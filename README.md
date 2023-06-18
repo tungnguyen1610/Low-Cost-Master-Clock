@@ -1,12 +1,13 @@
-# BeagleBone PTP Master Clock Setup (Student Scientific Conference TDK 2024)
+# BeagleBone PTP Master Clock Setup 
 
 This document provides a step-by-step guide to setting up a Precision Time Protocol (PTP) master clock on a BeagleBone platform. It covers kernel support verification, device tree overlay setup, initial configuration, and how to monitor the system’s operation. This setup achieves high-accuracy time synchronization on a cost-effective platform.
 
-## Table of Contents
-1. [Kernel Support Verification](#kernel-support-verification)
-2. [Building and Loading Device Tree Overlays](#building-and-loading-device-tree-overlays)
-3. [Initial Setup](#initial-setup)
-4. [Monitoring Operation](#monitoring-operation)
+## Table of Contents  
+1. [Kernel Support Verification](#kernel-support-verification)  
+2. [Modified LinuxPTP Package](#modified-linuxptp-package)  
+3. [Building and Loading Device Tree Overlays](#building-and-loading-device-tree-overlays)  
+4. [Initial Setup](#initial-setup)  
+5. [Monitoring Operation](#monitoring-operation)  
 
 ## 1. Kernel Support Verification
 To start, verify that the Linux kernel on the BeagleBone includes the necessary support for CPTS (Common Platform Time Sync). This feature is crucial for enabling PTP functionality.
@@ -17,7 +18,17 @@ To start, verify that the Linux kernel on the BeagleBone includes the necessary 
     ```
    - If the output includes `CONFIG_TI_CPTS=y`, CPTS support is active. Otherwise, additional kernel configuration may be required.
 
-## 2. Building and Loading Device Tree Overlays
+## 2. Modified LinuxPTP Package  
+The standard LinuxPTP package can be obtained from [this repository](https://github.com/richardcochran/linuxptp).  
+In this application, a modification has been made to the **"PI" servo** (`pi.c`) to include an additional feature that handles invalid hardware timestamp push events caused by the BeagleBone Black timer.  
+
+To install the modified package, use the following command:  
+
+```sh
+cd linuxptp-repo
+make install
+```
+## 3. Building and Loading Device Tree Overlays
 Device tree overlays are used to enable additional functionality on the BeagleBone hardware, such as an external clock input.
 
 ### Steps
@@ -43,7 +54,7 @@ Device tree overlays are used to enable additional functionality on the BeagleBo
       sudo reboot
       ```
 
-## 3. Initial Setup
+## 4. Initial Setup
 With the kernel and device tree overlays in place, configure the necessary GPIO pins and compile the main program.
 
 ### Steps
@@ -73,7 +84,7 @@ With the kernel and device tree overlays in place, configure the necessary GPIO 
       ```
    - This command sets the clock on `/dev/ptp0` and applies a timestamp correction for accurate synchronization.
 
-## 4. Monitoring Operation
+## 5. Monitoring Operation
 Once the setup is complete, use `ts2phc` output to monitor the PTP clock's performance. 
 
 ### Output Example
@@ -86,8 +97,6 @@ ts2phc[80404.557]: /dev/ptp0 offset         -3 s2 freq  +45527
 ```
 The output format from main program illustrates the D/A values, raw timestamp value
 ```plaintext
-Event low register:ebbccd5
-Event high register:3300000
-Counter differences: 10000000
+Averge counts: 10000000.5
 PID out value(D/A): 2460
 ```
