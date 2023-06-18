@@ -8,6 +8,9 @@ extern "C" {
 typedef struct {
 double Kp;
 double Ki;
+/*integrator limit*/
+double limInMin;
+double limInMax;
 /*Output limit */
 double limMin;
 double limMax;
@@ -20,7 +23,10 @@ double preMeasure;
 double out;
 }PIController;
 void PIController_Init(PIController *pi);
-int PIController_Update(PIController *pid, uint32_t setpoint, uint32_t measurement);
+int PIController_Update(PIController *pid, long setpoint, long measurement);
+void setAdaptiveTunning (PIController *pid, double valueKp,double valueKi);
+void setAdaptiveTunningPHC (PIController *pid, double valueMin,double valueMax);
+double PIController_Update_PHC(PIController *pid, long setpoint, long offset);
 void write_DAC (int fd,uint16_t value);
 #ifdef __cplusplus
 }
