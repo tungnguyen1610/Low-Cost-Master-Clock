@@ -35,8 +35,9 @@
 
 #define FREQ_EST_MARGIN 0.001
 
-#define AFTER_COUNT 100
-bool flag_locked = True;
+#define AFTER_COUNT 400
+bool flag_locked=false;
+extern bool flag_noPPS;
 struct pi_servo {
 	struct servo servo;
 	int64_t offset[2];
@@ -154,24 +155,35 @@ static double pi_sample(struct servo *servo,
 		*state = SERVO_LOCKED;
 		s->locked_count++;
 		printf("You are here, locked count is: %lld\n", s->locked_count);
+		printf("Previous freq:%lf\n",s->last_freq);
+                printf("Actual offset:%lld\n",offset);
 		if (abs(offset)<1000)
-		     {flag_locked=true;}
-		else 
-		     {flag_locked=false;}
-		if (s->locked_count > AFTER_COUNT) {
-			printf("Actual count: %lld\n",s->locked_count);
-			if( abs(s->last_freq - ppb) > 200) {
-				printf("old freq:%f new freq:%f\n",s->last_freq,ppb);
-				ppb = s->last_freq;
-				printf("Overflow detected...\n");
-				s->locked_count = 0;
-			}
-		}
-		 if (abs(s->last_freq - ppb)> 5000 && flag_locked){
-		                        printf("old freq:%f new freq:%f\n",s->last_freq,ppb);
-		                                ppb = s->last_freq;
-		                                printf("Possibility: Wrong PPS detected...\n");
-		 }
+                {
+                flag_locked=true;
+                }
+                if (s->locked_count > AFTER_COUNT) {
+                        printf("Actual count: %lld\n",s->locked_count);
+//                      printf("Previous freq:%lf\n",s->last_freq);
+                        if( abs(s->last_freq - ppb) > 200) {
+                                printf("old freq:%f new freq:%f\n",s->last_freq,ppb);
+                                ppb = s->last_freq;
+                                printf("Overflow detected...\n");
+                                s->locked_count = 0;
+                        }
+                }
+                if (abs(s->last_freq - ppb)> 2000 && flag_locked){
+                        printf("old freq:%f new freq:%f\n",s->last_freq,ppb);
+                                ppb = s->last_freq;
+                                printf("Possibility: Wrong PPS detected...\n");
+                                flag_locked=false;
+                }
+                if (flag_noPPS)
+                {
+                                printf("old freq:%f new freq:%f\n",s->last_freq,ppb);
+                                ppb = s->last_freq;
+                                printf("Possibility: Wrong PPS detected...\n");
+                                flag_noPPS=false;
+                }
 		break;
 	}
 
