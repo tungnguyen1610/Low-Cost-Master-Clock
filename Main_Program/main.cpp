@@ -174,22 +174,10 @@ int main()
     clockid_t clkid = ((~(clockid_t)ptp_fd) << 3) | 3;
     struct timespec phc_time;
     struct timespec current_time;
-    // uint32_t lowRegister;
-    //uint32_t highRegister;
-//   bool initialState=false;
-//            do_set(clkid,0);
 	long diff=0;
 	long temp=0;
     while(1)
     {   
-        // get timestamp 
-      //  struct timespec current_time;
-      //  clock_gettime(CLOCK_REALTIME, &current_time);
-      //  time_t rawtime = current_time.tv_sec;
-      //  struct tm * ptm;
-      //  ptm = gmtime ( &rawtime );
-//       timer6_map[0x4C/4]= timer6_map[TCAR1_OFFSET/4]+0x100;
-//                            timer6_map[0x4C/4]= timer6_map[TCAR1_OFFSET/4]+0x1000;              
         if(timer6_map[IRQSTATUS/4]!=0)
         {
                    timer6_map[0x4C/4]= timer6_map[TCAR1_OFFSET/4]+10000005;       
