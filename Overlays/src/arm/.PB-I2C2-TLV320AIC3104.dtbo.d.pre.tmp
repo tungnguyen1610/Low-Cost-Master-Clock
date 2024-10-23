@@ -1,0 +1,3 @@
+PB-I2C2-TLV320AIC3104.o: src/arm/PB-I2C2-TLV320AIC3104.dts \
+ include/dt-bindings/gpio/gpio.h include/dt-bindings/pinctrl/am33xx.h \
+ include/dt-bindings/pinctrl/omap.h

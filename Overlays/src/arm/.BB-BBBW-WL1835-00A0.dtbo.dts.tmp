@@ -1,0 +1,143 @@
+# 1 "src/arm/BB-BBBW-WL1835-00A0.dts"
+# 1 "<built-in>"
+# 1 "<command-line>"
+# 1 "src/arm/BB-BBBW-WL1835-00A0.dts"
+
+
+
+
+
+/dts-v1/;
+/plugin/;
+
+# 1 "include/dt-bindings/gpio/gpio.h" 1
+# 10 "src/arm/BB-BBBW-WL1835-00A0.dts" 2
+# 1 "include/dt-bindings/pinctrl/am33xx.h" 1
+# 9 "include/dt-bindings/pinctrl/am33xx.h"
+# 1 "include/dt-bindings/pinctrl/omap.h" 1
+# 10 "include/dt-bindings/pinctrl/am33xx.h" 2
+# 11 "src/arm/BB-BBBW-WL1835-00A0.dts" 2
+# 1 "include/dt-bindings/interrupt-controller/irq.h" 1
+# 12 "src/arm/BB-BBBW-WL1835-00A0.dts" 2
+
+
+
+
+&{/chosen} {
+ overlays {
+  BB-BBBW-WL1835-00A0.bb.org-overlays = "Wed Jun 19 07:10:02 2024";
+ };
+};
+
+&{/} {
+ model = "TI AM335x BeagleBone Black Wireless";
+ compatible = "ti,am335x-bone-black", "ti,am335x-bone", "ti,am33xx";
+
+ wlan_en_reg: fixedregulator@2 {
+  compatible = "regulator-fixed";
+  regulator-name = "wlan-en-regulator";
+  regulator-min-microvolt = <1800000>;
+  regulator-max-microvolt = <1800000>;
+  startup-delay-us= <70000>;
+
+
+  gpio = <&gpio3 9 0>;
+  enable-active-high;
+ };
+
+ leds {
+  pinctrl-names = "default";
+  pinctrl-0 = <&bt_pins>;
+  compatible = "gpio-leds";
+
+  wl18xx_bt_en {
+   label = "wl18xx_bt_en";
+   gpios = <&gpio0 28 0>;
+   default-state = "off";
+  };
+ };
+};
+
+&am33xx_pinmux {
+ bt_pins: pinmux_bt_pins {
+  pinctrl-single,pins = <
+   ((((0x928)) & 0xffff) - (0x0800)) ((((1 << 4))) | (7))
+  >;
+ };
+
+ mmc3_pins: pinmux_mmc3_pins {
+  pinctrl-single,pins = <
+   ((((0x93c)) & 0xffff) - (0x0800)) ((((1 << 5) | (1 << 4))) | (6))
+   ((((0x914)) & 0xffff) - (0x0800)) ((((1 << 5) | (1 << 4))) | (6))
+   ((((0x918)) & 0xffff) - (0x0800)) ((((1 << 5) | (1 << 4))) | (5))
+   ((((0x91c)) & 0xffff) - (0x0800)) ((((1 << 5) | (1 << 4))) | (5))
+   ((((0x920)) & 0xffff) - (0x0800)) ((((1 << 5) | (1 << 4))) | (5))
+   ((((0x908)) & 0xffff) - (0x0800)) ((((1 << 5) | (1 << 4))) | (5))
+  >;
+ };
+
+ uart3_pins: pinmux_uart3_pins {
+  pinctrl-single,pins = <
+   ((((0x934)) & 0xffff) - (0x0800)) ((((1 << 5) | (1 << 4))) | (1))
+   ((((0x938)) & 0xffff) - (0x0800)) ((0) | (1))
+   ((((0x948)) & 0xffff) - (0x0800)) ((((1 << 5) | (1 << 3))) | (3))
+   ((((0x94c)) & 0xffff) - (0x0800)) ((0) | (3))
+  >;
+ };
+
+ wl18xx_pins: pinmux_wl18xx_pins {
+  pinctrl-single,pins = <
+   ((((0x92c)) & 0xffff) - (0x0800)) ((0) | (7))
+   ((((0x944)) & 0xffff) - (0x0800)) ((((1 << 5))) | (7))
+   ((((0x930)) & 0xffff) - (0x0800)) ((((1 << 4))) | (7))
+  >;
+ };
+};
+
+&mac {
+ status = "disabled";
+};
+
+&mmc3 {
+ dmas = <&edma_xbar 12 0 1
+  &edma_xbar 13 0 2>;
+ dma-names = "tx", "rx";
+ status = "okay";
+ vmmc-supply = <&wlan_en_reg>;
+ bus-width = <4>;
+ non-removable;
+ cap-power-off-card;
+ ti,needs-special-hs-handling;
+ keep-power-in-suspend;
+ pinctrl-names = "default";
+ pinctrl-0 = <&mmc3_pins &wl18xx_pins>;
+
+ #address-cells = <1>;
+ #size-cells = <0>;
+ wlcore: wlcore@2 {
+  compatible = "ti,wl1835";
+  reg = <2>;
+  interrupt-parent = <&gpio0>;
+  interrupts = <29 1>;
+ };
+};
+
+&uart3 {
+ pinctrl-names = "default";
+ pinctrl-0 = <&uart3_pins &bt_pins>;
+ status = "okay";
+
+ bluetooth {
+  compatible = "ti,wl1835-st";
+  enable-gpios = <&gpio0 28 0>;
+ };
+};
+
+&gpio3 {
+ ls-buf-en-hog {
+  gpio-hog;
+  gpios = <10 0>;
+  output-high;
+  line-name = "LS_BUF_EN";
+ };
+};

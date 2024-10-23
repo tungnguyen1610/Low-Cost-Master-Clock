@@ -1,0 +1,2 @@
+BBBLUE-UDA1334-00A0.o: src/arm/BBBLUE-UDA1334-00A0.dts \
+ include/dt-bindings/pinctrl/am33xx.h include/dt-bindings/pinctrl/omap.h

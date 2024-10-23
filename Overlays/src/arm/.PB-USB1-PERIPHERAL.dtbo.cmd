@@ -1,0 +1,3 @@
+cmd_src/arm/PB-USB1-PERIPHERAL.dtbo = cpp -Wp,-MD,src/arm/.PB-USB1-PERIPHERAL.dtbo.d.pre.tmp -nostdinc -Iinclude -Isrc/arm -Isrc -Itestcase-data -undef -D__DTS__ -x assembler-with-cpp -o src/arm/.PB-USB1-PERIPHERAL.dtbo.dts.tmp src/arm/PB-USB1-PERIPHERAL.dts ; dtc -O dtb -o src/arm/PB-USB1-PERIPHERAL.dtbo -b 0 -@ -i src/arm -Wno-unit_address_vs_reg -Wno-chosen_node_is_root -Wno-alias_paths -d src/arm/.PB-USB1-PERIPHERAL.dtbo.d.dtc.tmp src/arm/.PB-USB1-PERIPHERAL.dtbo.dts.tmp ; cat src/arm/.PB-USB1-PERIPHERAL.dtbo.d.pre.tmp src/arm/.PB-USB1-PERIPHERAL.dtbo.d.dtc.tmp > src/arm/.PB-USB1-PERIPHERAL.dtbo.d
+PB-USB1-PERIPHERAL.o: src/arm/PB-USB1-PERIPHERAL.dts
+src/arm/PB-USB1-PERIPHERAL.dtbo: src/arm/.PB-USB1-PERIPHERAL.dtbo.dts.tmp

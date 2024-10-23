@@ -1,0 +1,34 @@
+# 1 "src/arm/AM335X-I2C1-400-00A0.dts"
+# 1 "<built-in>"
+# 1 "<command-line>"
+# 1 "src/arm/AM335X-I2C1-400-00A0.dts"
+
+
+
+
+
+/dts-v1/;
+/plugin/;
+
+
+
+
+&{/chosen} {
+ overlays {
+  AM335X-I2C1-400-00A0.bb.org-overlays = "Wed Jun 19 07:10:02 2024";
+ };
+};
+
+/ {
+ fragment@1 {
+  target = <&i2c1>;
+  __overlay__ {
+   status = "okay";
+
+   clock-frequency = <400000>;
+
+   #address-cells = <1>;
+   #size-cells = <0>;
+  };
+ };
+};

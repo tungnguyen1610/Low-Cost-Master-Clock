@@ -1,0 +1,3 @@
+BB-MIKROBUS-CAPE-3.o: src/arm/BB-MIKROBUS-CAPE-3.dts \
+ include/dt-bindings/gpio/gpio.h include/dt-bindings/pinctrl/am33xx.h \
+ include/dt-bindings/pinctrl/omap.h

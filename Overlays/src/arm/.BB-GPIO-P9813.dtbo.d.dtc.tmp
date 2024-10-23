@@ -1,0 +1,1 @@
+src/arm/BB-GPIO-P9813.dtbo: src/arm/.BB-GPIO-P9813.dtbo.dts.tmp

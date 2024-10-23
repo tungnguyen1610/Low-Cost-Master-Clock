@@ -1,0 +1,42 @@
+# 1 "src/arm/beaglelogic-00A0.dts"
+# 1 "<built-in>"
+# 1 "<command-line>"
+# 1 "src/arm/beaglelogic-00A0.dts"
+# 9 "src/arm/beaglelogic-00A0.dts"
+/dts-v1/;
+/plugin/;
+
+/ {
+
+
+
+ fragment@0 {
+  target-path="/";
+  __overlay__ {
+
+   chosen {
+    overlays {
+     beaglelogic-00A0 = "Wed Jun 19 07:10:02 2024";
+    };
+   };
+  };
+ };
+
+ fragment@1 {
+  target-path="/";
+  __overlay__ {
+
+   pru-beaglelogic {
+    compatible = "beaglelogic,beaglelogic";
+    samplerate = <50000000>;
+    sampleunit = <1>;
+    triggerflags = <0>;
+
+    pruss = <&pruss>;
+    interrupt-parent = <&pruss_intc>;
+    interrupts = <22>, <23>, <24>;
+    interrupt-names = "from_bl_1", "to_bl", "from_bl_2";
+   };
+  };
+ };
+};

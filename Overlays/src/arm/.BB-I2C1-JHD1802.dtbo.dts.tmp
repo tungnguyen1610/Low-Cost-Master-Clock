@@ -1,0 +1,68 @@
+# 1 "src/arm/BB-I2C1-JHD1802.dts"
+# 1 "<built-in>"
+# 1 "<command-line>"
+# 1 "src/arm/BB-I2C1-JHD1802.dts"
+
+
+
+
+
+
+
+/dts-v1/;
+/plugin/;
+
+/ {
+
+
+
+ fragment@0 {
+  target-path="/";
+  __overlay__ {
+   chosen {
+    overlays {
+     BB-I2C1-JHD1802-00A0 = "Wed Jun 19 07:10:02 2024";
+    };
+   };
+  };
+ };
+
+ fragment@1 {
+  target-path="/";
+  __overlay__ {
+
+   aliases {
+
+    jhd1802 = "/ocp/i2c@4802a000/jhd1802@3e";
+
+
+
+
+   };
+  };
+ };
+
+ fragment@2 {
+
+  target = <&i2c1>;
+
+
+
+
+  __overlay__ {
+   status = "okay";
+
+
+   clock-frequency = <100000>;
+
+   #address-cells = <1>;
+   #size-cells = <0>;
+
+   jhd1802@3e {
+    compatible = "seeed-hd44780";
+    reg = <0x3e>;
+    status = "okay";
+   };
+  };
+ };
+};

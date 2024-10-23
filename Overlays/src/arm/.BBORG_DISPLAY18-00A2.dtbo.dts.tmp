@@ -1,0 +1,166 @@
+# 1 "src/arm/BBORG_DISPLAY18-00A2.dts"
+# 1 "<built-in>"
+# 1 "<command-line>"
+# 1 "src/arm/BBORG_DISPLAY18-00A2.dts"
+
+
+
+
+
+
+
+/dts-v1/;
+/plugin/;
+
+# 1 "include/dt-bindings/gpio/gpio.h" 1
+# 12 "src/arm/BBORG_DISPLAY18-00A2.dts" 2
+# 1 "include/dt-bindings/pinctrl/am33xx.h" 1
+# 9 "include/dt-bindings/pinctrl/am33xx.h"
+# 1 "include/dt-bindings/pinctrl/omap.h" 1
+# 10 "include/dt-bindings/pinctrl/am33xx.h" 2
+# 13 "src/arm/BBORG_DISPLAY18-00A2.dts" 2
+# 1 "include/dt-bindings/board/am335x-bbw-bbb-base.h" 1
+# 14 "src/arm/BBORG_DISPLAY18-00A2.dts" 2
+
+/ {
+
+
+
+ fragment@0 {
+  target-path="/";
+  __overlay__ {
+
+   chosen {
+    overlays {
+     BBORG_DISPLAY18-00A2 = "Wed Jun 19 07:10:02 2024";
+    };
+   };
+  };
+ };
+
+
+
+
+ fragment@1 {
+  target = <&ocp>;
+  __overlay__ {
+   P8_07_pinmux { status = "disabled"; };
+   P8_08_pinmux { status = "disabled"; };
+   P8_09_pinmux { status = "disabled"; };
+   P8_27_pinmux { status = "disabled"; };
+   P8_28_pinmux { status = "disabled"; };
+   P8_29_pinmux { status = "disabled"; };
+   P8_30_pinmux { status = "disabled"; };
+   P8_31_pinmux { status = "disabled"; };
+   P8_33_pinmux { status = "disabled"; };
+   P8_35_pinmux { status = "disabled"; };
+   P8_37_pinmux { status = "disabled"; };
+   P8_43_pinmux { status = "disabled"; };
+   P9_12_pinmux { status = "disabled"; };
+   P9_17_pinmux { status = "disabled"; };
+   P9_18_pinmux { status = "disabled"; };
+   P9_21_pinmux { status = "disabled"; };
+   P9_22_pinmux { status = "disabled"; };
+  };
+ };
+
+ fragment@2 {
+  target = <&am33xx_pinmux>;
+  __overlay__ {
+   bb_lcd_lcd_pins: pinmux_bb_lcd_lcd_pins {
+    pinctrl-single,pins = <
+     0x09C (((1 << 3)) | 7)
+
+     0x090 (((1 << 5) | (1 << 4)) | 7)
+     0x094 (((1 << 5) | (1 << 4)) | 7)
+     0x0E0 (((1 << 5) | (1 << 4)) | 7)
+     0x0E8 (((1 << 5) | (1 << 4)) | 7)
+     0x0E4 (((1 << 5) | (1 << 4)) | 7)
+     0x0EC (((1 << 5) | (1 << 4)) | 7)
+     0x0D8 (((1 << 3)) | 7)
+     0x0D4 (((1 << 3)) | 7)
+     0x0D0 (((1 << 3)) | 7)
+     0x0C0 (((1 << 3)) | 7)
+     0x0A8 (((1 << 5) | (1 << 4)) | 7)
+     0x078 (((1 << 5) | (1 << 4)) | 7)
+     0x15C (((1 << 4)) | 0)
+     0x158 (((1 << 4)) | 0)
+     0x154 (((1 << 5) | (1 << 4)) | 0)
+     0x150 (((1 << 5) | (1 << 4)) | 0)
+    >;
+   };
+
+   bb_lcd_pwm_backlight_pins: pinmux_bb_lcd_pwm_backlight_pins {
+    pinctrl-single,pins = <
+     0x09C (0 | 2)
+    >;
+   };
+  };
+ };
+
+
+
+
+ fragment@3 {
+  target = <&spi0>;
+  __overlay__ {
+   status = "okay";
+
+   channel@0 { status = "disabled"; };
+   channel@1 { status = "disabled"; };
+  };
+ };
+
+
+
+
+ fragment@4 {
+  target = <&spi0>;
+  __overlay__ {
+   #address-cells = <1>;
+   #size-cells = <0>;
+
+   adafruit18: adafruit18@0{
+    compatible = "sitronix,st7735r";
+    pinctrl-names = "default";
+    pinctrl-0 = <&bb_lcd_lcd_pins>;
+    reg = <0>;
+    buswidth = <8>;
+    reset-gpios = <&gpio0 10 0>;
+    dc-gpios = <&gpio0 9 0>;
+    led-gpios = <&gpio2 5 1>;
+    debug = <1>;
+    spi-max-frequency = <32000000>;
+    rotate = <90>;
+    bgr;
+    fps = <30>;
+   };
+  };
+ };
+
+
+
+
+ fragment@5 {
+  target-path="/";
+  __overlay__ {
+# 205 "src/arm/BBORG_DISPLAY18-00A2.dts"
+   capeleds {
+    compatible = "gpio-leds";
+
+    led@1 {
+     label = "display18:green:led1";
+     gpios = <&gpio0 8 0>;
+     default-state = "phy0tx";
+    };
+
+    led@2 {
+     label = "display18:red:led2";
+     gpios = <&gpio2 14 0>;
+     default-state = "phy0rx";
+    };
+   };
+  };
+ };
+# 266 "src/arm/BBORG_DISPLAY18-00A2.dts"
+};

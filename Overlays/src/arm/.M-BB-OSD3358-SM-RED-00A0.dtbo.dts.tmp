@@ -1,0 +1,74 @@
+# 1 "src/arm/M-BB-OSD3358-SM-RED-00A0.dts"
+# 1 "<built-in>"
+# 1 "<command-line>"
+# 1 "src/arm/M-BB-OSD3358-SM-RED-00A0.dts"
+# 9 "src/arm/M-BB-OSD3358-SM-RED-00A0.dts"
+/dts-v1/;
+/plugin/;
+
+# 1 "include/dt-bindings/gpio/gpio.h" 1
+# 13 "src/arm/M-BB-OSD3358-SM-RED-00A0.dts" 2
+# 1 "include/dt-bindings/pinctrl/am33xx.h" 1
+# 9 "include/dt-bindings/pinctrl/am33xx.h"
+# 1 "include/dt-bindings/pinctrl/omap.h" 1
+# 10 "include/dt-bindings/pinctrl/am33xx.h" 2
+# 14 "src/arm/M-BB-OSD3358-SM-RED-00A0.dts" 2
+# 1 "include/dt-bindings/board/am335x-bbw-bbb-base.h" 1
+# 15 "src/arm/M-BB-OSD3358-SM-RED-00A0.dts" 2
+
+/ {
+
+
+
+ fragment@0 {
+  target-path="/";
+  __overlay__ {
+
+   chosen {
+    overlays {
+     M-BB-OSD3358-SM-RED-00A0 = "Wed Jun 19 07:10:02 2024";
+    };
+   };
+  };
+ };
+
+ fragment@1 {
+  target-path="/";
+  __overlay__ {
+   model = "Octavo Systems OSD3358-SM-RED";
+   compatible = "ti,am335x-osd3358-sm-red", "ti,am335x-bone-black", "ti,am335x-bone", "ti,am33xx";
+  };
+ };
+
+ fragment@2 {
+  target = <&am33xx_pinmux>;
+  __overlay__ {
+
+   cpsw_default {
+    pinctrl-single,pins = <
+
+     ((((0x914)) & 0xffff) - (0x0800)) (0 | 2)
+     ((((0x918)) & 0xffff) - (0x0800)) (((1 << 5)) | 2)
+     ((((0x91c)) & 0xffff) - (0x0800)) (0 | 2)
+     ((((0x920)) & 0xffff) - (0x0800)) (0 | 2)
+     ((((0x924)) & 0xffff) - (0x0800)) (0 | 2)
+     ((((0x928)) & 0xffff) - (0x0800)) (0 | 2)
+     ((((0x92c)) & 0xffff) - (0x0800)) (0 | 2)
+     ((((0x930)) & 0xffff) - (0x0800)) (((1 << 5)) | 2)
+     ((((0x934)) & 0xffff) - (0x0800)) (((1 << 5)) | 2)
+     ((((0x938)) & 0xffff) - (0x0800)) (((1 << 5)) | 2)
+     ((((0x93c)) & 0xffff) - (0x0800)) (((1 << 5)) | 2)
+     ((((0x940)) & 0xffff) - (0x0800)) (((1 << 5)) | 2)
+    >;
+   };
+  };
+ };
+
+ fragment@3 {
+  target = <&cpsw_emac0>;
+  __overlay__ {
+   phy_id = <&davinci_mdio>, <4>;
+   phy-mode = "rgmii-txid";
+  };
+ };
+};

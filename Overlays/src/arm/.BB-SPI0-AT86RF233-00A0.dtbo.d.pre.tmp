@@ -1,0 +1,4 @@
+BB-SPI0-AT86RF233-00A0.o: src/arm/BB-SPI0-AT86RF233-00A0.dts \
+ include/dt-bindings/board/am335x-bbw-bbb-base.h \
+ include/dt-bindings/pinctrl/am33xx.h include/dt-bindings/pinctrl/omap.h \
+ include/dt-bindings/interrupt-controller/irq.h

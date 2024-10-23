@@ -1,0 +1,3 @@
+PB-CAN0-00A0.o: src/arm/PB-CAN0-00A0.dts \
+ include/dt-bindings/pinctrl/am33xx.h include/dt-bindings/pinctrl/omap.h \
+ include/dt-bindings/board/am335x-pb-base.h

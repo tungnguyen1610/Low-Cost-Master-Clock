@@ -1,0 +1,77 @@
+# 1 "src/arm/PB-PWM-RGB-TECHLAB-CAPE.dts"
+# 1 "<built-in>"
+# 1 "<command-line>"
+# 1 "src/arm/PB-PWM-RGB-TECHLAB-CAPE.dts"
+# 14 "src/arm/PB-PWM-RGB-TECHLAB-CAPE.dts"
+/dts-v1/;
+/plugin/;
+
+# 1 "include/dt-bindings/gpio/gpio.h" 1
+# 18 "src/arm/PB-PWM-RGB-TECHLAB-CAPE.dts" 2
+# 1 "include/dt-bindings/pinctrl/am33xx.h" 1
+# 9 "include/dt-bindings/pinctrl/am33xx.h"
+# 1 "include/dt-bindings/pinctrl/omap.h" 1
+# 10 "include/dt-bindings/pinctrl/am33xx.h" 2
+# 19 "src/arm/PB-PWM-RGB-TECHLAB-CAPE.dts" 2
+# 1 "include/dt-bindings/interrupt-controller/irq.h" 1
+# 20 "src/arm/PB-PWM-RGB-TECHLAB-CAPE.dts" 2
+
+/ {
+
+
+
+ fragment@0 {
+  target-path="/";
+  __overlay__ {
+
+   chosen {
+    overlays {
+     PB-PWM-RGB-TECHLAB-CAPE = "Wed Jun 19 07:10:02 2024";
+    };
+   };
+  };
+ };
+
+
+
+
+ fragment@1 {
+  target-path="/";
+  __overlay__ {
+   techlab_rgb {
+    compatible = "pwm-leds";
+
+    techlab_pwm_red {
+
+
+
+
+     label = "techlab::red";
+     pwms = <&ehrpwm0 1 500000 0>;
+     max-brightness = <255>;
+    };
+
+
+    techlab_pwm_green {
+
+
+
+
+     label = "techlab::green";
+     pwms = <&ehrpwm1 0 500000 0>;
+     max-brightness = <255>;
+    };
+
+    techlab_pwm_blue {
+
+
+
+
+     label = "techlab::blue";
+     pwms = <&ehrpwm0 0 500000 0>;
+     max-brightness = <255>;
+    };
+   };
+  };
+ };
+};

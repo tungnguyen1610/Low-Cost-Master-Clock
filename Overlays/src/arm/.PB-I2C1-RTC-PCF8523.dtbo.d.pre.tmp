@@ -1,0 +1,4 @@
+PB-I2C1-RTC-PCF8523.o: src/arm/PB-I2C1-RTC-PCF8523.dts \
+ include/dt-bindings/board/am335x-bbw-bbb-base.h \
+ include/dt-bindings/gpio/gpio.h include/dt-bindings/pinctrl/am33xx.h \
+ include/dt-bindings/pinctrl/omap.h

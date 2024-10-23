@@ -1,0 +1,72 @@
+# 1 "src/arm/BBORG_COMMS-00A2.dts"
+# 1 "<built-in>"
+# 1 "<command-line>"
+# 1 "src/arm/BBORG_COMMS-00A2.dts"
+
+
+
+
+
+
+
+/dts-v1/;
+/plugin/;
+
+# 1 "include/dt-bindings/pinctrl/am33xx.h" 1
+# 9 "include/dt-bindings/pinctrl/am33xx.h"
+# 1 "include/dt-bindings/pinctrl/omap.h" 1
+# 10 "include/dt-bindings/pinctrl/am33xx.h" 2
+# 12 "src/arm/BBORG_COMMS-00A2.dts" 2
+# 1 "include/dt-bindings/gpio/gpio.h" 1
+# 13 "src/arm/BBORG_COMMS-00A2.dts" 2
+
+
+
+
+&{/chosen} {
+ overlays {
+  BBORG_COMMS-00A2.bb.org-overlays = "Wed Jun 19 07:10:02 2024";
+ };
+};
+
+
+
+
+&ocp {
+ P9_24_pinmux { status = "disabled"; };
+ P9_26_pinmux { status = "disabled"; };
+ P9_13_pinmux { status = "disabled"; };
+ P9_11_pinmux { status = "disabled"; };
+};
+
+&am33xx_pinmux {
+ bborg_comms_can_pins: pinmux_comms_can_pins {
+  pinctrl-single,pins = <
+   0x184 (((1 << 5) | (1 << 4)) | 2)
+   0x180 (((1 << 4)) | 2)
+  >;
+ };
+
+ bborg_comms_rs485_pins: pinmux_comms_rs485_pins {
+  pinctrl-single,pins = <
+   0x074 (((1 << 3)) | 6)
+   0x070 (((1 << 5) | (1 << 3)) | 6)
+  >;
+ };
+};
+
+&dcan1 {
+ status = "okay";
+ pinctrl-names = "default";
+ pinctrl-0 = <&bborg_comms_can_pins>;
+};
+
+&uart4 {
+ status = "okay";
+ pinctrl-names = "default";
+ pinctrl-0 = <&bborg_comms_rs485_pins>;
+
+
+
+
+};

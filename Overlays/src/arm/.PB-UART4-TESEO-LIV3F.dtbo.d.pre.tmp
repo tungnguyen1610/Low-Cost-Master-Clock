@@ -1,0 +1,4 @@
+PB-UART4-TESEO-LIV3F.o: src/arm/PB-UART4-TESEO-LIV3F.dts \
+ include/dt-bindings/gpio/gpio.h include/dt-bindings/pinctrl/am33xx.h \
+ include/dt-bindings/pinctrl/omap.h \
+ include/dt-bindings/interrupt-controller/irq.h

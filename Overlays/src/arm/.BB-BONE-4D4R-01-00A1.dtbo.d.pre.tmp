@@ -1,0 +1,5 @@
+BB-BONE-4D4R-01-00A1.o: src/arm/BB-BONE-4D4R-01-00A1.dts \
+ include/dt-bindings/interrupt-controller/irq.h \
+ include/dt-bindings/gpio/gpio.h include/dt-bindings/pinctrl/am33xx.h \
+ include/dt-bindings/pinctrl/omap.h \
+ include/dt-bindings/board/am335x-bbw-bbb-base.h

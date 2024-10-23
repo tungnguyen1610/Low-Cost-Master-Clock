@@ -1,0 +1,55 @@
+# 1 "src/arm/PB-PWM-TIMER-P1.26.dts"
+# 1 "<built-in>"
+# 1 "<command-line>"
+# 1 "src/arm/PB-PWM-TIMER-P1.26.dts"
+# 9 "src/arm/PB-PWM-TIMER-P1.26.dts"
+/dts-v1/;
+/plugin/;
+
+# 1 "include/dt-bindings/gpio/gpio.h" 1
+# 13 "src/arm/PB-PWM-TIMER-P1.26.dts" 2
+# 1 "include/dt-bindings/pinctrl/am33xx.h" 1
+# 9 "include/dt-bindings/pinctrl/am33xx.h"
+# 1 "include/dt-bindings/pinctrl/omap.h" 1
+# 10 "include/dt-bindings/pinctrl/am33xx.h" 2
+# 14 "src/arm/PB-PWM-TIMER-P1.26.dts" 2
+
+/ {
+
+
+
+ fragment@0 {
+  target = <&ocp>;
+  __overlay__ {
+   P1_26_pinmux { status = "disabled"; };
+  };
+ };
+
+ fragment@1 {
+  target = <&am33xx_pinmux>;
+  __overlay__ {
+   timer6_pin: pinmux_timer6_pin {
+    pinctrl-single,pins = <
+     ((((0x0978)) & 0xffff) - (0x0800)) (((1 << 4)) | (1 << 5) | 1)
+    >;
+   };
+  };
+ };
+
+ fragment@2 {
+  target-path="/";
+  __overlay__ {
+   dmtimer-pwm-6 {
+    pinctrl-names = "default";
+    pinctrl-0 = <&timer6_pin>;
+
+    compatible = "ti,omap-dmtimer-pwm";
+    #pwm-cells = <3>;
+    ti,timers = <&timer6>;
+
+    ti,clock-source = <0x00>;
+
+   };
+  };
+ };
+};

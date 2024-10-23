@@ -1,0 +1,449 @@
+# 1 "src/arm/BBIM-00A0.dts"
+# 1 "<built-in>"
+# 1 "<command-line>"
+# 1 "src/arm/BBIM-00A0.dts"
+
+
+
+
+
+
+
+/dts-v1/;
+/plugin/;
+
+# 1 "include/dt-bindings/board/am335x-bbw-bbb-base.h" 1
+# 12 "src/arm/BBIM-00A0.dts" 2
+# 1 "include/dt-bindings/gpio/gpio.h" 1
+# 13 "src/arm/BBIM-00A0.dts" 2
+# 1 "include/dt-bindings/pinctrl/am33xx.h" 1
+# 9 "include/dt-bindings/pinctrl/am33xx.h"
+# 1 "include/dt-bindings/pinctrl/omap.h" 1
+# 10 "include/dt-bindings/pinctrl/am33xx.h" 2
+# 14 "src/arm/BBIM-00A0.dts" 2
+
+/ {
+
+
+
+ fragment@0 {
+  target-path="/";
+  __overlay__ {
+
+   chosen {
+    overlays {
+     BBIM-00A0 = "Wed Jun 19 07:10:02 2024";
+    };
+   };
+  };
+ };
+
+ fragment@1 {
+  target = <&am33xx_pinmux>;
+  __overlay__ {
+
+   bb_bbim_led_pins: pinmux_bb_bbim_led_pins {
+    pinctrl-single,pins = <
+     0x090 (((1 << 5) | (1 << 3)) | 7)
+     0x094 (((1 << 5) | (1 << 3)) | 7)
+     0x09C (((1 << 5) | (1 << 3)) | 7)
+     0x098 (((1 << 5) | (1 << 3)) | 7)
+    >;
+   };
+
+   bb_dcan1_pins: pinmux_dcan1_pins {
+    pinctrl-single,pins = <
+     0x184 (((1 << 5) | (1 << 4)) | 2)
+     0x180 (((1 << 4)) | 2)
+    >;
+   };
+
+   bb_gpio_relay_pins: pinmux_bb_gpio_relay_pins {
+    pinctrl-single,pins = <
+     0x034 (0 | 7)
+     0x030 (0 | 7)
+     0x028 (0 | 7)
+    >;
+   };
+
+   bb_uart4_rs422_pins: pinmux_bb_uart4_rs422_pins {
+    pinctrl-single,pins = <
+     0x070 (((1 << 5) | (1 << 3)) | 6)
+     0x074 (((1 << 3)) | 6)
+     0x15C 0x07
+    >;
+   };
+
+
+
+   P8_11_default_pin: pinmux_P8_11_default_pin { pinctrl-single,pins = <
+    ((((0x0834)) & 0xffff) - (0x0800)) (0 | (1 << 5) | 7) >; };
+   P8_11_gpio_pin: pinmux_P8_11_gpio_pin { pinctrl-single,pins = <
+    ((((0x0834)) & 0xffff) - (0x0800)) (((1 << 3)) | (1 << 5) | 7) >; };
+   P8_11_pruout_pin: pinmux_P8_11_pruout_pin { pinctrl-single,pins = <
+    ((((0x0834)) & 0xffff) - (0x0800)) (0 | (1 << 5) | 6) >; };
+
+   P8_12_default_pin: pinmux_P8_12_default_pin { pinctrl-single,pins = <
+    ((((0x0830)) & 0xffff) - (0x0800)) (0 | (1 << 5) | 7) >; };
+   P8_12_gpio_pin: pinmux_P8_12_gpio_pin { pinctrl-single,pins = <
+    ((((0x0830)) & 0xffff) - (0x0800)) (((1 << 3)) | (1 << 5) | 7) >; };
+   P8_12_pruout_pin: pinmux_P8_12_pruout_pin { pinctrl-single,pins = <
+    ((((0x0830)) & 0xffff) - (0x0800)) (0 | (1 << 5) | 6) >; };
+
+   P8_14_default_pin: pinmux_P8_14_default_pin { pinctrl-single,pins = <
+    ((((0x0828)) & 0xffff) - (0x0800)) (0 | (1 << 5) | 7) >; };
+   P8_14_gpio_pin: pinmux_P8_14_gpio_pin { pinctrl-single,pins = <
+    ((((0x0828)) & 0xffff) - (0x0800)) (((1 << 3)) | (1 << 5) | 7) >; };
+
+
+   P9_31_default_pin: pinmux_P9_31_default_pin { pinctrl-single,pins = <
+    ((((0x0990)) & 0xffff) - (0x0800)) (((1 << 5) | (1 << 3)) | 7) >; };
+   P9_31_gpio_pin: pinmux_P9_31_gpio_pin { pinctrl-single,pins = <
+    ((((0x0990)) & 0xffff) - (0x0800)) (((1 << 5) | (1 << 3)) | 7) >; };
+   P9_31_pruin_pin: pinmux_P9_31_pruin_pin { pinctrl-single,pins = <
+    ((((0x0990)) & 0xffff) - (0x0800)) (((1 << 5) | (1 << 3)) | 6) >; };
+
+   P9_29_default_pin: pinmux_P9_29_default_pin { pinctrl-single,pins = <
+    ((((0x0994)) & 0xffff) - (0x0800)) (((1 << 5) | (1 << 3)) | 7) >; };
+   P9_29_gpio_pin: pinmux_P9_29_gpio_pin { pinctrl-single,pins = <
+    ((((0x0994)) & 0xffff) - (0x0800)) (((1 << 5) | (1 << 3)) | 7) >; };
+   P9_29_pruin_pin: pinmux_P9_29_pruin_pin { pinctrl-single,pins = <
+    ((((0x0994)) & 0xffff) - (0x0800)) (((1 << 5) | (1 << 3)) | 6) >; };
+
+   P9_30_default_pin: pinmux_P9_30_default_pin { pinctrl-single,pins = <
+    ((((0x0998)) & 0xffff) - (0x0800)) (((1 << 5) | (1 << 3)) | 7) >; };
+   P9_30_gpio_pin: pinmux_P9_30_gpio_pin { pinctrl-single,pins = <
+    ((((0x0998)) & 0xffff) - (0x0800)) (((1 << 5) | (1 << 3)) | 7) >; };
+   P9_30_pruin_pin: pinmux_P9_30_pruin_pin { pinctrl-single,pins = <
+    ((((0x0998)) & 0xffff) - (0x0800)) (((1 << 5) | (1 << 3)) | 6) >; };
+
+   P9_28_default_pin: pinmux_P9_28_default_pin { pinctrl-single,pins = <
+    ((((0x099c)) & 0xffff) - (0x0800)) (((1 << 5) | (1 << 3)) | 7) >; };
+   P9_28_gpio_pin: pinmux_P9_28_gpio_pin { pinctrl-single,pins = <
+    ((((0x099c)) & 0xffff) - (0x0800)) (((1 << 5) | (1 << 3)) | 7) >; };
+   P9_28_pruin_pin: pinmux_P9_28_pruin_pin { pinctrl-single,pins = <
+    ((((0x099c)) & 0xffff) - (0x0800)) (((1 << 5) | (1 << 3))| 6) >; };
+
+   P9_42_default_pin: pinmux_P9_42_default_pin { pinctrl-single,pins = <
+    ((((0x0964)) & 0xffff) - (0x0800)) (((1 << 5) | (1 << 3)) | 7) >; };
+   P9_42_gpio_pin: pinmux_P9_42_gpio_pin { pinctrl-single,pins = <
+    ((((0x0964)) & 0xffff) - (0x0800)) (((1 << 5) | (1 << 3)) | 7) >; };
+
+   P9_92_default_pin: pinmux_P9_92_default_pin { pinctrl-single,pins = <
+    ((((0x09a0)) & 0xffff) - (0x0800)) (((1 << 5) | (1 << 3)) | 7) >; };
+   P9_92_gpio_pin: pinmux_P9_92_gpio_pin { pinctrl-single,pins = <
+    ((((0x09a0)) & 0xffff) - (0x0800)) (((1 << 5) | (1 << 3)) | 7) >; };
+   P9_92_pruin_pin: pinmux_P9_92_pruin_pin { pinctrl-single,pins = <
+    ((((0x09a0)) & 0xffff) - (0x0800)) (((1 << 5) | (1 << 3)) | 6) >; };
+
+   P9_27_default_pin: pinmux_P9_27_default_pin { pinctrl-single,pins = <
+    ((((0x09a4)) & 0xffff) - (0x0800)) (((1 << 5) | (1 << 3)) | 7) >; };
+   P9_27_gpio_pin: pinmux_P9_27_gpio_pin { pinctrl-single,pins = <
+    ((((0x09a4)) & 0xffff) - (0x0800)) (((1 << 5) | (1 << 3)) | 7) >; };
+   P9_27_pruin_pin: pinmux_P9_27_pruin_pin { pinctrl-single,pins = <
+    ((((0x09a4)) & 0xffff) - (0x0800)) (((1 << 5) | (1 << 3)) | 6) >; };
+
+   P9_41_default_pin: pinmux_P9_41_default_pin { pinctrl-single,pins = <
+    ((((0x09b4)) & 0xffff) - (0x0800)) (((1 << 5) | (1 << 3)) | 7) >; };
+   P9_41_gpio_pin: pinmux_P9_41_gpio_pin { pinctrl-single,pins = <
+    ((((0x09b4)) & 0xffff) - (0x0800)) (((1 << 5) | (1 << 3)) | 7) >; };
+   P9_41_pruin_pin: pinmux_P9_41_pruin_pin { pinctrl-single,pins = <
+    ((((0x09b4)) & 0xffff) - (0x0800)) (((1 << 5) | (1 << 3)) | 5) >; };
+
+   P9_91_default_pin: pinmux_P9_91_default_pin { pinctrl-single,pins = <
+    ((((0x09a8)) & 0xffff) - (0x0800)) (((1 << 5) | (1 << 3)) | 7) >; };
+   P9_91_gpio_pin: pinmux_P9_91_gpio_pin { pinctrl-single,pins = <
+    ((((0x09a8)) & 0xffff) - (0x0800)) (((1 << 5) | (1 << 3)) | 7) >; };
+   P9_91_pruin_pin: pinmux_P9_91_pruin_pin { pinctrl-single,pins = <
+    ((((0x09a8)) & 0xffff) - (0x0800)) (((1 << 5) | (1 << 3)) | 6) >; };
+
+   P9_25_default_pin: pinmux_P9_25_default_pin { pinctrl-single,pins = <
+    ((((0x09ac)) & 0xffff) - (0x0800)) (((1 << 5) | (1 << 3)) | 7) >; };
+   P9_25_gpio_pin: pinmux_P9_25_gpio_pin { pinctrl-single,pins = <
+    ((((0x09ac)) & 0xffff) - (0x0800)) (((1 << 5) | (1 << 3)) | 7) >; };
+   P9_25_pruin_pin: pinmux_P9_25_pruin_pin { pinctrl-single,pins = <
+    ((((0x09ac)) & 0xffff) - (0x0800)) (((1 << 5) | (1 << 3)) | 6) >; };
+  };
+ };
+
+ fragment@2 {
+  target-path="/";
+  __overlay__ {
+
+   gpio-leds-cape-bbim {
+    compatible = "gpio-leds";
+    pinctrl-names = "default";
+    pinctrl-0 = <&bb_bbim_led_pins>;
+
+    bbim-led0 {
+     label = "bbim:green:usr0";
+     gpios = <&gpio2 2 0>;
+     linux,default-trigger = "heartbeat";
+     default-state = "off";
+    };
+
+    bbim-led1 {
+     label = "bbim:green:usr1";
+     gpios = <&gpio2 3 0>;
+     linux,default-trigger = "none";
+     default-state = "off";
+    };
+
+    bbim-led2 {
+     label = "bbim:green:usr2";
+     gpios = <&gpio2 5 0>;
+     linux,default-trigger = "none";
+     default-state = "off";
+    };
+
+    bbim-led3 {
+     label = "bbim:red:usr3";
+     gpios = <&gpio2 4 0>;
+     linux,default-trigger = "none";
+     default-state = "off";
+    };
+   };
+  };
+ };
+
+ fragment@3 {
+  target = <&dcan1>;
+  __overlay__ {
+   status = "okay";
+   pinctrl-names = "default";
+   pinctrl-0 = <&bb_dcan1_pins>;
+  };
+ };
+
+ fragment@4 {
+  target = <&uart4>;
+  __overlay__ {
+   status = "okay";
+   pinctrl-names = "default";
+   pinctrl-0 = <&bb_uart4_rs422_pins>;
+  };
+ };
+
+ fragment@5 {
+  target = <&ocp>;
+  __overlay__ {
+
+   P8_11_pinmux {
+    compatible = "bone-pinmux-helper";
+    status = "okay";
+    pinctrl-names = "default", "gpio", "pruout";
+    pinctrl-0 = <&P8_11_default_pin>;
+    pinctrl-1 = <&P8_11_gpio_pin>;
+    pinctrl-2 = <&P8_11_pruout_pin>;
+   };
+
+   P8_12_pinmux {
+    compatible = "bone-pinmux-helper";
+    status = "okay";
+    pinctrl-names = "default", "gpio", "pruout";
+    pinctrl-0 = <&P8_12_default_pin>;
+    pinctrl-1 = <&P8_12_gpio_pin>;
+    pinctrl-2 = <&P8_12_pruout_pin>;
+   };
+
+   P8_14_pinmux {
+    compatible = "bone-pinmux-helper";
+    status = "okay";
+    pinctrl-names = "default", "gpio";
+    pinctrl-0 = <&P8_14_default_pin>;
+    pinctrl-1 = <&P8_14_gpio_pin>;
+   };
+
+   P9_31_pinmux {
+    compatible = "bone-pinmux-helper";
+    status = "okay";
+    pinctrl-names = "default", "gpio", "pruin";
+    pinctrl-0 = <&P9_31_default_pin>;
+    pinctrl-1 = <&P9_31_gpio_pin>;
+    pinctrl-2 = <&P9_31_pruin_pin>;
+   };
+
+   P9_29_pinmux {
+    compatible = "bone-pinmux-helper";
+    status = "okay";
+    pinctrl-names = "default", "gpio", "pruin";
+    pinctrl-0 = <&P9_29_default_pin>;
+    pinctrl-1 = <&P9_29_gpio_pin>;
+    pinctrl-2 = <&P9_29_pruin_pin>;
+   };
+
+   P9_30_pinmux {
+    compatible = "bone-pinmux-helper";
+    status = "okay";
+    pinctrl-names = "default", "gpio", "pruin";
+    pinctrl-0 = <&P9_30_default_pin>;
+    pinctrl-1 = <&P9_30_gpio_pin>;
+    pinctrl-2 = <&P9_30_pruin_pin>;
+   };
+
+   P9_28_pinmux {
+    compatible = "bone-pinmux-helper";
+    status = "okay";
+    pinctrl-names = "default", "gpio", "pruin";
+    pinctrl-0 = <&P9_28_default_pin>;
+    pinctrl-1 = <&P9_28_gpio_pin>;
+    pinctrl-2 = <&P9_28_pruin_pin>;
+   };
+
+   P9_42_pinmux {
+    compatible = "bone-pinmux-helper";
+    status = "okay";
+    pinctrl-names = "default", "gpio";
+    pinctrl-0 = <&P9_42_default_pin>;
+    pinctrl-1 = <&P9_42_gpio_pin>;
+   };
+
+   P9_92_pinmux {
+    compatible = "bone-pinmux-helper";
+    status = "okay";
+    pinctrl-names = "default", "gpio", "pruin";
+    pinctrl-0 = <&P9_92_default_pin>;
+    pinctrl-1 = <&P9_92_gpio_pin>;
+    pinctrl-2 = <&P9_92_pruin_pin>;
+   };
+
+   P9_27_pinmux {
+    compatible = "bone-pinmux-helper";
+    status = "okay";
+    pinctrl-names = "default", "gpio", "pruin";
+    pinctrl-0 = <&P9_27_default_pin>;
+    pinctrl-1 = <&P9_27_gpio_pin>;
+    pinctrl-2 = <&P9_27_pruin_pin>;
+   };
+
+   P9_41_pinmux {
+    compatible = "bone-pinmux-helper";
+    status = "okay";
+    pinctrl-names = "default", "gpio", "pruin";
+    pinctrl-0 = <&P9_41_default_pin>;
+    pinctrl-1 = <&P9_41_gpio_pin>;
+    pinctrl-2 = <&P9_41_pruin_pin>;
+   };
+
+   P9_91_pinmux {
+    compatible = "bone-pinmux-helper";
+    status = "okay";
+    pinctrl-names = "default", "gpio", "pruin";
+    pinctrl-0 = <&P9_91_default_pin>;
+    pinctrl-1 = <&P9_91_gpio_pin>;
+    pinctrl-22= <&P9_91_pruin_pin>;
+   };
+
+   P9_25_pinmux {
+    compatible = "bone-pinmux-helper";
+    status = "okay";
+    pinctrl-names = "default", "gpio", "pruin";
+    pinctrl-0 = <&P9_25_default_pin>;
+    pinctrl-1 = <&P9_25_gpio_pin>;
+    pinctrl-2 = <&P9_25_pruin_pin>;
+   };
+  };
+ };
+
+ fragment@6 {
+  target = <&ocp>;
+  __overlay__ {
+   cape-bbim {
+    compatible = "gpio-of-helper";
+    status = "okay";
+    pinctrl-names = "default";
+    pinctrl-0 = <>;
+
+    P8_11 {
+     gpio-name = "P8_11";
+     gpio = <&gpio1 13 0>;
+     output;
+     init-low;
+    };
+
+    P8_12 {
+     gpio-name = "P8_12";
+     gpio = <&gpio1 12 0>;
+     output;
+     init-low;
+    };
+
+    P8_14 {
+     gpio-name = "P8_14";
+     gpio = <&gpio0 26 0>;
+     output;
+     init-low;
+    };
+
+    P9_31 {
+     gpio-name = "P9_31";
+     gpio = <&gpio3 14 0>;
+     input;
+    };
+
+    P9_29 {
+     gpio-name = "P9_29";
+     gpio = <&gpio3 15 0>;
+     input;
+    };
+
+
+    P9_30 {
+     gpio-name = "P9_30";
+     gpio = <&gpio3 16 0>;
+     input;
+    };
+
+    P9_28 {
+     gpio-name = "P9_28";
+     gpio = <&gpio3 17 0>;
+     input;
+    };
+
+    P9_42 {
+     gpio-name = "P9_42";
+     gpio = <&gpio0 7 0>;
+     input;
+    };
+
+    P9_92 {
+     gpio-name = "P9_92";
+     gpio = <&gpio3 18 0>;
+     input;
+    };
+
+
+    P9_27 {
+     gpio-name = "P9_27";
+     gpio = <&gpio3 19 0>;
+     input;
+    };
+
+    P9_41 {
+     gpio-name = "P9_41";
+     gpio = <&gpio0 20 0>;
+     input;
+    };
+
+    P9_91 {
+     gpio-name = "P9_91";
+     gpio = <&gpio3 20 0>;
+     input;
+    };
+
+    P9_25 {
+     gpio-name = "P9_25";
+     gpio = <&gpio3 21 0>;
+     input;
+    };
+
+    P9_17 {
+     gpio-name = "P9_17";
+     gpio = <&gpio0 5 0>;
+     output;
+     init-low;
+    };
+   };
+  };
+ };
+};

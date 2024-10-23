@@ -1,0 +1,4 @@
+M-BB-OSD3358-SM-RED-00A1.o: src/arm/M-BB-OSD3358-SM-RED-00A1.dts \
+ include/dt-bindings/gpio/gpio.h include/dt-bindings/pinctrl/am33xx.h \
+ include/dt-bindings/pinctrl/omap.h \
+ include/dt-bindings/board/am335x-bbw-bbb-base.h

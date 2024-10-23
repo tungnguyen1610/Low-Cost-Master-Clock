@@ -1,0 +1,3 @@
+BB-PWM-TIMER-P8.10.o: src/arm/BB-PWM-TIMER-P8.10.dts \
+ include/dt-bindings/gpio/gpio.h include/dt-bindings/pinctrl/am33xx.h \
+ include/dt-bindings/pinctrl/omap.h

@@ -1,0 +1,1 @@
+src/arm/BB-GPIO-HCSR04.dtbo: src/arm/.BB-GPIO-HCSR04.dtbo.dts.tmp

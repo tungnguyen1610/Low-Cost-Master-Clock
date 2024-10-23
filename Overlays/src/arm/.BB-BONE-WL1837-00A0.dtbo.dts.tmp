@@ -1,0 +1,243 @@
+# 1 "src/arm/BB-BONE-WL1837-00A0.dts"
+# 1 "<built-in>"
+# 1 "<command-line>"
+# 1 "src/arm/BB-BONE-WL1837-00A0.dts"
+
+
+
+
+
+/dts-v1/;
+/plugin/;
+
+# 1 "include/dt-bindings/board/am335x-bbw-bbb-base.h" 1
+# 10 "src/arm/BB-BONE-WL1837-00A0.dts" 2
+# 1 "include/dt-bindings/gpio/gpio.h" 1
+# 11 "src/arm/BB-BONE-WL1837-00A0.dts" 2
+# 1 "include/dt-bindings/pinctrl/am33xx.h" 1
+# 9 "include/dt-bindings/pinctrl/am33xx.h"
+# 1 "include/dt-bindings/pinctrl/omap.h" 1
+# 10 "include/dt-bindings/pinctrl/am33xx.h" 2
+# 12 "src/arm/BB-BONE-WL1837-00A0.dts" 2
+
+/ {
+
+
+
+ fragment@0 {
+  target-path="/";
+  __overlay__ {
+
+   chosen {
+    overlays {
+     BB-BONE-WL1837-00A1 = "Wed Jun 19 07:10:02 2024";
+    };
+   };
+  };
+ };
+
+
+
+
+ fragment@1 {
+  target = <&ocp>;
+  __overlay__ {
+   P9_21_pinmux { status = "disabled"; };
+
+   P8_21_pinmux { status = "disabled"; };
+   P8_20_pinmux { status = "disabled"; };
+   P8_25_pinmux { status = "disabled"; };
+   P8_24_pinmux { status = "disabled"; };
+   P8_05_pinmux { status = "disabled"; };
+   P8_06_pinmux { status = "disabled"; };
+
+   P9_22_pinmux { status = "disabled"; };
+   P9_42_pinmux { status = "disabled"; };
+   P8_26_pinmux { status = "disabled"; };
+   P8_07_pinmux { status = "disabled"; };
+   P9_15_pinmux { status = "disabled"; };
+
+   P9_26_pinmux { status = "disabled"; };
+   P9_24_pinmux { status = "disabled"; };
+   P9_20_pinmux { status = "disabled"; };
+   P9_19_pinmux { status = "disabled"; };
+
+   P9_17_pinmux { status = "disabled"; };
+   P9_18_pinmux { status = "disabled"; }; };
+ };
+
+ fragment@2 {
+  target = <&am33xx_pinmux>;
+  __overlay__ {
+
+   bt_pins_default: pinmux_bt_pins_default {
+    pinctrl-single,pins = <
+     0x154 (((1 << 4)) | 7)
+    >;
+   };
+
+   bt_pins_sleep: pinmux_bt_pins_sleep {
+    pinctrl-single,pins = <
+     0x154 (0 | 7)
+    >;
+   };
+
+   bb_mmc2_pins: pinmux_bb_mmc2_pins {
+     pinctrl-single,pins = <
+     0x080 (((1 << 5) | (1 << 4)) | 2)
+      0x084 (((1 << 5) | (1 << 4)) | 2)
+     0x000 (((1 << 5) | (1 << 4)) | 1)
+     0x004 (((1 << 5) | (1 << 4)) | 1)
+     0x008 (((1 << 5) | (1 << 4)) | 1)
+     0x00C (((1 << 5) | (1 << 4)) | 1)
+    >;
+   };
+
+   bb_mmc2_pins_sleep: pinmux_bb_mmc2_pins_sleep {
+    pinctrl-single,pins = <
+     0x080 (((1 << 5)) | 7)
+     0x084 (((1 << 5)) | 7)
+     0x000 (((1 << 5)) | 7)
+     0x004 (((1 << 5)) | 7)
+     0x008 (((1 << 5)) | 7)
+     0x00C (((1 << 5)) | 7)
+    >;
+   };
+
+
+   bb_wlan_pins: pinmux_bb_wlan_pins {
+    pinctrl-single,pins = <
+     0x150 (((1 << 4)) | 7)
+     0x164 (((1 << 5) | (1 << 4)) | 7)
+     0x07C (((1 << 4)) | 0)
+     0x090 (0 | 7)
+     0x040 (((1 << 4)) | 7)
+    >;
+   };
+
+
+   bb_wlan_pins_sleep: pinmux_bb_wlan_pins_sleep {
+    pinctrl-single,pins = <
+     0x150 (((1 << 4)) | 7)
+     0x164 (((1 << 5) | (1 << 4)) | 7)
+     0x07C (((1 << 4)) | 0)
+     0x090 (0 | 7)
+     0x040 (((1 << 4)) | 7)
+    >;
+   };
+
+   bb_uart1_pins_default: pinmux_bb_uart1_pins_default {
+    pinctrl-single,pins = <
+     0x180 ( ((1 << 5) | (1 << 3)) | 0 )
+     0x184 ( ((1 << 3)) | 0 )
+     0x178 ( ((1 << 5) | (1 << 3)) | 0 )
+     0x17C ( ((1 << 3)) | 0 )
+    >;
+   };
+
+   bb_uart1_pins_sleep: pinmux_bb_uart1_pins_sleep {
+    pinctrl-single,pins = <
+     0x180 ( ((1 << 5) | (1 << 3)) | 0 )
+     0x184 ( ((1 << 3)) | 0 )
+     0x178 ( ((1 << 5) | (1 << 3)) | 0 )
+     0x17C ( ((1 << 3)) | 0 )
+    >;
+   };
+
+   bb_i2c1_pins: pinmux_bb_i2c1_pins {
+    pinctrl-single,pins = <
+     0x15C (((1 << 5) | (1 << 4)) | 2)
+     0x158 (((1 << 5) | (1 << 4)) | 2)
+    >;
+   };
+  };
+ };
+
+ fragment@3 {
+  target-path="/";
+  __overlay__ {
+   wlan_en_reg: fixedregulator@1 {
+    compatible = "regulator-fixed";
+    regulator-name = "wlan-en-regulator";
+    regulator-min-microvolt = <1800000>;
+    regulator-max-microvolt = <1800000>;
+
+
+    gpio = <&gpio0 2 0>;
+
+
+    enable-active-high;
+   };
+  };
+ };
+
+ fragment@6 {
+  target = <&mmc2>;
+  __overlay__ {
+   status = "okay";
+   vmmc-supply = <&wlan_en_reg>;
+   bus-width = <4>;
+   pinctrl-names = "default", "sleep";
+   pinctrl-0 = <&bb_mmc2_pins &bb_wlan_pins>;
+   pinctrl-1 = <&bb_mmc2_pins_sleep &bb_wlan_pins_sleep>;
+   ti,non-removable;
+   ti,needs-special-hs-handling;
+   cap-power-off-card;
+   keep-power-in-suspend;
+
+   #address-cells = <1>;
+   #size-cells = <0>;
+   wlcore: wlcore@0 {
+    compatible = "ti,wl1837";
+    reg = <2>;
+    interrupt-parent = <&gpio0>;
+    interrupts = <7 1 >;
+   };
+  };
+ };
+
+ fragment@7 {
+  target = <&i2c2>;
+  __overlay__ {
+   status = "disabled";
+  };
+ };
+
+ fragment@8 {
+  target = <&uart1>;
+  __overlay__ {
+   pinctrl-names = "default", "sleep";
+   pinctrl-0 = <&bb_uart1_pins_default &bt_pins_default>;
+   pinctrl-1 = <&bb_uart1_pins_sleep &bt_pins_sleep>;
+   status = "okay";
+  };
+ };
+
+ fragment@9 {
+  target = <&gpio1>;
+  __overlay__ {
+   emmc_rst {
+    gpio-hog;
+    gpios = <20 0>;
+    output-low;
+    line-name = "emmc_resetN";
+   };
+   eeprom_en {
+    gpio-hog;
+    gpios = <16 0>;
+    output-high;
+    line-name = "eeprom_enable";
+   };
+  };
+ };
+
+ fragment@10 {
+  target = <&i2c1>;
+  __overlay__ {
+   pinctrl-names = "default";
+   pinctrl-0 = <&bb_i2c1_pins>;
+   status = "okay";
+   clock-frequency = <400000>;
+  };
+ };
+};

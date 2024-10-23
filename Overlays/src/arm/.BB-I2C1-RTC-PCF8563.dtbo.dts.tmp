@@ -1,0 +1,70 @@
+# 1 "src/arm/BB-I2C1-RTC-PCF8563.dts"
+# 1 "<built-in>"
+# 1 "<command-line>"
+# 1 "src/arm/BB-I2C1-RTC-PCF8563.dts"
+
+
+
+
+
+/dts-v1/;
+/plugin/;
+
+# 1 "include/dt-bindings/pinctrl/am33xx.h" 1
+# 9 "include/dt-bindings/pinctrl/am33xx.h"
+# 1 "include/dt-bindings/pinctrl/omap.h" 1
+# 10 "include/dt-bindings/pinctrl/am33xx.h" 2
+# 10 "src/arm/BB-I2C1-RTC-PCF8563.dts" 2
+# 1 "include/dt-bindings/gpio/gpio.h" 1
+# 11 "src/arm/BB-I2C1-RTC-PCF8563.dts" 2
+
+
+
+
+&{/chosen} {
+ overlays {
+  BB-I2C1-RTC-PCF8563.bb.org-overlays = "Wed Jun 19 07:10:02 2024";
+ };
+};
+
+
+
+
+&ocp {
+ P9_17_pinmux { status = "disabled"; };
+ P9_18_pinmux { status = "disabled"; };
+};
+
+&{/} {
+ aliases {
+  rtc0 = &extrtc;
+
+  rtc1 = "/ocp/rtc@44e3e000";
+ };
+};
+
+&am33xx_pinmux {
+ bb_i2c1_pins: pinmux_bb_i2c1_pins {
+  pinctrl-single,pins = <
+   ((((0x958)) & 0xffff) - (0x0800)) (((1 << 6) | ((1 << 5) | (1 << 4))) | (2))
+   ((((0x95c)) & 0xffff) - (0x0800)) (((1 << 6) | ((1 << 5) | (1 << 4))) | (2))
+  >;
+ };
+};
+
+&i2c1 {
+ status = "okay";
+ pinctrl-names = "default";
+ pinctrl-0 = <&bb_i2c1_pins>;
+
+ clock-frequency = <100000>;
+
+ #address-cells = <1>;
+ #size-cells = <0>;
+
+ extrtc: pcf8563@51 {
+  status = "okay";
+  compatible = "nxp,pcf8563";
+  reg = <0x51>;
+ };
+};

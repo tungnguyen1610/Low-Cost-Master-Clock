@@ -1,0 +1,147 @@
+# 1 "src/arm/bb-justboom-amp-00A0.dts"
+# 1 "<built-in>"
+# 1 "<command-line>"
+# 1 "src/arm/bb-justboom-amp-00A0.dts"
+# 9 "src/arm/bb-justboom-amp-00A0.dts"
+/dts-v1/;
+/plugin/;
+
+/ {
+
+
+
+ fragment@0 {
+  target-path="/";
+  __overlay__ {
+
+   chosen {
+    overlays {
+     bb-justboom-amp-00A0 = "Wed Jun 19 07:10:02 2024";
+    };
+   };
+  };
+ };
+
+
+
+
+ fragment@1 {
+  target = <&ocp>;
+  __overlay__ {
+   P9_18_pinmux { status = "disabled"; };
+   P9_17_pinmux { status = "disabled"; };
+
+   P9_25_pinmux { status = "disabled"; };
+   P9_28_pinmux { status = "disabled"; };
+   P9_29_pinmux { status = "disabled"; };
+   P9_31_pinmux { status = "disabled"; };
+  };
+ };
+
+ fragment@2 {
+  target = <&am33xx_pinmux>;
+  __overlay__ {
+
+   i2c1_pins: pinmux_i2c1_pins {
+    pinctrl-single,pins = <
+     0x158 0x72
+     0x15c 0x72
+    >;
+   };
+
+   bone_audio_cape_audio_pins: pinmux_bone_audio_cape_audio_pins {
+    pinctrl-single,pins = <
+     0x1ac 0x20
+     0x19c 0x02
+     0x194 0x00
+     0x190 0x00
+     0x06c 0x07
+    >;
+   };
+  };
+ };
+
+ fragment@3 {
+  target = <&i2c1>;
+  __overlay__ {
+   #address-cells = <1>;
+   #size-cells = <0>;
+   clock-frequency = <100000>;
+   status = "okay";
+   pinctrl-names = "default";
+   pinctrl-0 = <&i2c1_pins>;
+
+   pcm5122: pcm5122@4d {
+    compatible = "ti,pcm5122";
+    reg = <0x4d>;
+
+
+
+    status = "okay";
+   };
+  };
+ };
+
+ fragment@4 {
+  target = <&mcasp0>;
+  __overlay__ {
+   pinctrl-names = "default";
+   pinctrl-0 = <&bone_audio_cape_audio_pins>;
+
+   status = "okay";
+
+   op-mode = <0>;
+   tdm-slots = <2>;
+   num-serializer = <16>;
+   serial-dir = <
+    0 0 1 0
+    0 0 0 0
+    0 0 0 0
+    0 0 0 0
+   >;
+   tx-num-evt = <1>;
+   rx-num-evt = <1>;
+  };
+ };
+
+ fragment@5 {
+  target = <&ocp>;
+  __overlay__ {
+
+   clk_48k_rate: clk_48k_rate {
+    #clock-cells = <0>;
+    compatible = "fixed-clock";
+    clock-frequency = <24576000>;
+   };
+
+   clk_44k1_rate: clk_44k1_rate {
+    #clock-cells = <0>;
+    compatible = "fixed-clock";
+    clock-frequency = <11289600>;
+   };
+
+   clk_48k_rate_master: clk_48k_rate_master {
+    #clock-cells = <0>;
+    compatible = "gpio-gate-clock";
+    clocks = <&clk_48k_rate>;
+    enable-gpios = <&gpio1 27 0>;
+   };
+
+   sound {
+    compatible = "justboom,justboom-dac";
+    model = "bb_justboom_amp";
+    audio-codec = <&pcm5122>;
+    mcasp-controller = <&mcasp0>;
+    clocks = <&clk_48k_rate_master &clk_44k1_rate>;
+    clock-names = "mclk_48k", "mclk_44k1";
+    clk-44k1-rate-en-gpio = <6>;
+    led-gpio = <4>;
+    24db_digital_gain = "justboom,24db_digital_gain?";
+   };
+  };
+ };
+
+
+
+
+};

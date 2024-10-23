@@ -1,0 +1,4 @@
+PB-PWM-RGB-TECHLAB-CAPE.o: src/arm/PB-PWM-RGB-TECHLAB-CAPE.dts \
+ include/dt-bindings/gpio/gpio.h include/dt-bindings/pinctrl/am33xx.h \
+ include/dt-bindings/pinctrl/omap.h \
+ include/dt-bindings/interrupt-controller/irq.h

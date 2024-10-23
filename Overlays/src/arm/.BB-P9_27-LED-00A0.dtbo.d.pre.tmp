@@ -1,0 +1,4 @@
+BB-P9_27-LED-00A0.o: src/arm/BB-P9_27-LED-00A0.dts \
+ include/dt-bindings/board/am335x-bbw-bbb-base.h \
+ include/dt-bindings/gpio/gpio.h include/dt-bindings/pinctrl/am33xx.h \
+ include/dt-bindings/pinctrl/omap.h

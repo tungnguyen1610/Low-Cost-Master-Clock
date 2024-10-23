@@ -1,0 +1,163 @@
+# 1 "src/arm/GHI-TH-NH43R-00A0.dts"
+# 1 "<built-in>"
+# 1 "<command-line>"
+# 1 "src/arm/GHI-TH-NH43R-00A0.dts"
+# 10 "src/arm/GHI-TH-NH43R-00A0.dts"
+/dts-v1/;
+/plugin/;
+
+# 1 "include/dt-bindings/gpio/gpio.h" 1
+# 14 "src/arm/GHI-TH-NH43R-00A0.dts" 2
+# 1 "include/dt-bindings/pinctrl/am33xx.h" 1
+# 9 "include/dt-bindings/pinctrl/am33xx.h"
+# 1 "include/dt-bindings/pinctrl/omap.h" 1
+# 10 "include/dt-bindings/pinctrl/am33xx.h" 2
+# 15 "src/arm/GHI-TH-NH43R-00A0.dts" 2
+# 1 "include/dt-bindings/board/am335x-bbw-bbb-base.h" 1
+# 16 "src/arm/GHI-TH-NH43R-00A0.dts" 2
+
+/ {
+
+
+
+ fragment@0 {
+  target-path="/";
+  __overlay__ {
+
+   chosen {
+    overlays {
+     GHI-TH-NH43R-00A0 = "Wed Jun 19 07:10:02 2024";
+    };
+   };
+  };
+ };
+
+
+
+
+ fragment@1 {
+  target = <&ocp>;
+  __overlay__ {
+   P8_45_pinmux { status = "disabled"; };
+   P8_46_pinmux { status = "disabled"; };
+   P8_43_pinmux { status = "disabled"; };
+   P8_44_pinmux { status = "disabled"; };
+   P8_41_pinmux { status = "disabled"; };
+   P8_42_pinmux { status = "disabled"; };
+   P8_39_pinmux { status = "disabled"; };
+   P8_40_pinmux { status = "disabled"; };
+   P8_37_pinmux { status = "disabled"; };
+   P8_38_pinmux { status = "disabled"; };
+   P8_36_pinmux { status = "disabled"; };
+   P8_34_pinmux { status = "disabled"; };
+   P8_35_pinmux { status = "disabled"; };
+   P8_33_pinmux { status = "disabled"; };
+   P8_31_pinmux { status = "disabled"; };
+   P8_32_pinmux { status = "disabled"; };
+
+   P8_27_pinmux { status = "disabled"; };
+   P8_29_pinmux { status = "disabled"; };
+   P8_28_pinmux { status = "disabled"; };
+   P8_30_pinmux { status = "disabled"; };
+  };
+ };
+
+ fragment@2 {
+  target = <&am33xx_pinmux>;
+  __overlay__ {
+   ghi_lcd_pins: pinmux_ghi_lcd_pins {
+    pinctrl-single,pins = <
+     0x0A0 (((1 << 3)) | 0)
+     0x0A4 (((1 << 3)) | 0)
+     0x0A8 (((1 << 3)) | 0)
+     0x0AC (((1 << 3)) | 0)
+     0x0B0 (((1 << 3)) | 0)
+     0x0B4 (((1 << 3)) | 0)
+     0x0B8 (((1 << 3)) | 0)
+     0x0BC (((1 << 3)) | 0)
+     0x0C0 (((1 << 3)) | 0)
+     0x0C4 (((1 << 3)) | 0)
+     0x0C8 (((1 << 3)) | 0)
+     0x0CC (((1 << 3)) | 0)
+     0x0D0 (((1 << 3)) | 0)
+     0x0D4 (((1 << 3)) | 0)
+     0x0D8 (((1 << 3)) | 0)
+     0x0DC (((1 << 3)) | 0)
+
+     0x0E0 (((1 << 3)) | 0)
+     0x0E4 (((1 << 3)) | 0)
+     0x0E8 (((1 << 3)) | 0)
+     0x0EC (((1 << 3)) | 0)
+    >;
+   };
+  };
+ };
+
+ fragment@3 {
+  target = <&lcdc>;
+  __overlay__ {
+   status = "okay";
+  };
+ };
+
+ fragment@4 {
+  target-path="/";
+  __overlay__ {
+   panel {
+    status = "okay";
+    compatible = "ti,tilcdc,panel";
+    pinctrl-names = "default";
+    pinctrl-0 = <&ghi_lcd_pins>;
+    panel-info {
+     ac-bias = <255>;
+     ac-bias-intrpt = <0>;
+     dma-burst-sz = <16>;
+     bpp = <16>;
+     fdd = <0x80>;
+     tft-alt-mode = <0>;
+     stn-565-mode = <0>;
+     mono-8bit-mode = <0>;
+     sync-edge = <0>;
+     sync-ctrl = <1>;
+     raster-order = <0>;
+     fifo-th = <0>;
+    };
+    display-timings {
+     native-mode = <&timing0>;
+     timing0: 480x272 {
+      clock-frequency = <20000000>;
+      hactive = <480>;
+      vactive = <272>;
+      hfront-porch = <9>;
+      hback-porch = <2>;
+      hsync-len = <41>;
+      vback-porch = <2>;
+      vfront-porch = <2>;
+      vsync-len = <10>;
+      hsync-active = <0>;
+      vsync-active = <0>;
+     };
+    };
+   };
+  };
+ };
+
+ fragment@5 {
+  target = <&tscadc>;
+  __overlay__ {
+
+   status = "okay";
+   tsc {
+    ti,wires = <4>;
+    ti,x-plate-resistance = <200>;
+    ti,coordinate-readouts = <5>;
+    ti,wire-config = <0x00 0x11 0x22 0x33>;
+    ti,charge-delay = <0x400>;
+   };
+
+   adc {
+    ti,adc-channels = <4 5 6 7>;
+   };
+  };
+ };
+};

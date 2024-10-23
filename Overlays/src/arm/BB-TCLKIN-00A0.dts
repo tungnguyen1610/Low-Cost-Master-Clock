@@ -1,0 +1,41 @@
+// SPDX-License-Identifier: GPL-2.0-only
+/*
+ * Copyright (C) 2013 CircuitCo
+ * Virtual cape for UART1 on connector pins P9.24 P9.26
+ */
+
+/dts-v1/;
+/plugin/;
+
+#include <dt-bindings/pinctrl/am33xx.h>
+
+/*
+ * Helper to show loaded overlays under: /proc/device-tree/chosen/overlays/
+ */
+&{/chosen} {
+	overlays {
+		BB-UART1-00A0.bb.org-overlays = __TIMESTAMP__;
+	};
+};
+
+/*
+ * Free up the pins used by the cape from the pinmux helpers.
+ */
+&ocp {
+	P9_41_pinmux { status = "disabled"; };	/* uart1_txd */
+};
+
+&am33xx_pinmux {
+	bb_uart1_pins: pinmux_bb_uart1_pins {
+		pinctrl-single,pins = <
+								AM33XX_IOPAD(0x09B4,PIN_OUTPUT_PULLUP | INPUT_EN | MUX_MODE2)	/* xdma_event_intr1.timer7 */
+		>;
+	};
+};
+
+&uart1 {
+	/* sudo agetty 115200 ttyS1 */
+	status = "okay";
+	pinctrl-names = "default";
+	pinctrl-0 = <&bb_uart1_pins>;
+};

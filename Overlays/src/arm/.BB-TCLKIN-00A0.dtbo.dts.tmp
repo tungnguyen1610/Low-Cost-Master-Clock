@@ -1,0 +1,49 @@
+# 1 "src/arm/BB-TCLKIN-00A0.dts"
+# 1 "<built-in>"
+# 1 "<command-line>"
+# 1 "src/arm/BB-TCLKIN-00A0.dts"
+
+
+
+
+
+
+/dts-v1/;
+/plugin/;
+
+# 1 "include/dt-bindings/pinctrl/am33xx.h" 1
+# 9 "include/dt-bindings/pinctrl/am33xx.h"
+# 1 "include/dt-bindings/pinctrl/omap.h" 1
+# 10 "include/dt-bindings/pinctrl/am33xx.h" 2
+# 11 "src/arm/BB-TCLKIN-00A0.dts" 2
+
+
+
+
+&{/chosen} {
+ overlays {
+  BB-UART1-00A0.bb.org-overlays = "Wed Jun 19 08:41:14 2024";
+ };
+};
+
+
+
+
+&ocp {
+ P9_41_pinmux { status = "disabled"; };
+};
+
+&am33xx_pinmux {
+ bb_uart1_pins: pinmux_bb_uart1_pins {
+  pinctrl-single,pins = <
+        ((((0x09B4)) & 0xffff) - (0x0800)) (((1 << 4)) | (1 << 5) | 2)
+  >;
+ };
+};
+
+&uart1 {
+
+ status = "okay";
+ pinctrl-names = "default";
+ pinctrl-0 = <&bb_uart1_pins>;
+};

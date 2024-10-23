@@ -1,0 +1,4 @@
+BEAGLEBOY-0013.o: src/arm/BEAGLEBOY-0013.dts \
+ include/dt-bindings/gpio/gpio.h include/dt-bindings/pinctrl/am33xx.h \
+ include/dt-bindings/pinctrl/omap.h \
+ include/dt-bindings/board/am335x-bbw-bbb-base.h

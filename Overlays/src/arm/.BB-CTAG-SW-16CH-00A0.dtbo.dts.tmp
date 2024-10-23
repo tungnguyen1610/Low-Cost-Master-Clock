@@ -1,0 +1,170 @@
+# 1 "src/arm/BB-CTAG-SW-16CH-00A0.dts"
+# 1 "<built-in>"
+# 1 "<command-line>"
+# 1 "src/arm/BB-CTAG-SW-16CH-00A0.dts"
+
+
+
+
+
+
+
+/dts-v1/;
+/plugin/;
+
+/ {
+
+
+
+ fragment@0 {
+  target-path="/";
+  __overlay__ {
+
+   chosen {
+    overlays {
+     BB-CTAG-SW-16CH-00A0 = "Wed Jun 19 07:10:02 2024";
+    };
+   };
+  };
+ };
+
+
+
+
+ fragment@1 {
+  target = <&ocp>;
+  __overlay__ {
+   P9_30_pinmux { status = "disabled"; };
+   P9_28_pinmux { status = "disabled"; };
+   P9_31_pinmux { status = "disabled"; };
+   P9_29_pinmux { status = "disabled"; };
+   P9_12_pinmux { status = "disabled"; };
+   P9_27_pinmux { status = "disabled"; };
+   P9_25_pinmux { status = "disabled"; };
+   P8_32_pinmux { status = "disabled"; };
+   P8_33_pinmux { status = "disabled"; };
+   P8_14_pinmux { status = "disabled"; };
+   P8_17_pinmux { status = "disabled"; };
+   P8_31_pinmux { status = "disabled"; };
+  };
+ };
+
+ fragment@2 {
+  target = <&am33xx_pinmux>;
+  __overlay__ {
+   mcasp0_pins: pinmix_mcasp0_pins {
+    pinctrl-single,pins = <
+     0x1ac 0x20
+     0x19c 0x02
+     0x194 0x20
+     0x190 0x20
+     0x1a4 0x20
+     0x078 0x26
+     0x198 0x20
+    >;
+   };
+
+   audiocard_spi_pins: pinmux_audiocard_spi_pins {
+    pinctrl-single,pins = <
+     0x0DC 0x37
+     0x028 0x37
+     0x0D4 0x17
+     0x02C 0x17
+     0x0D8 0x17
+    >;
+   };
+  };
+ };
+
+ fragment@3 {
+  target = <&spi_gpio>;
+  __overlay__ {
+   pinctrl-names = "default";
+   pinctrl-0 = <&audiocard_spi_pins>;
+   status = "okay";
+
+
+   #address-cells = <1>;
+   #size-cells = <0>;
+
+   ad193x_master: ad193x@0{
+    #address-cells = <1>;
+    #size-cells = <0>;
+
+    compatible = "analog,ad1938";
+
+    reg = <0>;
+    spi-max-frequency = <100000>;
+   };
+
+   ad193x_aux: ad193x@1{
+    #address-cells = <1>;
+    #size-cells = <0>;
+
+    compatible = "analog,ad1938-dc";
+
+    reg = <1>;
+    spi-max-frequency = <100000>;
+   };
+  };
+ };
+
+ fragment@4 {
+  target = <&mcasp0>;
+  __overlay__ {
+   pinctrl-names = "default";
+   pinctrl-0 = <&mcasp0_pins>;
+
+   status = "okay";
+
+   op-mode = <0>;
+   tdm-slots = <16>;
+   num-serializer = <16>;
+   serial-dir = <
+    2 0 1 0
+    0 0 0 0
+    0 0 0 0
+    0 0 0 0
+   >;
+   tx-num-evt = <1>;
+   rx-num-evt = <1>;
+  };
+ };
+
+ fragment@5 {
+  target = <&ocp>;
+  __overlay__ {
+
+   sound {
+    compatible = "ctag,face-2-4";
+    model = "CTAG face-2-4 16CH";
+    audio-codec = <&ad193x_master>;
+    audio-codec-aux = <&ad193x_aux>;
+    mcasp-controller = <&mcasp0>;
+    audiocard-tdm-slots = <16>;
+    codec-clock-rate = <24576000>;
+    cpu-clock-rate = <24576000>;
+    audio-codec-bit-delay-dac = <1>;
+    audio-codec-bit-delay-adc = <1>;
+    audio-codec-aux-bit-delay-dac = <1>;
+    audio-codec-aux-bit-delay-adc = <1>;
+    mcasp-controller-bit-delay-tx = <1>;
+    mcasp-controller-bit-delay-rx = <1>;
+    bb-device = <0>;
+    audio-routing =
+     "Line Out", "DAC1OUT",
+     "Line Out", "DAC2OUT",
+     "Line Out", "DAC3OUT",
+     "Line Out", "DAC4OUT",
+
+
+
+
+     "ADC1IN", "Line In",
+     "ADC2IN", "Line In",
+     "ADC3IN", "Line In",
+     "ADC4IN", "Line In";
+   };
+  };
+ };
+};

@@ -1,0 +1,58 @@
+# 1 "src/arm/PB-UART4-GNSS-4-CLICK.dts"
+# 1 "<built-in>"
+# 1 "<command-line>"
+# 1 "src/arm/PB-UART4-GNSS-4-CLICK.dts"
+# 12 "src/arm/PB-UART4-GNSS-4-CLICK.dts"
+/dts-v1/;
+/plugin/;
+
+# 1 "include/dt-bindings/gpio/gpio.h" 1
+# 16 "src/arm/PB-UART4-GNSS-4-CLICK.dts" 2
+# 1 "include/dt-bindings/pinctrl/am33xx.h" 1
+# 9 "include/dt-bindings/pinctrl/am33xx.h"
+# 1 "include/dt-bindings/pinctrl/omap.h" 1
+# 10 "include/dt-bindings/pinctrl/am33xx.h" 2
+# 17 "src/arm/PB-UART4-GNSS-4-CLICK.dts" 2
+# 1 "include/dt-bindings/interrupt-controller/irq.h" 1
+# 18 "src/arm/PB-UART4-GNSS-4-CLICK.dts" 2
+
+/ {
+
+
+
+ fragment@0 {
+  target-path="/";
+  __overlay__ {
+
+   chosen {
+    overlays {
+     PB-UART4-GNSS-4-CLICK = "Wed Jun 19 07:10:02 2024";
+    };
+   };
+  };
+ };
+
+
+
+
+ fragment@1 {
+  target = <&ocp>;
+  __overlay__ {
+   P1_04_pinmux { status = "disabled"; };
+   P2_05_pinmux { status = "disabled"; };
+   P2_07_pinmux { status = "disabled"; };
+  };
+ };
+
+ fragment@2 {
+  target = <&uart4>;
+  __overlay__ {
+   status = "okay";
+   pinctrl-names = "default";
+   pinctrl-0 = <
+    &P2_05_uart_pin
+    &P2_07_uart_pin
+   >;
+  };
+ };
+};

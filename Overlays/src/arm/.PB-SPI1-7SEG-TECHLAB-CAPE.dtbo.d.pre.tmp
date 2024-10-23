@@ -1,0 +1,4 @@
+PB-SPI1-7SEG-TECHLAB-CAPE.o: src/arm/PB-SPI1-7SEG-TECHLAB-CAPE.dts \
+ include/dt-bindings/gpio/gpio.h include/dt-bindings/pinctrl/am33xx.h \
+ include/dt-bindings/pinctrl/omap.h \
+ include/dt-bindings/interrupt-controller/irq.h
