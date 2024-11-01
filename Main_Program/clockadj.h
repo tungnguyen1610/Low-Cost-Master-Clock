@@ -1,3 +1,4 @@
+// Reference: https://github.com/nwtime/linuxptp/blob/master/clockadj.h 
 /**
  * @file clockadj.h
  * @brief Wraps clock_adjtime functionality.
