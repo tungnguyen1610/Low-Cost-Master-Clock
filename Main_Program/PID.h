@@ -27,6 +27,9 @@ int PIController_Update(PIController *pid, long setpoint, long measurement);
 void setAdaptiveTunning (PIController *pid, double valueKp,double valueKi);
 void setAdaptiveTunningPHC (PIController *pid, double valueMin,double valueMax);
 double PIController_Update_PHC(PIController *pid, long setpoint, long offset);
+/*
+Function to wrtie value to I2C bus
+*/
 void write_DAC (int fd,uint16_t value);
 #ifdef __cplusplus
 }
