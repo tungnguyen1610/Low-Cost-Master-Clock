@@ -86,23 +86,18 @@ void setuptimer()
 
 #define CPTS_IDVER_REG 0x4A100C00            // CPTS Identification and Version Register
 #define CPTS_CONTROL_REG 0x4A100C04          // Time Sync Control Register
-//#define CPTS_RFTCLK_SEL_REG 0x4603D008       // Reference Clock Select Register
 #define CPTS_TS_PUSH_REG 0x4A100C0C          // Time Stamp Event Push Register
 #define CPTS_TS_LOAD_VAL_REG 0x4A100C10      // Time Stamp Load Low Value (lower 32-bits) Register
 #define CPTS_TS_LOAD_EN_REG 0x4A100C14       // Time Stamp Load Enable Register
-//#define CPTS_TS_COMP_VAL_REG 0x4603D018      // Time Stamp Comparison Low Value (lower 32-bits) Register
-//#define CPTS_TS_COMP_LEN_REG 0x4603D01C      // Time Stamp Comparison Length Register
 #define CPTS_INTSTAT_RAW_REG 0x4A100C20      // Interrupt Status Raw Register
 #define CPTS_INTSTAT_MASKED_REG 0x4A100C24   // Interrupt Status Masked Register
 #define CPTS_INT_ENABLE_REG 0x4A100C28       // Interrupt Enable Register Register
-//#define CPTS_TS_COMP_NUDGE_REG 0x4603D02C    // Time Stamp Comparison Nudge Value Register
 #define CPTS_EVENT_POP_REG 0x4A100C30        // Event Interrupt Pop Register
 #define CPTS_EVENT_0_REG 0x4A100C34          // Lower 32-bits of the Event Value Registersize_t length= (size_t)PAGE_SIZE;
 #define CPTS_EVENT_1_REG 0x4A100C38          // Lower Middle 32-bits of the Event Value Register    
 
 int main()
 {
-
     setuptimer();
     for (int i=0;i<5;i++)
     {
@@ -153,8 +148,7 @@ int main()
     uint32_t preCapture=0;
 
 // CPTS configuration
-   
-   volatile uint32_t *cpts_Base=(uint32_t*) mmap(NULL, 0x1000, PROT_READ|PROT_WRITE, MAP_SHARED, mem_fd, 0x4A100000 );
+    volatile uint32_t *cpts_Base=(uint32_t*) mmap(NULL, 0x1000, PROT_READ|PROT_WRITE, MAP_SHARED, mem_fd, 0x4A100000 );
     if (cpts_Base == MAP_FAILED)
     {
         printf("Map fail");
@@ -180,49 +174,19 @@ int main()
     {   
         if(timer6_map[IRQSTATUS/4]!=0)
         {
-                   timer6_map[0x4C/4]= timer6_map[TCAR1_OFFSET/4]+10000005;       
-//                            timer6_map[0x4C/4]= preCapture+10000010;
-          cout <<"TCAR register:"<<timer6_map[TCAR1_OFFSET/4]<<endl;
-          cout << "TMAR register:" <<timer6_map[0x4C/4]<<endl;
-      //  clockadj_step(clkid,-50000);
-          // set PHC value = system clock initially.
-     //  timer6_map[0x4C/4]= timer6_map[TCAR1_OFFSET/4]+0xF00;
-//	cout << "Event low register:"<<cpts_Base[0xC34/4]<<endl;
- //       cout << "Event high register:"<<cpts_Base[0xC38/4]<<endl;
-//        memset(&phc_time, 0, sizeof(phc_time));
-//	clock_gettime(clkid,&phc_time);
-//	clock_gettime(CLOCK_REALTIME, &current_time);
-//         myfile << current_time.tv_sec << "." << std::setw(9) << std::setfill('0') << current_time.tv_nsec << ",";
-//        myfile << phc_time.tv_sec << "." << std::setw(9) << std::setfill('0') << phc_time.tv_nsec << "\n";
-      //  myfile << "0x" << hex << setw(8) << setfill('0') << 0 << ",";
-      //  myfile << "0x" << hex << setw(8) << setfill('0') << 0 << "\n";
-    //    printf("Current Timestamp: %02d:%02d:%02d\n", ptm->tm_hour, ptm->tm_min, ptm->tm_sec);
-    //    cout << "captured counter value on previous PPS :"<<hex<< preCapture <<endl ;
-    //    cout << "captured counter value on first transition:"<<hex<< timer6_map[TCAR1_OFFSET/4]<<endl ;
-//        cout << "captured counter value on second transition:"<<hex<< timer6_map[TCAR2_OFFSET/4]<<endl;
-         int cycle = timer6_map[TCAR1_OFFSET/4] - preCapture; 
-        cout << "Event low register:"<<cpts_Base[0xC34/4]<<endl;
-        cout << "Event high register:"<<cpts_Base[0xC38/4]<<endl;   
-    // myfile << ptm->tm_hour << ":" << ptm->tm_min << ":" << ptm->tm_sec << ","
-        //       << timer6_map[TCAR1_OFFSET/4] << "," << timer6_map[TCAR2_OFFSET/4] <<","<<cycle <<","<<(offset+result)<<"\n";
-      //  myfile << ptm->tm_hour << ":" << ptm->tm_min << ":" << ptm->tm_sec << ","
-      //          << preCapture<< "," << timer6_map[TCAR1_OFFSET/4] <<","<<cycle <<","<<(offset+result)<<"\n";
-  
         printf("Counter value: %d\n", cycle);
         // add element error value  to buffer
         recent_value.add(cycle-10000000);
         recent_value.printBuffer();
-
- 
-     	myfile.flush();
+	myfile.flush();
         // switching between fast and slow controller 
-         if (recent_value.allValuesSame())
+        if (recent_value.allValuesSame())
         {
            cout <<"the same"<<endl;
            setAdaptiveTunning(&pid,0.5,0.1);
         }
         else
-       {
+       	{
 	   if (abs(cycle-10000000)>1)
            {
                cout <<"not same,fast controller" <<endl;
@@ -230,56 +194,16 @@ int main()
 	   }
            else
            {
-                 cout<<"notsame,slow controller" <<endl;
+	     cout<<"notsame,slow controller" <<endl;
              setAdaptiveTunning(&pid,0.7,0.3);
-            }
+           }
         }
         cout<<pid.Kp<<","<<pid.Ki<<endl; 
         result=PIController_Update(&pid,setpoint,cycle);
 	printf("PID out value:%d\n",offset+result);
         write_DAC(file,offset+result);
-/*
-        if ( phc_time.tv_nsec < 500000000 )
-        {setpointPHC=0;
-	diff=phc_time.tv_nsec;
-	} 
-        else 
-	{
-        setpointPHC=1000000000;
-	diff=-setpointPHC+phc_time.tv_nsec;        
-        }
-	temp=diff;
-	if (abs(temp) > 10000)
-	{
-	if (temp > 0)
-              {temp=10000;}
-	else
-              {temp=-10000;}
-        }
-        recent_value_PHC.add(temp);
-      //  recent_value_PHC.printBuffer();
-      //  printf ("Average offset:%f\n", recent_value_PHC.calculateAverage());
-	clockadj_step(clkid,-50000-recent_value_PHC.calculateAverage());
-
-             setAdaptiveTunning(&pid_PHC,0.7,0.3);
-                setAdaptiveTunningPHC(&pid_PHC,-1000,1000);
-        //       cout<<"PHC value Kp,Ki:" << pid_PHC.Kp<<","<<pid_PHC.Ki<<endl; 
- 
-        resultPHC= PIController_Update_PHC(&pid_PHC,0,diff); 
-  //      myfile<< resultPHC << "\n";
-     //   printf ("Adjusted frequency:%lf\n",resultPHC);
-       clockadj_set_freq(clkid,resultPHC);
-      //  clockadj_step(clkid,-50000);
-	/*
-        value=do_freq(clkid, resultPHC);
-        if (value < 0) {
-        fprintf(stderr, "Failed to adjust the frequency\n");
-        } else {
-        printf("Frequency adjustment completed successfully.\n");
- 	}
-*/
         preCapture=timer6_map[TCAR1_OFFSET/4];
-	        cout <<"Status register:" <<timer6_map[IRQSTATUS/4]<<endl;
+	cout <<"Status register:" <<timer6_map[IRQSTATUS/4]<<endl;
         timer6_map[IRQSTATUS/4] |=0x4;
         cout <<"Status register:" <<timer6_map[IRQSTATUS/4]<<endl;
 	}
