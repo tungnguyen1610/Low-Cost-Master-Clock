@@ -12,10 +12,8 @@ int do_freq(clockid_t clkid, double ppb)
                 fprintf(stderr, "failed to adjust the clock: %s\n", strerror(errno));
         return -2;
     }
-
     /* Initialize the clock adjustment (if needed) */
     clockadj_init(clkid);
-
     /* Set the frequency adjustment */
     clockadj_set_freq(clkid, ppb);
     printf("adjusted clock frequency offset to %lfppb\n",ppb);
@@ -38,7 +36,6 @@ void double_to_timespec(double d, struct timespec *ts)
 void do_set(clockid_t clkid,long custom_nsec)
 {
     struct timespec ts;
-
     memset(&ts, 0, sizeof(ts));
 
     /* Get the current time from CLOCK_REALTIME */
