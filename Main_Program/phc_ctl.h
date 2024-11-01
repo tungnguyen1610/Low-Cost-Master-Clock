@@ -1,8 +1,6 @@
 #ifndef PHC_CONTROL_H
 #define PHC_CONTROL_H
-
 #include <time.h>
-
 /* Define limits for frequency adjustment */
 #define NSEC2SEC 1000000000.0  // For converting nanoseconds to seconds
 #ifdef __cplusplus
