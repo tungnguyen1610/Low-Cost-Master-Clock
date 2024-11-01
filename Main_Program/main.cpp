@@ -51,13 +51,12 @@ void setuptimer()
     cout<<"Clock enable module for timer CM_PER:"<<hex<<timer6_CTRL[CM_PER_TIMER6_CLKCTRL/4]<<endl;
     timer6_CTRL[(0x500+0x1C)/4]=0x0;
     cout<<"Clock source of timer6 (=0x0 TCLKIN) and (=0x1) clock_m_osc:" << hex <<timer6_CTRL[(0x500+CLKSEL_TIMER6_CLK)/4]<<endl;
-// change from 0x4 to 0x6
     timer6_map[IRQENABLE_SET/4] |=0x4;
     cout <<"Interrupt request register:" << hex << timer6_map[IRQENABLE_SET/4] << endl;
     timer6_map[IRQSTATUS/4] = 0x4;
     cout <<"Interrupt status register:" << hex << timer6_map[IRQSTATUS/4] <<endl;
     cout<<"Control register:" << hex<<timer6_map[TCLR_OFFSET/4]<<endl;
-// change from 6103 -> 4941  
+// change from 6103 -> 4943  
   timer6_map[TCLR_OFFSET/4]=0x4943; //0x4103 ; or 0x6103
     cout<<"Control register TCLR of DMTIMER 4 update :" << hex<<timer6_map[TCLR_OFFSET/4]<<endl;
     timer6_map[TCRR_OFFSET/4]=0 ;
