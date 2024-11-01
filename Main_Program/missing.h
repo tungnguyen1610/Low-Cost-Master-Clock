@@ -1,3 +1,4 @@
+/*Import from linuxptp*/
 /**
  * @file missing.h
  * @note Copyright (C) 2011 Richard Cochran <richardcochran@gmail.com>
