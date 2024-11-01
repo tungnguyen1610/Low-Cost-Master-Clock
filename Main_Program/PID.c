@@ -55,18 +55,6 @@ void setAdaptiveTunningPHC (PIController *pid, double valueMin,double valueMax)
     pid->limInMax=valueMax;
 }  
 
-void write_DAC (int fd,uint16_t value)
-{
-    uint8_t buff[10];
-    buff[0]=0x60; //register address 0x60
-    buff[1]=(value >> 4) & (0xFF);
-    buff[2]=(value << 4) & (0xFF);
-    if (write(fd, buff, 3) != 3) {
-    /* ERROR HANDLING: i2c transaction failed */
-     perror("Failed to write to the i2c bus");
-        exit(1);
-     }
-}
 double PIController_Update_PHC(PIController *pid, long setpointPHC, long offset)
 {
 /*error signal*/
@@ -100,4 +88,17 @@ if (pid->integrator > pid->limInMax) {
   //  pid->integrator=pid->out;
         /* Return controller output */
     return pid->out;
+}
+
+void write_DAC (int fd,uint16_t value)
+{
+    uint8_t buff[10];
+    buff[0]=0x60; //register address 0x60
+    buff[1]=(value >> 4) & (0xFF);
+    buff[2]=(value << 4) & (0xFF);
+    if (write(fd, buff, 3) != 3) {
+    /* ERROR HANDLING: i2c transaction failed */
+     perror("Failed to write to the i2c bus");
+        exit(1);
+     }
 }
