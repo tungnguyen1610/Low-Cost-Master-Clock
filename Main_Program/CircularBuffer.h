@@ -5,7 +5,8 @@
 #include <cstddef>
 
 #ifdef __cplusplus
-extern "C" {
+extern "C" 
+{
 #endif
 
 class CircularBuffer {
