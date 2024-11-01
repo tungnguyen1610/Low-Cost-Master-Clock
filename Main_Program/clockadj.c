@@ -1,3 +1,4 @@
+// Reference: https://github.com/nwtime/linuxptp/blob/master/clockadj.c
 /**
  * @file clockadj.c
  * @note Copyright (C) 2013 Richard Cochran <richardcochran@gmail.com>
