@@ -1,9 +1,9 @@
 #include "PID.h"
-#include <stdio.h>
+#include <stdio.h> // Integer types
 #include <stdint.h>
 #include "math.h"
 #include <stdlib.h>
-#include <unistd.h>
+#include <unistd.h> // For write() system call
 void PIController_Init(PIController *pi){
 pi->integrator=0.0f;
 pi->preError=0.0f;
