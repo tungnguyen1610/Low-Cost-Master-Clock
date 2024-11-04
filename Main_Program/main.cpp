@@ -173,8 +173,12 @@ int main()
     {   
         if(timer6_map[IRQSTATUS/4]!=0)
         {
-        printf("Counter value: %d\n", cycle);
+        timer6_map[0x4C/4]= timer6_map[TCAR1_OFFSET/4] + 10000002;       
         // add element error value  to buffer
+        int cycle = timer6_map[TCAR1_OFFSET/4] - preCapture; 
+        cout << "Event low register:"<<cpts_Base[0xC34/4]<<endl;
+        cout << "Event high register:"<<cpts_Base[0xC38/4]<<endl;
+        cout << "Counter differences:"<<cycle<<endl;
         recent_value.add(cycle-10000000);
         recent_value.printBuffer();
 	myfile.flush();
@@ -199,14 +203,14 @@ int main()
         }
         cout<<pid.Kp<<","<<pid.Ki<<endl; 
         result=PIController_Update(&pid,setpoint,cycle);
-	printf("PID out value:%d\n",offset+result);
+	cout<<"PID out value:"<<offset+result<<endl;
         write_DAC(file,offset+result);
         preCapture=timer6_map[TCAR1_OFFSET/4];
-	cout <<"Status register:" <<timer6_map[IRQSTATUS/4]<<endl;
+        /*clear interrupt flag */
         timer6_map[IRQSTATUS/4] |=0x4;
-        cout <<"Status register:" <<timer6_map[IRQSTATUS/4]<<endl;
 	}
     }
+    /*unmap memory*/
     munmap((void *)timer6_map,getpagesize());
     munmap((void*) cpts_Base,getpagesize());
     close(mem_fd);
