@@ -78,9 +78,15 @@ Once the setup is complete, use `ts2phc` output to monitor the PTP clock's perfo
 
 ### Output Example
 The following output format from `ts2phc` illustrates key details of the synchronization status:
-
 ```plaintext
 ts2phc[80403.557]: adding tstamp 1727879618.999999999 to clock /dev/ptp0
 ts2phc[80403.557]: /dev/ptp0 offset         -1 s2 freq  +45529
 ts2phc[80404.557]: adding tstamp 1727879619.999999997 to clock /dev/ptp0
 ts2phc[80404.557]: /dev/ptp0 offset         -3 s2 freq  +45527
+
+The output format from main program illustrates the D/A values, raw timestamp value
+```plaintext
+Event low register:ebbccd5
+Event high register:3300000
+Counter differences: 10000000
+PID out value(D/A): 2460
