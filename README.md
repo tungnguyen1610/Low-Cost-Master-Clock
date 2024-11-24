@@ -1,4 +1,4 @@
-# BeagleBone PTP Master Clock Setup
+# BeagleBone PTP Master Clock Setup (Student Scientific Conference TDK 2024)
 
 This document provides a step-by-step guide to setting up a Precision Time Protocol (PTP) master clock on a BeagleBone platform. It covers kernel support verification, device tree overlay setup, initial configuration, and how to monitor the system’s operation. This setup achieves high-accuracy time synchronization on a cost-effective platform.
 
