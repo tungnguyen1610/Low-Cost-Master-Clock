@@ -1,0 +1,16 @@
+# 1 "src/arm/PB-USB0-HOST.dts"
+# 1 "<built-in>"
+# 1 "<command-line>"
+# 1 "src/arm/PB-USB0-HOST.dts"
+# 11 "src/arm/PB-USB0-HOST.dts"
+/dts-v1/;
+/plugin/;
+/ {
+        fragment@0 {
+                target = <&usb0>;
+                __overlay__ {
+                        status = "okay";
+                        dr_mode = "host";
+                };
+        };
+};

@@ -1,0 +1,32 @@
+// SPDX-License-Identifier: GPL-2.0-only
+/*
+ * Copyright (C) 2012 Texas Instruments Incorporated - https://www.ti.com/
+ */
+
+/dts-v1/;
+/plugin/;
+
+/*
+ * Helper to show loaded overlays under: /proc/device-tree/chosen/overlays/
+ */
+&{/chosen} {
+	overlays {
+		AM335X-20-00A0.bb.org-overlays = __TIMESTAMP__;
+	};
+};
+
+/ {
+	fragment@1 {
+		target = <&cpu0_opp_table>;
+		__overlay__ {
+			/*
+			 * All PG 2.0 silicon may not support 1GHz but some of the early
+			 * BeagleBone Blacks have PG 2.0 silicon which is guaranteed
+			 * to support 1GHz OPP so enable it for PG 2.0 on this board.
+			 */
+			oppnitro@1000000000 {
+				opp-supported-hw = <0x06 0x0100>;
+			};
+		};
+	};
+};

@@ -1,0 +1,170 @@
+# 1 "src/arm/PB-SPI1-7SEG-TECHLAB-CAPE.dts"
+# 1 "<built-in>"
+# 1 "<command-line>"
+# 1 "src/arm/PB-SPI1-7SEG-TECHLAB-CAPE.dts"
+# 14 "src/arm/PB-SPI1-7SEG-TECHLAB-CAPE.dts"
+/dts-v1/;
+/plugin/;
+
+# 1 "include/dt-bindings/gpio/gpio.h" 1
+# 18 "src/arm/PB-SPI1-7SEG-TECHLAB-CAPE.dts" 2
+# 1 "include/dt-bindings/pinctrl/am33xx.h" 1
+# 9 "include/dt-bindings/pinctrl/am33xx.h"
+# 1 "include/dt-bindings/pinctrl/omap.h" 1
+# 10 "include/dt-bindings/pinctrl/am33xx.h" 2
+# 19 "src/arm/PB-SPI1-7SEG-TECHLAB-CAPE.dts" 2
+# 1 "include/dt-bindings/interrupt-controller/irq.h" 1
+# 20 "src/arm/PB-SPI1-7SEG-TECHLAB-CAPE.dts" 2
+
+/ {
+
+
+
+ fragment@0 {
+  target-path="/";
+  __overlay__ {
+
+   chosen {
+    overlays {
+     PB-SPI1-7SEG-TECHLAB-CAPE = "Wed Jun 19 07:10:02 2024";
+    };
+   };
+  };
+ };
+
+ fragment@1 {
+  target = <&spi1>;
+  __overlay__ {
+   status = "okay";
+   channel@0{ status = "disabled"; };
+   channel@1{ status = "disabled"; };
+  };
+ };
+
+ fragment@2 {
+  target = <&spi1>;
+  __overlay__ {
+   #address-cells = <1>;
+   #size-cells = <0>;
+
+   sevenseg: mcp23s18@1 {
+    #address-cells = <1>;
+    #size-cells = <1>;
+    #gpio-cells = <2>;
+    compatible = "microchip,mcp23s18";
+    gpio-controller;
+    microchip,spi-present-mask = <0x01>;
+    reg = <1>;
+    spi-max-frequency = <1000000>;
+   };
+  };
+ };
+
+
+
+
+ fragment@3 {
+  target-path="/";
+  __overlay__ {
+   techlab_sevenseg {
+    compatible = "gpio-leds";
+
+    techlab_sevenseg@0 {
+     label = "techlab::seg0";
+     gpios = <&sevenseg 0 1>;
+     default-state = "off";
+    };
+
+    techlab_sevenseg@1 {
+     label = "techlab::seg1";
+     gpios = <&sevenseg 1 1>;
+     default-state = "off";
+    };
+
+    techlab_sevenseg@2 {
+     label = "techlab::seg2";
+     gpios = <&sevenseg 2 1>;
+     default-state = "off";
+    };
+
+    techlab_sevenseg@3 {
+     label = "techlab::seg3";
+     gpios = <&sevenseg 3 1>;
+     default-state = "off";
+    };
+
+    techlab_sevenseg@4 {
+     label = "techlab::seg4";
+     gpios = <&sevenseg 4 1>;
+     default-state = "off";
+    };
+
+    techlab_sevenseg@5 {
+     label = "techlab::seg5";
+     gpios = <&sevenseg 5 1>;
+     default-state = "off";
+    };
+
+    techlab_sevenseg@6 {
+     label = "techlab::seg6";
+     gpios = <&sevenseg 6 1>;
+     default-state = "off";
+    };
+
+    techlab_sevenseg@7 {
+     label = "techlab::seg7";
+     gpios = <&sevenseg 7 1>;
+     default-state = "off";
+    };
+
+    techlab_sevenseg@8 {
+     label = "techlab::seg8";
+     gpios = <&sevenseg 8 1>;
+     default-state = "off";
+    };
+
+    techlab_sevenseg@9 {
+     label = "techlab::seg9";
+     gpios = <&sevenseg 9 1>;
+     default-state = "off";
+    };
+
+    techlab_sevenseg@10 {
+     label = "techlab::seg10";
+     gpios = <&sevenseg 10 1>;
+     default-state = "off";
+    };
+
+    techlab_sevenseg@11 {
+     label = "techlab::seg11";
+     gpios = <&sevenseg 11 1>;
+     default-state = "off";
+    };
+
+    techlab_sevenseg@12 {
+     label = "techlab::seg12";
+     gpios = <&sevenseg 12 1>;
+     default-state = "off";
+    };
+
+    techlab_sevenseg@13 {
+     label = "techlab::seg13";
+     gpios = <&sevenseg 13 1>;
+     default-state = "off";
+    };
+
+    techlab_sevenseg@14 {
+     label = "techlab::seg14";
+     gpios = <&sevenseg 14 1>;
+     default-state = "off";
+    };
+
+    techlab_sevenseg@15 {
+     label = "techlab::seg15";
+     gpios = <&sevenseg 15 1>;
+     default-state = "off";
+    };
+   };
+  };
+ };
+};

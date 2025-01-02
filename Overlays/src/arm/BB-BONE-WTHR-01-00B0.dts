@@ -1,0 +1,52 @@
+// SPDX-License-Identifier: GPL-2.0-only
+/*
+* Copyright (C) 2012 Texas Instruments Incorporated - https://www.ti.com/
+*/
+
+/dts-v1/;
+/plugin/;
+
+/ {
+	/*
+	 * Helper to show loaded overlays under: /proc/device-tree/chosen/overlays/
+	 */
+	fragment@0 {
+		target-path="/";
+		__overlay__ {
+
+			chosen {
+				overlays {
+					BB-BONE-WTHR-01-00B0 = __TIMESTAMP__;
+				};
+			};
+		};
+	};
+
+	/* state the resources this cape uses */
+	fragment@1 {
+		target = <&i2c2>;
+		__overlay__ {
+
+			#address-cells = <1>;
+			#size-cells = <0>;
+
+			/* Ambient light sensor */
+			tsl2550@39 {
+				compatible = "tsl,tsl2550";
+				reg = <0x39>;
+			};
+
+			/* Humidity Sensor */
+			htu21@40 {
+				compatible = "meas-spec,htu21";
+				reg = <0x40>;
+			};
+
+			/* Barometric pressure sensor */
+			bmp085@77 {
+				compatible = "bosch,bmp085";
+				reg = <0x77>;
+			};
+		};
+	};
+};

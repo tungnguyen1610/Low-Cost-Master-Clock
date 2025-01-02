@@ -1,0 +1,4 @@
+BB-GATEWAY-WL1837-00A0.o: src/arm/BB-GATEWAY-WL1837-00A0.dts \
+ include/dt-bindings/gpio/gpio.h include/dt-bindings/pinctrl/am33xx.h \
+ include/dt-bindings/pinctrl/omap.h \
+ include/dt-bindings/interrupt-controller/irq.h

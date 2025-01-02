@@ -1,0 +1,46 @@
+# 1 "src/arm/BBBLUE-GP0-SPI-00A0.dts"
+# 1 "<built-in>"
+# 1 "<command-line>"
+# 1 "src/arm/BBBLUE-GP0-SPI-00A0.dts"
+# 14 "src/arm/BBBLUE-GP0-SPI-00A0.dts"
+/dts-v1/;
+/plugin/;
+
+
+
+
+&{/chosen} {
+ overlays {
+  BBBLUE-GP0-SPI-00A0.bb.org-overlays = "Wed Jun 19 07:10:02 2024";
+ };
+};
+
+/ {
+ fragment@1 {
+  target-path = "/";
+  __overlay__ {
+   spi_gp0: spi_gp0 {
+    compatible = "spi-gpio";
+
+    #address-cells = <1>;
+    #size-cells = <0>;
+    ranges;
+
+    mosi-gpios = <&gpio1 25 0>;
+    miso-gpios = <&gpio1 17 0>;
+    sck-gpios = <&gpio3 20 0>;
+    cs-gpios = <&gpio3 17 0>;
+    num-chipselects = <1>;
+
+
+    spidev_gp0: spidev_gp0@0 {
+     compatible = "spidev";
+     reg = <0>;
+     #address-cells = <1>;
+     #size-cells = <0>;
+     spi-max-frequency = <2000000>;
+    };
+   };
+  };
+ };
+};

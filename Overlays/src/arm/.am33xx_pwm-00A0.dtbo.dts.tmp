@@ -1,0 +1,79 @@
+# 1 "src/arm/am33xx_pwm-00A0.dts"
+# 1 "<built-in>"
+# 1 "<command-line>"
+# 1 "src/arm/am33xx_pwm-00A0.dts"
+
+
+
+
+
+
+/dts-v1/;
+/plugin/;
+
+
+
+
+&{/chosen} {
+ overlays {
+  am33xx_pwm-00A0.bb.org-overlays = "Wed Jun 19 07:10:02 2024";
+ };
+};
+
+/ {
+ fragment@1 {
+  target = <&epwmss0>;
+  __overlay__ {
+   status = "okay";
+  };
+ };
+
+ fragment@2 {
+  target = <&ehrpwm0>;
+  __overlay__ {
+   status = "okay";
+  };
+ };
+
+ fragment@3 {
+  target = <&ecap0>;
+  __overlay__ {
+   status = "okay";
+  };
+ };
+
+ fragment@4 {
+  target = <&epwmss1>;
+  __overlay__ {
+   status = "okay";
+  };
+ };
+
+ fragment@5 {
+  target = <&ehrpwm1>;
+  __overlay__ {
+   status = "okay";
+  };
+ };
+
+ fragment@6 {
+  target = <&epwmss2>;
+  __overlay__ {
+   status = "okay";
+  };
+ };
+
+ fragment@7 {
+  target = <&ehrpwm2>;
+  __overlay__ {
+   status = "okay";
+  };
+ };
+
+ fragment@8 {
+  target = <&ecap2>;
+  __overlay__ {
+   status = "okay";
+  };
+ };
+};

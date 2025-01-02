@@ -1,0 +1,145 @@
+# 1 "src/arm/BBORG_MOTOR-00A2.dts"
+# 1 "<built-in>"
+# 1 "<command-line>"
+# 1 "src/arm/BBORG_MOTOR-00A2.dts"
+# 9 "src/arm/BBORG_MOTOR-00A2.dts"
+/dts-v1/;
+/plugin/;
+
+# 1 "include/dt-bindings/gpio/gpio.h" 1
+# 13 "src/arm/BBORG_MOTOR-00A2.dts" 2
+# 1 "include/dt-bindings/pinctrl/am33xx.h" 1
+# 9 "include/dt-bindings/pinctrl/am33xx.h"
+# 1 "include/dt-bindings/pinctrl/omap.h" 1
+# 10 "include/dt-bindings/pinctrl/am33xx.h" 2
+# 14 "src/arm/BBORG_MOTOR-00A2.dts" 2
+
+/ {
+
+
+
+ fragment@0 {
+  target-path="/";
+  __overlay__ {
+
+   chosen {
+    overlays {
+     BBORG_MOTOR-00A2 = "Wed Jun 19 07:10:02 2024";
+    };
+   };
+  };
+ };
+
+
+
+
+ fragment@1 {
+  target = <&ocp>;
+  __overlay__ {
+   P8_13_pinmux { status = "disabled"; };
+   P8_14_pinmux { status = "disabled"; };
+   P8_16_pinmux { status = "disabled"; };
+   P8_18_pinmux { status = "disabled"; };
+   P8_19_pinmux { status = "disabled"; };
+   P8_26_pinmux { status = "disabled"; };
+   P9_14_pinmux { status = "disabled"; };
+   P9_16_pinmux { status = "disabled"; };
+  };
+ };
+
+ fragment@2 {
+  target = <&am33xx_pinmux>;
+  __overlay__ {
+   bborg_motor_led_pins: pinmux-bborg-proto-led-pins {
+    pinctrl-single,pins = <
+     ((((0x0828)) & 0xffff) - (0x0800)) (((1 << 4)) | (1 << 5) | 7)
+     ((((0x0838)) & 0xffff) - (0x0800)) (((1 << 4)) | (1 << 5) | 7)
+     ((((0x088c)) & 0xffff) - (0x0800)) (((1 << 4)) | (1 << 5) | 7)
+     ((((0x087c)) & 0xffff) - (0x0800)) (((1 << 4)) | (1 << 5) | 7)
+    >;
+   };
+
+   bborg_motor_ehrpwm1_pins: pinmux-bborg-proto-ehrpwm1-pins {
+    pinctrl-single,pins = <
+     ((((0x0848)) & 0xffff) - (0x0800)) (0 | 6)
+     ((((0x084c)) & 0xffff) - (0x0800)) (0 | 6)
+    >;
+   };
+
+   bborg_motor_ehrpwm2_pins: pinmux-bborg-proto-ehrpwm2-pins {
+    pinctrl-single,pins = <
+     ((((0x0824)) & 0xffff) - (0x0800)) (0 | 4)
+     ((((0x0820)) & 0xffff) - (0x0800)) (0 | 4)
+    >;
+   };
+  };
+ };
+
+ fragment@3 {
+  target = <&epwmss1>;
+  __overlay__ {
+   status = "okay";
+  };
+ };
+
+ fragment@4 {
+  target = <&ehrpwm1>;
+  __overlay__ {
+   pinctrl-names = "default";
+   pinctrl-0 = <&bborg_motor_ehrpwm1_pins>;
+   status = "okay";
+  };
+ };
+
+ fragment@5 {
+  target = <&epwmss2>;
+  __overlay__ {
+   status = "okay";
+  };
+ };
+
+ fragment@6 {
+  target = <&ehrpwm2>;
+  __overlay__ {
+   pinctrl-names = "default";
+   pinctrl-0 = <&bborg_motor_ehrpwm2_pins>;
+   status = "okay";
+  };
+ };
+
+ fragment@7 {
+  target-path="/";
+  __overlay__ {
+
+   leds {
+    pinctrl-names = "default";
+    pinctrl-0 = <&bborg_motor_led_pins>;
+    compatible = "gpio-leds";
+
+    m1_high {
+     label = "m1_high";
+     gpios = <&gpio2 1 0>;
+     default-state = "off";
+    };
+
+    m2_high {
+     label = "m2_high";
+     gpios = <&gpio1 14 0>;
+     default-state = "off";
+    };
+
+    m3_high {
+     label = "m3_high";
+     gpios = <&gpio0 26 0>;
+     default-state = "off";
+    };
+
+    m4_high {
+     label = "m4_high";
+     gpios = <&gpio1 29 0>;
+     default-state = "off";
+    };
+   };
+  };
+ };
+};

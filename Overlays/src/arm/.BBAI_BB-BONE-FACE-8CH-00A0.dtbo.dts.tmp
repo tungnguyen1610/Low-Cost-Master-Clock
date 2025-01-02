@@ -1,0 +1,163 @@
+# 1 "src/arm/BBAI_BB-BONE-FACE-8CH-00A0.dts"
+# 1 "<built-in>"
+# 1 "<command-line>"
+# 1 "src/arm/BBAI_BB-BONE-FACE-8CH-00A0.dts"
+
+
+
+
+
+/dts-v1/;
+/plugin/;
+
+# 1 "include/dt-bindings/interrupt-controller/irq.h" 1
+# 10 "src/arm/BBAI_BB-BONE-FACE-8CH-00A0.dts" 2
+# 1 "include/dt-bindings/gpio/gpio.h" 1
+# 11 "src/arm/BBAI_BB-BONE-FACE-8CH-00A0.dts" 2
+# 1 "include/dt-bindings/pinctrl/dra.h" 1
+# 12 "src/arm/BBAI_BB-BONE-FACE-8CH-00A0.dts" 2
+# 1 "include/dt-bindings/clock/dra7.h" 1
+# 13 "src/arm/BBAI_BB-BONE-FACE-8CH-00A0.dts" 2
+
+
+
+
+&{/chosen} {
+ overlays {
+  BBAI_BB-BONE-FACE-8CH-00A0.bb.org-overlays = "Wed Jun 19 07:10:02 2024";
+ };
+};
+
+/ {
+ fragment@1 {
+  target-path = "/";
+  __overlay__ {
+   spi_gpio: spi_gpio {
+    compatible = "spi-gpio";
+    #address-cells = <1>;
+    #size-cells = <0>;
+
+    sck-gpios = <&gpio8 15 0>;
+    mosi-gpios = <&gpio8 13 0>;
+    miso-gpios = <&gpio4 13 0>;
+    cs-gpios = <&gpio8 18 0 &gpio8 14 0>;
+    num-chipselects = <2>;
+
+    pinctrl-names = "default";
+
+    pinctrl-0 = <&audiocard_spi_pins>;
+    status = "okay";
+
+    ad193x: ad193x@0{
+     pinctrl-names = "default";
+     pinctrl-0 = <&ad1938_codec_reset_muxing>;
+     #address-cells = <1>;
+     #size-cells = <0>;
+
+     compatible = "analog,ad1938";
+     status = "okay";
+     reset-gpio = <&gpio8 11 0>;
+     reg = <0>;
+     spi-max-frequency = <100000>;
+    };
+   };
+  };
+ };
+
+ fragment@2 {
+  target = <&dra7_pmx_core>;
+  __overlay__ {
+   ad1938_codec_reset_muxing: ad1938_codec_reset_muxing {
+    pinctrl-single,pins = <
+     (((0x3564) & 0xffff) - 0x3400) (((0 << 16) | (1 << 18)) | 0xe)
+    >;
+   };
+
+   mcasp1_pins_sleep: mcasp1_pins_sleep {
+    pinctrl-single,pins = <
+     (((0x3694) & 0xffff) - 0x3400) (((0 << 16) | (1 << 18)) | 0xe)
+     (((0x36E0) & 0xffff) - 0x3400) (((0 << 16) | (1 << 18)) | 0xe)
+     (((0x36A8) & 0xffff) - 0x3400) (((0 << 16) | (1 << 18)) | 0xe)
+     (((0x36A4) & 0xffff) - 0x3400) (((0 << 16) | (1 << 18)) | 0xe)
+     (((0x36B0) & 0xffff) - 0x3400) (((0 << 16) | (1 << 18)) | 0x0)
+     (((0x36AC) & 0xffff) - 0x3400) (((0 << 16) | (1 << 18)) | 0x0)
+     (((0x36DC) & 0xffff) - 0x3400) (((0 << 16) | (1 << 18)) | 0xe)
+    >;
+   };
+
+   mcasp1_pins: mcasp1_pins {
+    pinctrl-single,pins = <
+     (((0x3694) & 0xffff) - 0x3400) (((0 << 16) | (1 << 18)) | 0x3)
+     (((0x36E0) & 0xffff) - 0x3400) ((0) | 0x0)
+     (((0x36A8) & 0xffff) - 0x3400) (((0 << 16) | (1 << 18)) | 0x0)
+     (((0x36A4) & 0xffff) - 0x3400) (((0 << 16) | (1 << 18)) | 0x0)
+     (((0x36B0) & 0xffff) - 0x3400) (((0 << 16) | (1 << 18)) | 0x0)
+     (((0x36AC) & 0xffff) - 0x3400) (((0 << 16) | (1 << 18)) | 0x0)
+     (((0x36DC) & 0xffff) - 0x3400) (((0 << 16) | (1 << 18)) | 0x0)
+    >;
+   };
+
+   audiocard_spi_pins: pinmux_audiocard_spi_pins {
+    pinctrl-single,pins = <
+     (((0x3618) & 0xffff) - 0x3400) (((0 << 16) | (1 << 18) | (1 << 17)) | 0xe)
+     (((0x3598) & 0xffff) - 0x3400) (((0 << 16) | (1 << 18) | (1 << 17)) | 0xe)
+     (((0x3610) & 0xffff) - 0x3400) (((1 << 17)) | 0xe)
+     (((0x3624) & 0xffff) - 0x3400) (((1 << 17)) | 0xe)
+    >;
+   };
+  };
+ };
+
+ fragment@3 {
+  target = <&mcasp1>;
+  __overlay__ {
+   #sound-dai-cells= <0>;
+   pinctrl-names = "default", "sleep";
+   pinctrl-0 = <&mcasp1_pins>;
+   pinctrl-1 = <&mcasp1_pins_sleep>;
+   assigned-clocks = <&ipu_clkctrl ((0x50) - 0x40) 24>;
+   assigned-clock-parents = <&sys_clkin2>;
+   status = "okay";
+   op-mode = <0>;
+   tdm-slots = <8>;
+   num-serializer = <16>;
+   serial-dir = <
+    0 0 0 0
+    0 0 0 0
+    0 0 2 1
+    0 0 0 0
+   >;
+   tx-num-evt = <1>;
+   rx-num-evt = <1>;
+  };
+ };
+
+ fragment@4 {
+  target-path = "/";
+  __overlay__ {
+   sound {
+    compatible = "ctag,face-2-4";
+    ti,model = "CTAG face-2-4 8CH";
+    ti,audio-codec = <&ad193x>;
+    ti,mcasp-controller = <&mcasp1>;
+    ti,audiocard-tdm-slots = <8>;
+    ti,codec-clock-rate = <24576000>;
+    ti,cpu-clock-rate = <24576000>;
+    status = "okay";
+
+    ti,audio-codec-bit-delay-dac = <1>;
+    ti,audio-codec-bit-delay-adc = <1>;
+    ti,mcasp-controller-bit-delay-tx = <1>;
+    ti,mcasp-controller-bit-delay-rx = <1>;
+    bb-device = <1>;
+    audio-routing =
+     "Line Out", "DAC1OUT",
+     "Line Out", "DAC2OUT",
+     "Line Out", "DAC3OUT",
+     "Line Out", "DAC4OUT",
+     "ADC1IN", "Line In",
+     "ADC2IN", "Line In";
+   };
+  };
+ };
+};

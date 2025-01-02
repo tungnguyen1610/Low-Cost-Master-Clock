@@ -1,0 +1,70 @@
+# 1 "src/arm/BB-BONE-eMMC1-01-00A0.dts"
+# 1 "<built-in>"
+# 1 "<command-line>"
+# 1 "src/arm/BB-BONE-eMMC1-01-00A0.dts"
+
+
+
+
+
+/dts-v1/;
+/plugin/;
+
+# 1 "include/dt-bindings/gpio/gpio.h" 1
+# 10 "src/arm/BB-BONE-eMMC1-01-00A0.dts" 2
+# 1 "include/dt-bindings/pinctrl/am33xx.h" 1
+# 9 "include/dt-bindings/pinctrl/am33xx.h"
+# 1 "include/dt-bindings/pinctrl/omap.h" 1
+# 10 "include/dt-bindings/pinctrl/am33xx.h" 2
+# 11 "src/arm/BB-BONE-eMMC1-01-00A0.dts" 2
+
+
+
+
+&{/chosen} {
+ overlays {
+  BB-BONE-eMMC1-01-00A0.bb.org-overlays = "Wed Jun 19 07:10:02 2024";
+ };
+};
+
+
+
+
+&ocp {
+ P8_21_pinmux { status = "disabled"; };
+ P8_20_pinmux { status = "disabled"; };
+ P8_25_pinmux { status = "disabled"; };
+ P8_24_pinmux { status = "disabled"; };
+ P8_05_pinmux { status = "disabled"; };
+ P8_06_pinmux { status = "disabled"; };
+ P8_23_pinmux { status = "disabled"; };
+ P8_22_pinmux { status = "disabled"; };
+ P8_03_pinmux { status = "disabled"; };
+ P8_04_pinmux { status = "disabled"; };
+};
+
+&am33xx_pinmux {
+ emmc_pins: pinmux_emmc_pins {
+  pinctrl-single,pins = <
+   ((((0x880)) & 0xffff) - (0x0800)) ((((1 << 5) | (1 << 4))) | (2))
+   ((((0x884)) & 0xffff) - (0x0800)) ((((1 << 5) | (1 << 4))) | (2))
+   ((((0x800)) & 0xffff) - (0x0800)) ((((1 << 5) | (1 << 4))) | (1))
+   ((((0x804)) & 0xffff) - (0x0800)) ((((1 << 5) | (1 << 4))) | (1))
+   ((((0x808)) & 0xffff) - (0x0800)) ((((1 << 5) | (1 << 4))) | (1))
+   ((((0x80c)) & 0xffff) - (0x0800)) ((((1 << 5) | (1 << 4))) | (1))
+   ((((0x810)) & 0xffff) - (0x0800)) ((((1 << 5) | (1 << 4))) | (1))
+   ((((0x814)) & 0xffff) - (0x0800)) ((((1 << 5) | (1 << 4))) | (1))
+   ((((0x818)) & 0xffff) - (0x0800)) ((((1 << 5) | (1 << 4))) | (1))
+   ((((0x81c)) & 0xffff) - (0x0800)) ((((1 << 5) | (1 << 4))) | (1))
+  >;
+ };
+};
+
+&mmc2 {
+ vmmc-supply = <&vmmcsd_fixed>;
+ pinctrl-names = "default";
+ pinctrl-0 = <&emmc_pins>;
+ bus-width = <8>;
+ status = "okay";
+ non-removable;
+};

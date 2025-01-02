@@ -1,0 +1,69 @@
+# 1 "src/arm/BB-I2C2-LIS331DLH.dts"
+# 1 "<built-in>"
+# 1 "<command-line>"
+# 1 "src/arm/BB-I2C2-LIS331DLH.dts"
+
+
+
+
+
+
+
+/dts-v1/;
+/plugin/;
+
+/ {
+
+
+
+ fragment@0 {
+  target-path="/";
+  __overlay__ {
+   chosen {
+    overlays {
+     BB-I2C2-LIS331DLH-00A0 = "Wed Jun 19 07:10:02 2024";
+    };
+   };
+  };
+ };
+
+ fragment@1 {
+  target-path="/";
+  __overlay__ {
+
+   aliases {
+
+
+
+
+
+    lis331dlh = "/ocp/i2c@4819c000/lis331dlh@18";
+   };
+  };
+ };
+
+ fragment@2 {
+
+
+
+
+
+  target = <&i2c2>;
+
+  __overlay__ {
+   status = "okay";
+
+
+   clock-frequency = <400000>;
+
+   #address-cells = <1>;
+   #size-cells = <0>;
+
+   lis331dlh@18 {
+    compatible = "st,lis331dlh";
+    reg = <0x18>;
+    status = "okay";
+   };
+  };
+ };
+};

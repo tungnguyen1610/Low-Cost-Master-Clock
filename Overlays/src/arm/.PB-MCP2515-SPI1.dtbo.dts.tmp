@@ -1,0 +1,127 @@
+# 1 "src/arm/PB-MCP2515-SPI1.dts"
+# 1 "<built-in>"
+# 1 "<command-line>"
+# 1 "src/arm/PB-MCP2515-SPI1.dts"
+/dts-v1/;
+/plugin/;
+
+# 1 "include/dt-bindings/gpio/gpio.h" 1
+# 5 "src/arm/PB-MCP2515-SPI1.dts" 2
+# 1 "include/dt-bindings/pinctrl/am33xx.h" 1
+# 9 "include/dt-bindings/pinctrl/am33xx.h"
+# 1 "include/dt-bindings/pinctrl/omap.h" 1
+# 10 "include/dt-bindings/pinctrl/am33xx.h" 2
+# 6 "src/arm/PB-MCP2515-SPI1.dts" 2
+# 1 "include/dt-bindings/interrupt-controller/irq.h" 1
+# 7 "src/arm/PB-MCP2515-SPI1.dts" 2
+
+/ {
+
+
+
+ fragment@0 {
+  target-path="/";
+  __overlay__ {
+
+   chosen {
+    overlays {
+     PB-MCP2515-SPI1 = "Wed Jun 19 07:10:02 2024";
+    };
+   };
+  };
+ };
+
+        fragment@1 {
+                target = <&ocp>;
+                __overlay__ {
+                        P2_25_pinmux { status = "disabled"; };
+                        P2_27_pinmux { status = "disabled"; };
+                        P2_29_pinmux { status = "disabled"; };
+                        P2_30_pinmux { status = "disabled"; };
+                        P2_31_pinmux { status = "disabled"; };
+                        P2_08_pinmux { status = "disabled"; };
+                        P2_32_pinmux { status = "disabled"; };
+                        P2_06_pinmux { status = "disabled"; };
+                        P2_18_pinmux { status = "disabled"; };
+                };
+        };
+
+        fragment@2 {
+                target = <&spi1>;
+                __overlay__ {
+                        status = "okay";
+                        pinctrl-names = "default";
+
+
+
+                        pinctrl-0 = <
+
+                               &P2_06_gpio_pin
+                               &P2_18_gpio_pin
+                               &P2_32_gpio_pu_pin
+                               &P2_08_default_pin
+                               &P2_25_spi_pin
+                               &P2_27_spi_pin
+                               &P2_29_spi_sclk_pin
+                               &P2_30_spi_cs_pin
+                               &P2_31_spi_cs_pin
+                        >;
+
+                        channel@0{ status = "disabled"; };
+                        channel@1{ status = "disabled"; };
+                };
+        };
+
+        fragment@3 {
+                target = <&am33xx_pinmux>;
+                __overlay__ {
+                        mcp2515_int: mcp2515_int {
+                               pinctrl-single,pins = < 0x087 0x37 >;
+                        };
+                };
+        };
+
+    fragment@4 {
+        target-path = "/";
+        __overlay__ {
+            mcp2515_clock: mcp2515_clock {
+                compatible = "fixed-clock";
+                #clock-cells = <0>;
+                clock-frequency = <16000000>;
+            };
+        };
+    };
+
+    fragment@5 {
+        target = <&spi1>;
+        __overlay__ {
+            #address-cells = <1>;
+            #size-cells = <0>;
+            can0: mcp2515@1 {
+                status = "okay";
+
+
+                reg = <1>;
+                compatible = "microchip,mcp2515";
+                pinctrl-names = "default";
+                pinctrl-0 = <&mcp2515_int>;
+                spi-max-frequency = <10000000>;
+                interrupt-parent = <&gpio1>;
+                interrupts = <28 2>;
+                clocks = <&mcp2515_clock>;
+
+                mcp251x,oscillator-frequency = <16000000>;
+                mcp251x,irq-gpios = <&gpio1 28 0>;
+                mcp251x,stay-awake = <1>;
+                mcp251x,enable-clkout = <1>;
+            };
+        };
+    };
+
+    __overrides__ {
+        oscillator = <&mcp2515_clock>,"clock-frequency:0";
+        spimaxfrequency = <&can0>,"spi-max-frequency:0";
+        interrupt = <&mcp2515_int>,"pinctrl-single,pins:0",<&can0>,"interrupts:0";
+    };
+
+};

@@ -1,0 +1,68 @@
+# 1 "src/arm/BB-mBC3-RTC-6-CLICK.dts"
+# 1 "<built-in>"
+# 1 "<command-line>"
+# 1 "src/arm/BB-mBC3-RTC-6-CLICK.dts"
+# 12 "src/arm/BB-mBC3-RTC-6-CLICK.dts"
+/dts-v1/;
+/plugin/;
+
+# 1 "include/dt-bindings/gpio/gpio.h" 1
+# 16 "src/arm/BB-mBC3-RTC-6-CLICK.dts" 2
+# 1 "include/dt-bindings/pinctrl/am33xx.h" 1
+# 9 "include/dt-bindings/pinctrl/am33xx.h"
+# 1 "include/dt-bindings/pinctrl/omap.h" 1
+# 10 "include/dt-bindings/pinctrl/am33xx.h" 2
+# 17 "src/arm/BB-mBC3-RTC-6-CLICK.dts" 2
+# 1 "include/dt-bindings/interrupt-controller/irq.h" 1
+# 18 "src/arm/BB-mBC3-RTC-6-CLICK.dts" 2
+
+/ {
+
+
+
+ fragment@0 {
+  target-path="/";
+  __overlay__ {
+
+   chosen {
+    overlays {
+     BB-mBC3-RTC-6-CLICK = "Wed Jun 19 07:10:02 2024";
+    };
+   };
+  };
+ };
+
+
+
+
+ fragment@1 {
+  target = <&ocp>;
+  __overlay__ {
+   P8_18_pinmux { status = "disabled"; };
+  };
+ };
+
+ fragment@2 {
+  target-path="/";
+  __overlay__ {
+   aliases {
+    rtc0 = &extrtc;
+    rtc1 = "/ocp/rtc@44e3e000";
+   };
+  };
+ };
+
+ fragment@3 {
+  target = <&i2c2>;
+  __overlay__ {
+   status = "okay";
+   #address-cells = <1>;
+   #size-cells = <0>;
+
+   extrtc: mcp7941x@6f {
+    compatible = "microchip,mcp7941x";
+    reg = <0x6f>;
+   };
+  };
+ };
+};

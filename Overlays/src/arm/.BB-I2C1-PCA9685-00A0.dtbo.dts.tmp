@@ -1,0 +1,125 @@
+# 1 "src/arm/BB-I2C1-PCA9685-00A0.dts"
+# 1 "<built-in>"
+# 1 "<command-line>"
+# 1 "src/arm/BB-I2C1-PCA9685-00A0.dts"
+# 9 "src/arm/BB-I2C1-PCA9685-00A0.dts"
+/dts-v1/;
+/plugin/;
+
+# 1 "include/dt-bindings/board/am335x-bbw-bbb-base.h" 1
+# 13 "src/arm/BB-I2C1-PCA9685-00A0.dts" 2
+# 1 "include/dt-bindings/pinctrl/am33xx.h" 1
+# 9 "include/dt-bindings/pinctrl/am33xx.h"
+# 1 "include/dt-bindings/pinctrl/omap.h" 1
+# 10 "include/dt-bindings/pinctrl/am33xx.h" 2
+# 14 "src/arm/BB-I2C1-PCA9685-00A0.dts" 2
+# 1 "include/dt-bindings/gpio/gpio.h" 1
+# 15 "src/arm/BB-I2C1-PCA9685-00A0.dts" 2
+
+/ {
+
+
+
+ fragment@0 {
+  target-path="/";
+  __overlay__ {
+
+   chosen {
+    overlays {
+     BB-I2C1-PCA9685-00A0 = "Wed Jun 19 07:10:02 2024";
+    };
+   };
+  };
+ };
+
+
+
+
+ fragment@1 {
+  target = <&ocp>;
+  __overlay__ {
+   P9_17_pinmux { status = "disabled"; };
+   P9_18_pinmux { status = "disabled"; };
+   P9_23_pinmux { status = "disabled"; };
+   P9_27_pinmux { status = "disabled"; };
+  };
+ };
+
+ fragment@2 {
+  target = <&am33xx_pinmux>;
+  __overlay__ {
+
+   bb_pca9685_oe0_pins: pinmux_bb_pca9685_oe0_pins {
+    pinctrl-single,pins = <
+     0x044 (0 | 7)
+     0x1A4 (0 | 7)
+    >;
+   };
+
+   bb_i2c1_pins: pinmux_bb_i2c1_pins {
+    pinctrl-single,pins = <
+     0x158 ((1 << 6) | ((1 << 5) | (1 << 4)) | 2)
+     0x15C ((1 << 6) | ((1 << 5) | (1 << 4)) | 2)
+    >;
+   };
+  };
+ };
+
+ fragment@3 {
+  target-path="/";
+  __overlay__ {
+
+   leds {
+    pinctrl-names = "default";
+    pinctrl-0 = <&bb_pca9685_oe0_pins>;
+
+    compatible = "gpio-leds";
+
+    pca9685-oe@0 {
+     label = "pca9685-oe0";
+     gpios = <&gpio1 17 0>;
+     default-state = "on";
+    };
+
+    pca9685-oe@1 {
+     label = "pca9685-oe1";
+     gpios = <&gpio3 19 0>;
+     default-state = "on";
+    };
+   };
+  };
+ };
+
+ fragment@4 {
+  target = <&i2c1>;
+  __overlay__ {
+   status = "okay";
+   pinctrl-names = "default";
+   pinctrl-0 = <&bb_i2c1_pins>;
+
+
+   clock-frequency = <100000>;
+
+   #address-cells = <1>;
+   #size-cells = <0>;
+
+
+   pca@40 {
+    compatible = "nxp,pca9685-pwm";
+    #pwm-cells = <2>;
+    reg = <0x40>;
+
+
+   };
+
+
+   pca@41 {
+    compatible = "nxp,pca9685-pwm";
+    #pwm-cells = <2>;
+    reg = <0x41>;
+
+
+   };
+  };
+ };
+};

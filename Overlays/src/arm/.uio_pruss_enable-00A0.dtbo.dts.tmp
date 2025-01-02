@@ -1,0 +1,38 @@
+# 1 "src/arm/uio_pruss_enable-00A0.dts"
+# 1 "<built-in>"
+# 1 "<command-line>"
+# 1 "src/arm/uio_pruss_enable-00A0.dts"
+
+
+
+
+
+
+
+/dts-v1/;
+/plugin/;
+
+/ {
+
+
+
+ fragment@0 {
+  target-path="/";
+  __overlay__ {
+
+   chosen {
+    overlays {
+     uio_pruss_enable-00A0 = "Wed Jun 19 07:10:02 2024";
+    };
+   };
+  };
+ };
+
+ fragment@1 {
+  target = <&pruss>;
+  __overlay__ {
+
+   status = "okay";
+  };
+ };
+};

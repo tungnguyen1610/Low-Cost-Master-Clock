@@ -1,0 +1,48 @@
+# 1 "src/arm/BBBLUE-MPU9250-00A0.dts"
+# 1 "<built-in>"
+# 1 "<command-line>"
+# 1 "src/arm/BBBLUE-MPU9250-00A0.dts"
+
+
+
+
+
+/dts-v1/;
+/plugin/;
+
+# 1 "include/dt-bindings/interrupt-controller/irq.h" 1
+# 10 "src/arm/BBBLUE-MPU9250-00A0.dts" 2
+
+
+
+
+&{/chosen} {
+ overlays {
+  BBBLUE-MPU9250-00A0.bb.org-overlays = "Wed Jun 19 07:10:02 2024";
+ };
+};
+
+/ {
+ fragment@1 {
+  target = <&i2c2>;
+  __overlay__ {
+   #address-cells = <1>;
+   #size-cells = <0>;
+
+   mpu9250@68 {
+    compatible = "invensense,mpu9250";
+    reg = <0x68>;
+    interrupt-parent = <&gpio3>;
+    interrupts = <21 4>;
+    i2c-gate {
+     #address-cells = <1>;
+     #size-cells = <0>;
+     ax8975@c {
+      compatible = "asahi-kasei,ak8975";
+      reg = <0x0c>;
+     };
+    };
+   };
+  };
+ };
+};

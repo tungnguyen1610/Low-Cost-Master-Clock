@@ -1,0 +1,4 @@
+BB-BONE-NH7C-01-A0.o: src/arm/BB-BONE-NH7C-01-A0.dts \
+ include/dt-bindings/gpio/gpio.h \
+ include/dt-bindings/interrupt-controller/irq.h \
+ include/dt-bindings/pinctrl/am33xx.h include/dt-bindings/pinctrl/omap.h

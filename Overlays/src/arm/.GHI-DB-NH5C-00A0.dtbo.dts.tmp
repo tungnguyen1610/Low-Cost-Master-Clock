@@ -1,0 +1,241 @@
+# 1 "src/arm/GHI-DB-NH5C-00A0.dts"
+# 1 "<built-in>"
+# 1 "<command-line>"
+# 1 "src/arm/GHI-DB-NH5C-00A0.dts"
+# 10 "src/arm/GHI-DB-NH5C-00A0.dts"
+/dts-v1/;
+/plugin/;
+
+# 1 "include/dt-bindings/gpio/gpio.h" 1
+# 14 "src/arm/GHI-DB-NH5C-00A0.dts" 2
+# 1 "include/dt-bindings/pinctrl/am33xx.h" 1
+# 9 "include/dt-bindings/pinctrl/am33xx.h"
+# 1 "include/dt-bindings/pinctrl/omap.h" 1
+# 10 "include/dt-bindings/pinctrl/am33xx.h" 2
+# 15 "src/arm/GHI-DB-NH5C-00A0.dts" 2
+# 1 "include/dt-bindings/board/am335x-bbw-bbb-base.h" 1
+# 16 "src/arm/GHI-DB-NH5C-00A0.dts" 2
+
+/ {
+
+
+
+ fragment@0 {
+  target-path="/";
+  __overlay__ {
+
+   chosen {
+    overlays {
+     GHI-DB-NH5C-00A0 = "Wed Jun 19 07:10:02 2024";
+    };
+   };
+  };
+ };
+
+
+
+
+ fragment@1 {
+  target = <&ocp>;
+  __overlay__ {
+   P8_45_pinmux { status = "disabled"; };
+   P8_46_pinmux { status = "disabled"; };
+   P8_43_pinmux { status = "disabled"; };
+   P8_44_pinmux { status = "disabled"; };
+   P8_41_pinmux { status = "disabled"; };
+   P8_42_pinmux { status = "disabled"; };
+   P8_39_pinmux { status = "disabled"; };
+   P8_40_pinmux { status = "disabled"; };
+   P8_37_pinmux { status = "disabled"; };
+   P8_38_pinmux { status = "disabled"; };
+   P8_36_pinmux { status = "disabled"; };
+   P8_34_pinmux { status = "disabled"; };
+   P8_35_pinmux { status = "disabled"; };
+   P8_33_pinmux { status = "disabled"; };
+   P8_31_pinmux { status = "disabled"; };
+   P8_32_pinmux { status = "disabled"; };
+
+   P8_27_pinmux { status = "disabled"; };
+   P8_29_pinmux { status = "disabled"; };
+   P8_28_pinmux { status = "disabled"; };
+   P8_30_pinmux { status = "disabled"; };
+
+   P8_17_pinmux { status = "disabled"; };
+   P8_15_pinmux { status = "disabled"; };
+   P8_14_pinmux { status = "disabled"; };
+   P8_16_pinmux { status = "disabled"; };
+   P8_18_pinmux { status = "disabled"; };
+
+   P9_25_pinmux { status = "disabled"; };
+   P9_27_pinmux { status = "disabled"; };
+  };
+ };
+
+ fragment@2 {
+  target = <&am33xx_pinmux>;
+  __overlay__ {
+   ghi_lcd_pins: pinmux_ghi_lcd_pins {
+    pinctrl-single,pins = <
+     0x0A0 (((1 << 3)) | 0)
+     0x0A4 (((1 << 3)) | 0)
+     0x0A8 (((1 << 3)) | 0)
+     0x0AC (((1 << 3)) | 0)
+     0x0B0 (((1 << 3)) | 0)
+     0x0B4 (((1 << 3)) | 0)
+     0x0B8 (((1 << 3)) | 0)
+     0x0BC (((1 << 3)) | 0)
+     0x0C0 (((1 << 3)) | 0)
+     0x0C4 (((1 << 3)) | 0)
+     0x0C8 (((1 << 3)) | 0)
+     0x0CC (((1 << 3)) | 0)
+     0x0D0 (((1 << 3)) | 0)
+     0x0D4 (((1 << 3)) | 0)
+     0x0D8 (((1 << 3)) | 0)
+     0x0DC (((1 << 3)) | 0)
+
+     0x0E0 (((1 << 3)) | 0)
+     0x0E4 (((1 << 3)) | 0)
+     0x0E8 (((1 << 3)) | 0)
+     0x0EC (((1 << 3)) | 0)
+    >;
+   };
+
+   bb_lcd_keymap_pins: pinmux_bb_lcd_keymap_pins {
+    pinctrl-single,pins = <
+     0x2c (((1 << 5) | (1 << 3)) | 7)
+     0x3c (((1 << 5) | (1 << 3)) | 7)
+     0x28 (((1 << 5) | (1 << 3)) | 7)
+     0x38 (((1 << 5) | (1 << 3)) | 7)
+     0x8c (((1 << 5) | (1 << 3)) | 7)
+    >;
+   };
+
+   edt_ft5x06_pins:pinmux_edt_ft5x06_pins {
+    pinctrl-single,pins = <
+     0x1AC 0x17
+     0x1A4 0x37
+    >;
+   };
+  };
+ };
+
+ fragment@3 {
+  target = <&lcdc>;
+  __overlay__ {
+   status = "okay";
+  };
+ };
+
+ fragment@4 {
+  target-path="/";
+  __overlay__ {
+   gpio_keys {
+    compatible = "gpio-keys";
+    pinctrl-names = "default";
+    pinctrl-0 = <&bb_lcd_keymap_pins>;
+
+    button@1 {
+     debounce_interval = <50>;
+     linux,code = <105>;
+     label = "left";
+     gpios = <&gpio0 26 0x1>;
+     gpio-key,wakeup;
+     autorepeat;
+    };
+
+    button@2 {
+     debounce_interval = <50>;
+     linux,code = <106>;
+     label = "right";
+     gpios = <&gpio1 14 0x1>;
+     gpio-key,wakeup;
+     autorepeat;
+    };
+
+    button@3 {
+     debounce_interval = <50>;
+     linux,code = <103>;
+     label = "up";
+     gpios = <&gpio0 27 0x1>;
+     gpio-key,wakeup;
+     autorepeat;
+    };
+
+    button@4 {
+     debounce_interval = <50>;
+     linux,code = <108>;
+     label = "down";
+     gpios = <&gpio1 15 0x1>;
+     gpio-key,wakeup;
+     autorepeat;
+    };
+
+    button@5 {
+     debounce_interval = <50>;
+     linux,code = <28>;
+     label = "enter";
+     gpios = <&gpio2 1 0x1>;
+     gpio-key,wakeup;
+    };
+   };
+
+   panel {
+    status = "okay";
+    compatible = "ti,tilcdc,panel";
+    pinctrl-names = "default";
+    pinctrl-0 = <&ghi_lcd_pins>;
+    panel-info {
+     ac-bias = <255>;
+     ac-bias-intrpt = <0>;
+     dma-burst-sz = <16>;
+     bpp = <16>;
+     fdd = <0x80>;
+     tft-alt-mode = <0>;
+     stn-565-mode = <0>;
+     mono-8bit-mode = <0>;
+     sync-edge = <0>;
+     sync-ctrl = <1>;
+     raster-order = <0>;
+     fifo-th = <0>;
+    };
+    display-timings {
+     native-mode = <&timing0>;
+     timing0: 800x480 {
+      clock-frequency = <30000000>;
+      hactive = <800>;
+      vactive = <480>;
+      hfront-porch = <40>;
+      hback-porch = <39>;
+      hsync-len = <48>;
+      vback-porch = <36>;
+      vfront-porch = <13>;
+      vsync-len = <3>;
+      hsync-active = <0>;
+      vsync-active = <0>;
+     };
+    };
+   };
+  };
+ };
+
+ fragment@5 {
+  target = <&i2c0>;
+  __overlay__ {
+   #address-cells = <1>;
+   #size-cells = <0>;
+
+   edt_ft5x06@38 {
+    status = "okay";
+    compatible = "edt,edt-ft5306","edt,edt-ft5406","edt,edt-ft5206","edt,edt-ft5x06";
+    pinctrl-names="default";
+    pinctrl-0=<&edt_ft5x06_pins>;
+    reg = <0x38>;
+    interrupt-parent = <&gpio3>;
+    interrupts = <0x13 0x2>;
+    reset-gpios = <&gpio3 0x15 1>;
+    touchscreen-size-x = <800>;
+    touchscreen-size-y = <480>;
+   };
+  };
+ };
+};

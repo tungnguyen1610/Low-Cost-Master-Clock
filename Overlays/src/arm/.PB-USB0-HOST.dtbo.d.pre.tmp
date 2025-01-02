@@ -1,0 +1,1 @@
+PB-USB0-HOST.o: src/arm/PB-USB0-HOST.dts

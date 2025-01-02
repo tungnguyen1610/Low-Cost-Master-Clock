@@ -1,0 +1,2 @@
+BB-BELA-B2.o: src/arm/BB-BELA-B2.dts include/dt-bindings/gpio/gpio.h \
+ include/dt-bindings/pinctrl/am33xx.h include/dt-bindings/pinctrl/omap.h

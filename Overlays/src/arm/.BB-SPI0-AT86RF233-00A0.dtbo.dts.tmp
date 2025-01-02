@@ -1,0 +1,102 @@
+# 1 "src/arm/BB-SPI0-AT86RF233-00A0.dts"
+# 1 "<built-in>"
+# 1 "<command-line>"
+# 1 "src/arm/BB-SPI0-AT86RF233-00A0.dts"
+# 19 "src/arm/BB-SPI0-AT86RF233-00A0.dts"
+/dts-v1/;
+/plugin/;
+
+# 1 "include/dt-bindings/board/am335x-bbw-bbb-base.h" 1
+# 23 "src/arm/BB-SPI0-AT86RF233-00A0.dts" 2
+# 1 "include/dt-bindings/pinctrl/am33xx.h" 1
+# 9 "include/dt-bindings/pinctrl/am33xx.h"
+# 1 "include/dt-bindings/pinctrl/omap.h" 1
+# 10 "include/dt-bindings/pinctrl/am33xx.h" 2
+# 24 "src/arm/BB-SPI0-AT86RF233-00A0.dts" 2
+# 1 "include/dt-bindings/interrupt-controller/irq.h" 1
+# 25 "src/arm/BB-SPI0-AT86RF233-00A0.dts" 2
+
+/ {
+
+
+
+ fragment@0 {
+  target-path="/";
+  __overlay__ {
+
+   chosen {
+    overlays {
+     BB-SPI0-AT86RF233-00A0 = "Wed Jun 19 07:10:02 2024";
+    };
+   };
+  };
+ };
+
+
+
+
+ fragment@1 {
+  target = <&ocp>;
+  __overlay__ {
+   P9_17_pinmux { status = "disabled"; };
+   P9_18_pinmux { status = "disabled"; };
+   P9_21_pinmux { status = "disabled"; };
+   P9_22_pinmux { status = "disabled"; };
+
+   P9_15_pinmux { status = "disabled"; };
+   P9_23_pinmux { status = "disabled"; };
+   P9_12_pinmux { status = "disabled"; };
+  };
+ };
+
+ fragment@2 {
+  target = <&am33xx_pinmux>;
+  __overlay__ {
+   bb_at86_pins: bb_at86_pins {
+    pinctrl-single,pins = <
+     ((((0x840)) & 0xffff) - (0x0800)) ((((1 << 5))) | (7))
+     ((((0x844)) & 0xffff) - (0x0800)) ((0) | (7))
+     ((((0x878)) & 0xffff) - (0x0800)) ((0) | (7))
+    >;
+   };
+   spi0_at86_s0: spi0_at86_s0 {
+    pinctrl-single,pins = <
+     ((((0x950)) & 0xffff) - (0x0800)) ((((1 << 5) | (1 << 3))) | (0))
+     ((((0x954)) & 0xffff) - (0x0800)) ((((1 << 5) | (1 << 3))) | (0))
+     ((((0x958)) & 0xffff) - (0x0800)) ((((1 << 5) | (1 << 3))) | (0))
+     ((((0x95c)) & 0xffff) - (0x0800)) ((((1 << 5) | (1 << 3))) | (0))
+    >;
+   };
+  };
+ };
+
+ fragment@3 {
+  target = <&spi0>;
+  __overlay__ {
+   #address-cells = <1>;
+   #size-cells = <0>;
+
+   status = "okay";
+   pinctrl-names = "default";
+   pinctrl-0 = <&spi0_at86_s0>;
+
+   at86rf233@0 {
+    compatible = "atmel,at86rf233";
+
+    pinctrl-names = "default";
+    pinctrl-0 = <&bb_at86_pins>;
+
+    spi-max-frequency = <1000000>;
+    reg = <0>;
+    interrupt-parent = <&gpio1>;
+    interrupts = <16 4>;
+
+    xtal-trim = /bits/ 8 <0xf>;
+
+    reset-gpio = <&gpio1 28 0x00>;
+    sleep-gpio = <&gpio1 17 0x00>;
+
+   };
+  };
+ };
+};

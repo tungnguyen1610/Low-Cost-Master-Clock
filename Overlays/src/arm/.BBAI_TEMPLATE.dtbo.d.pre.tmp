@@ -1,0 +1,3 @@
+BBAI_TEMPLATE.o: src/arm/BBAI_TEMPLATE.dts \
+ include/dt-bindings/interrupt-controller/irq.h \
+ include/dt-bindings/gpio/gpio.h include/dt-bindings/pinctrl/dra.h

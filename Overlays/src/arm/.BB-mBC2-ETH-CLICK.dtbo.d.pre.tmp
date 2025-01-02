@@ -1,0 +1,4 @@
+BB-mBC2-ETH-CLICK.o: src/arm/BB-mBC2-ETH-CLICK.dts \
+ include/dt-bindings/gpio/gpio.h include/dt-bindings/pinctrl/am33xx.h \
+ include/dt-bindings/pinctrl/omap.h \
+ include/dt-bindings/interrupt-controller/irq.h

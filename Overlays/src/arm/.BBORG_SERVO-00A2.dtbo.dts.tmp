@@ -1,0 +1,126 @@
+# 1 "src/arm/BBORG_SERVO-00A2.dts"
+# 1 "<built-in>"
+# 1 "<command-line>"
+# 1 "src/arm/BBORG_SERVO-00A2.dts"
+
+
+
+
+
+/dts-v1/;
+/plugin/;
+
+# 1 "include/dt-bindings/board/am335x-bbw-bbb-base.h" 1
+# 10 "src/arm/BBORG_SERVO-00A2.dts" 2
+# 1 "include/dt-bindings/gpio/gpio.h" 1
+# 11 "src/arm/BBORG_SERVO-00A2.dts" 2
+# 1 "include/dt-bindings/pinctrl/am33xx.h" 1
+# 9 "include/dt-bindings/pinctrl/am33xx.h"
+# 1 "include/dt-bindings/pinctrl/omap.h" 1
+# 10 "include/dt-bindings/pinctrl/am33xx.h" 2
+# 12 "src/arm/BBORG_SERVO-00A2.dts" 2
+
+
+
+
+&{/chosen} {
+ overlays {
+  BBORG_SERVO-00A2 = "Wed Jun 19 07:10:02 2024";
+ };
+};
+
+
+
+
+&ocp {
+    P8_12_pinmux { status = "disabled"; };
+    P8_11_pinmux { status = "disabled"; };
+    P9_30_pinmux { status = "disabled"; };
+    P9_27_pinmux { status = "disabled"; };
+    P9_41_pinmux { status = "disabled"; };
+    P9_42_pinmux { status = "disabled"; };
+
+    P9_19_pinmux { status = "disabled"; };
+    P9_20_pinmux { status = "disabled"; };
+    P8_10_pinmux { status = "disabled"; };
+};
+
+&am33xx_pinmux {
+
+    bborg_servo_input_pins: pinmux_bborg_servo_input_pins {
+        pinctrl-single,pins = <
+            0x030 (0 | 7)
+            0x034 (0 | 7)
+            0x198 (0 | 7)
+            0x1A4 (0 | 7)
+            0x1B4 (0 | 7)
+            0x164 (0 | 7)
+        >;
+    };
+
+
+    bborg_servo_pca9685_i2c_pins: bborg_servo_pca9685_i2c_pins {
+        pinctrl-single,pins = <
+            0x17C (0 | 3)
+            0x178 (0 | 3)
+        >;
+    };
+
+
+    bborg_servo_pca9685_en_pins: pinmux_bborg_servo_pca9685_en_pins {
+        pinctrl-single,pins = <
+            0x098 (0 | 7)
+        >;
+    };
+};
+
+&i2c2 {
+    pinctrl-names = "default";
+    pinctrl-0 = <&bborg_servo_pca9685_i2c_pins>;
+    status = "okay";
+    clock-frequency = <100000>;
+    #address-cells = <1>;
+    #size-cells = <0>;
+
+    pca9685_servo: pca9685_serve@7f {
+        compatible = "nxp, pca9685";
+        lable = "pca9685_servo";
+        pinctrl-names = "default";
+        pinctrl-0 = <&bborg_servo_pca9685_en_pins>;
+        enable-gpios = <&gpio2 4 0>;
+        reg = <0x7f>;
+    };
+};
+
+&{/} {
+    gpio_inputs {
+        compatible = "gpio-keys";
+        pinctrl-names = "default";
+        pinctrl-0 = <&bborg_servo_input_pins>;
+
+        input@1 {
+            lable = "in1";
+            gpios = <&gpio1 12 0>;
+        };
+        input@2 {
+            lable = "in2";
+            gpios = <&gpio1 13 0>;
+        };
+        input@3 {
+            lable = "in3";
+            gpios = <&gpio3 16 0>;
+        };
+        input@4 {
+            lable = "in4";
+            gpios = <&gpio3 19 0>;
+        };
+        input@5 {
+            lable = "in5";
+            gpios = <&gpio3 20 0>;
+        };
+        input@6 {
+            lable = "in6";
+            gpios = <&gpio0 7 0>;
+        };
+    };
+};

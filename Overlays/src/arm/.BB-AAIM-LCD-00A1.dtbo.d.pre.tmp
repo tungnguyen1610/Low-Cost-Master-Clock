@@ -1,0 +1,4 @@
+BB-AAIM-LCD-00A1.o: src/arm/BB-AAIM-LCD-00A1.dts \
+ include/dt-bindings/gpio/gpio.h \
+ include/dt-bindings/interrupt-controller/irq.h \
+ include/dt-bindings/pinctrl/am33xx.h include/dt-bindings/pinctrl/omap.h

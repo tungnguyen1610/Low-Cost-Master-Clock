@@ -1,0 +1,30 @@
+// SPDX-License-Identifier: GPL-2.0-only
+/*
+ * Copyright (C) 2019 Robert Nelson <robertcnelson@gmail.com>
+ */
+
+/dts-v1/;
+/plugin/;
+
+/*
+ * Helper to show loaded overlays under: /proc/device-tree/chosen/overlays/
+ */
+&{/chosen} {
+	overlays {
+		AM335X-I2C1-400-00A0.bb.org-overlays = __TIMESTAMP__;
+	};
+};
+
+/ {
+	fragment@1 {
+		target = <&i2c1>;
+		__overlay__ {
+			status = "okay";
+
+			clock-frequency = <400000>;
+
+			#address-cells = <1>;
+			#size-cells = <0>;
+		};
+	};
+};

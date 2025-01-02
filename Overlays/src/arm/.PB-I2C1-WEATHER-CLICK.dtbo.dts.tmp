@@ -1,0 +1,55 @@
+# 1 "src/arm/PB-I2C1-WEATHER-CLICK.dts"
+# 1 "<built-in>"
+# 1 "<command-line>"
+# 1 "src/arm/PB-I2C1-WEATHER-CLICK.dts"
+
+
+
+
+
+
+
+/dts-v1/;
+/plugin/;
+
+# 1 "include/dt-bindings/board/am335x-bbw-bbb-base.h" 1
+# 12 "src/arm/PB-I2C1-WEATHER-CLICK.dts" 2
+# 1 "include/dt-bindings/gpio/gpio.h" 1
+# 13 "src/arm/PB-I2C1-WEATHER-CLICK.dts" 2
+# 1 "include/dt-bindings/pinctrl/am33xx.h" 1
+# 9 "include/dt-bindings/pinctrl/am33xx.h"
+# 1 "include/dt-bindings/pinctrl/omap.h" 1
+# 10 "include/dt-bindings/pinctrl/am33xx.h" 2
+# 14 "src/arm/PB-I2C1-WEATHER-CLICK.dts" 2
+
+/ {
+
+
+
+ fragment@0 {
+  target-path="/";
+  __overlay__ {
+
+   chosen {
+    overlays {
+     PB-I2C1-WEATHER-CLICK = "Wed Jun 19 07:10:02 2024";
+    };
+   };
+  };
+ };
+
+ fragment@1 {
+  target = <&i2c1>;
+  __overlay__ {
+   status = "okay";
+
+   #address-cells = <1>;
+   #size-cells = <0>;
+
+   bmp280@76 {
+    compatible = "bosch,bme280";
+    reg = <0x76>;
+   };
+  };
+ };
+};

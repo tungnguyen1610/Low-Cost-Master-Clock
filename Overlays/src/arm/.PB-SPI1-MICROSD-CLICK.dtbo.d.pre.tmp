@@ -1,0 +1,4 @@
+PB-SPI1-MICROSD-CLICK.o: src/arm/PB-SPI1-MICROSD-CLICK.dts \
+ include/dt-bindings/gpio/gpio.h include/dt-bindings/pinctrl/am33xx.h \
+ include/dt-bindings/pinctrl/omap.h \
+ include/dt-bindings/interrupt-controller/irq.h

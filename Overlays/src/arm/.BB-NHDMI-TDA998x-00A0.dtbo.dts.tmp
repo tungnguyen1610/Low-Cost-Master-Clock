@@ -1,0 +1,139 @@
+# 1 "src/arm/BB-NHDMI-TDA998x-00A0.dts"
+# 1 "<built-in>"
+# 1 "<command-line>"
+# 1 "src/arm/BB-NHDMI-TDA998x-00A0.dts"
+# 9 "src/arm/BB-NHDMI-TDA998x-00A0.dts"
+/dts-v1/;
+/plugin/;
+
+# 1 "include/dt-bindings/gpio/gpio.h" 1
+# 13 "src/arm/BB-NHDMI-TDA998x-00A0.dts" 2
+# 1 "include/dt-bindings/pinctrl/am33xx.h" 1
+# 9 "include/dt-bindings/pinctrl/am33xx.h"
+# 1 "include/dt-bindings/pinctrl/omap.h" 1
+# 10 "include/dt-bindings/pinctrl/am33xx.h" 2
+# 14 "src/arm/BB-NHDMI-TDA998x-00A0.dts" 2
+# 1 "include/dt-bindings/display/tda998x.h" 1
+# 15 "src/arm/BB-NHDMI-TDA998x-00A0.dts" 2
+
+/ {
+
+
+
+ fragment@0 {
+  target-path="/";
+  __overlay__ {
+
+   chosen {
+    overlays {
+     BB-NHDMI-TDA998x-00A0 = "Wed Jun 19 07:10:02 2024";
+    };
+   };
+  };
+ };
+
+
+
+
+ fragment@1 {
+  target = <&ocp>;
+  __overlay__ {
+   P8_45_pinmux { status = "disabled"; };
+   P8_46_pinmux { status = "disabled"; };
+   P8_43_pinmux { status = "disabled"; };
+   P8_44_pinmux { status = "disabled"; };
+   P8_41_pinmux { status = "disabled"; };
+   P8_42_pinmux { status = "disabled"; };
+   P8_39_pinmux { status = "disabled"; };
+   P8_40_pinmux { status = "disabled"; };
+   P8_37_pinmux { status = "disabled"; };
+   P8_38_pinmux { status = "disabled"; };
+   P8_36_pinmux { status = "disabled"; };
+   P8_34_pinmux { status = "disabled"; };
+   P8_35_pinmux { status = "disabled"; };
+   P8_33_pinmux { status = "disabled"; };
+   P8_31_pinmux { status = "disabled"; };
+   P8_32_pinmux { status = "disabled"; };
+   P8_27_pinmux { status = "disabled"; };
+   P8_29_pinmux { status = "disabled"; };
+   P8_28_pinmux { status = "disabled"; };
+   P8_30_pinmux { status = "disabled"; };
+  };
+ };
+
+ fragment@2 {
+  target = <&am33xx_pinmux>;
+  __overlay__ {
+   nxp_hdmi_bonelt_pins: nxp_hdmi_bonelt_pins {
+    pinctrl-single,pins = <
+     ((((0x8a0)) & 0xffff) - (0x0800)) (((1 << 3)) | 0)
+     ((((0x8a4)) & 0xffff) - (0x0800)) (((1 << 3)) | 0)
+     ((((0x8a8)) & 0xffff) - (0x0800)) (((1 << 3)) | 0)
+     ((((0x8ac)) & 0xffff) - (0x0800)) (((1 << 3)) | 0)
+     ((((0x8b0)) & 0xffff) - (0x0800)) (((1 << 3)) | 0)
+     ((((0x8b4)) & 0xffff) - (0x0800)) (((1 << 3)) | 0)
+     ((((0x8b8)) & 0xffff) - (0x0800)) (((1 << 3)) | 0)
+     ((((0x8bc)) & 0xffff) - (0x0800)) (((1 << 3)) | 0)
+     ((((0x8c0)) & 0xffff) - (0x0800)) (((1 << 3)) | 0)
+     ((((0x8c4)) & 0xffff) - (0x0800)) (((1 << 3)) | 0)
+     ((((0x8c8)) & 0xffff) - (0x0800)) (((1 << 3)) | 0)
+     ((((0x8cc)) & 0xffff) - (0x0800)) (((1 << 3)) | 0)
+     ((((0x8d0)) & 0xffff) - (0x0800)) (((1 << 3)) | 0)
+     ((((0x8d4)) & 0xffff) - (0x0800)) (((1 << 3)) | 0)
+     ((((0x8d8)) & 0xffff) - (0x0800)) (((1 << 3)) | 0)
+     ((((0x8dc)) & 0xffff) - (0x0800)) (((1 << 3)) | 0)
+     ((((0x8e0)) & 0xffff) - (0x0800)) (0 | 0)
+     ((((0x8e4)) & 0xffff) - (0x0800)) (0 | 0)
+     ((((0x8e8)) & 0xffff) - (0x0800)) (0 | 0)
+     ((((0x8ec)) & 0xffff) - (0x0800)) (0 | 0)
+    >;
+   };
+  };
+ };
+
+ fragment@3 {
+  target = <&lcdc>;
+  __overlay__ {
+   status = "okay";
+
+
+
+
+
+
+   blue-and-red-wiring = "straight";
+
+   port {
+    lcdc_0: endpoint@0 {
+     remote-endpoint = <&hdmi_0>;
+    };
+   };
+  };
+ };
+
+ fragment@4 {
+  target = <&i2c0>;
+  __overlay__ {
+   #address-cells = <1>;
+   #size-cells = <0>;
+   tda19988: tda19988@70 {
+    compatible = "nxp,tda998x";
+    reg = <0x70>;
+
+    pinctrl-names = "default";
+    pinctrl-0 = <&nxp_hdmi_bonelt_pins>;
+
+
+
+
+    ports {
+     port@0 {
+      hdmi_0: endpoint@0 {
+       remote-endpoint = <&lcdc_0>;
+      };
+     };
+    };
+   };
+  };
+ };
+};

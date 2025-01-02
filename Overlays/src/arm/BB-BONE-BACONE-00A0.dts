@@ -1,0 +1,152 @@
+// SPDX-License-Identifier: GPL-2.0-only
+/*
+ * Copyright (C) 2013 Circuit Co.
+ */
+
+/dts-v1/;
+/plugin/;
+
+#include <dt-bindings/board/am335x-bbw-bbb-base.h>
+#include <dt-bindings/gpio/gpio.h>
+#include <dt-bindings/pinctrl/am33xx.h>
+
+/*
+ * Helper to show loaded overlays under: /proc/device-tree/chosen/overlays/
+ */
+&{/chosen} {
+	overlays {
+		BB-BONE-BACONE-00A0.bb.org-overlays = __TIMESTAMP__;
+	};
+};
+
+/ {
+	/*
+	 * Free up the pins used by the cape from the pinmux helpers.
+	 */
+	fragment@1 {
+		target = <&ocp>;
+		__overlay__ {
+			P8_19_pinmux { status = "disabled"; };	/* P8_19: gpmc_ad8.gpio0_22 */
+
+			P9_14_pinmux { status = "disabled"; };	/* P9_14: (ZCZ ball U14) | MODE 6 */
+			P9_16_pinmux { status = "disabled"; };	/* P9_16: (ZCZ ball T14) | MODE 6 */
+
+			P9_42_pinmux { status = "disabled"; };	/* P9_42: (ZCZ ball C18) | MODE 0 */
+
+			P9_15_pinmux { status = "disabled"; };	/* P9_15: .gpio1_16 | MODE7 | OUTPUT */
+			P9_17_pinmux { status = "disabled"; };	/* P9_17: spi0_cs0.gpio0_5 | MODE7 | OUTPUT */
+			P9_18_pinmux { status = "disabled"; };	/* P9_18: spi0_d1.gpio0_4 | MODE7 | OUTPUT */
+			P9_22_pinmux { status = "disabled"; };	/* P9_22: spi0_sclk.gpio0_2 | MODE7 | OUTPUT */
+		};
+	};
+
+	fragment@2 {
+		target = <&am33xx_pinmux>;
+		__overlay__ {
+
+			bb_gpio0_22_pins: pinmux_bb_gpio0_22_pins {
+				pinctrl-single,pins = <
+					BONE_P8_19 (PIN_INPUT | MUX_MODE7)	/* P8_19: gpmc_ad8.gpio0_22 */
+				>;
+			};
+
+			bb_ehrpwm1_pins: pinmux_bb_ehrpwm1_pins {
+				pinctrl-single,pins = <
+					BONE_P9_14 (PIN_OUTPUT_PULLDOWN | MUX_MODE6)	/* P9_14: (ZCZ ball U14) | MODE 6 */
+					BONE_P9_16 (PIN_OUTPUT_PULLDOWN | MUX_MODE6)	/* P9_16: (ZCZ ball T14) | MODE 6 */
+				>;
+			};
+
+			bb_ecap0_pins: pinmux_bb_ecap0_pins {
+				pinctrl-single,pins = <
+					BONE_P9_42 (PIN_OUTPUT_PULLDOWN | MUX_MODE0)	/* P9_42: (ZCZ ball C18) | MODE 0 */
+				>;
+			};
+
+			bacon_gpiohelp_pins: pinmux_bacon_gpio_helper_pins {
+				pinctrl-single,pins = <
+					0x040 0x0f	/* P9_15: .gpio1_16 | MODE7 | OUTPUT */
+					0x15c 0x0f	/* P9_17: spi0_cs0.gpio0_5 | MODE7 | OUTPUT */
+					0x158 0x0f	/* P9_18: spi0_d1.gpio0_4 | MODE7 | OUTPUT */
+					0x150 0x0f	/* P9_22: spi0_sclk.gpio0_2 | MODE7 | OUTPUT */
+				>;
+			};
+		};
+	};
+
+	fragment@3 {
+		target-path="/";
+		__overlay__ {
+
+			gpio_keys {
+				compatible = "gpio-keys";
+				pinctrl-names = "default";
+				pinctrl-0 = <&bb_gpio0_22_pins>;
+
+				button@1 {
+					debounce_interval = <50>;
+					linux,code = <143>; /* System Wake Up */
+					label = "gpio_btn";
+					gpios = <&gpio0 22 GPIO_ACTIVE_LOW>;
+					gpio-key,wakeup;
+				};
+			};
+		};
+	};
+
+	fragment@4 {
+		target = <&tscadc>;
+		__overlay__ {
+
+			status = "okay";
+			adc {
+				ti,adc-channels = <6>; /* AIN5 */
+			};
+		};
+	};
+
+	fragment@5 {
+		target = <&epwmss0>;
+		__overlay__ {
+			status = "okay";
+		};
+	};
+
+	fragment@6 {
+		target = <&ecap0>;
+		__overlay__ {
+			pinctrl-names = "default";
+			pinctrl-0 = <&bb_ecap0_pins>;
+			status = "okay";
+		};
+	};
+
+	fragment@7 {
+		target = <&epwmss1>;
+		__overlay__ {
+			status = "okay";
+		};
+	};
+
+	fragment@8 {
+		target = <&ehrpwm1>;
+		__overlay__ {
+			pinctrl-names = "default";
+			pinctrl-0 = <&bb_ehrpwm1_pins>;
+			status = "okay";
+		};
+	};
+
+	fragment@9 {
+		target = <&i2c2>;
+		__overlay__ {
+			#address-cells = <1>;
+			#size-cells = <0>;
+
+			accelerometer: mma8450@1c {
+				compatible = "fsl,mma8450";
+				reg = <0x1c>;
+			};
+		};
+	};
+};

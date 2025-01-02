@@ -1,0 +1,3 @@
+BBAI_BBORG_COMMS-00A2.o: src/arm/BBAI_BBORG_COMMS-00A2.dts \
+ include/dt-bindings/interrupt-controller/irq.h \
+ include/dt-bindings/pinctrl/dra.h include/dt-bindings/gpio/gpio.h

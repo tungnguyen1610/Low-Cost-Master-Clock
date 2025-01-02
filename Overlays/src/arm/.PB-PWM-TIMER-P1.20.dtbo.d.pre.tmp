@@ -1,0 +1,3 @@
+PB-PWM-TIMER-P1.20.o: src/arm/PB-PWM-TIMER-P1.20.dts \
+ include/dt-bindings/gpio/gpio.h include/dt-bindings/pinctrl/am33xx.h \
+ include/dt-bindings/pinctrl/omap.h

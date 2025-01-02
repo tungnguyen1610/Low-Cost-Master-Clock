@@ -1,0 +1,4 @@
+BBAI_BB-BONE-FACE-8CH-00A0.o: src/arm/BBAI_BB-BONE-FACE-8CH-00A0.dts \
+ include/dt-bindings/interrupt-controller/irq.h \
+ include/dt-bindings/gpio/gpio.h include/dt-bindings/pinctrl/dra.h \
+ include/dt-bindings/clock/dra7.h

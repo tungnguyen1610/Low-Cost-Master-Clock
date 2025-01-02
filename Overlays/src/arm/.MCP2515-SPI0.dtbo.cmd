@@ -1,0 +1,3 @@
+cmd_src/arm/MCP2515-SPI0.dtbo = cpp -Wp,-MD,src/arm/.MCP2515-SPI0.dtbo.d.pre.tmp -nostdinc -Iinclude -Isrc/arm -Isrc -Itestcase-data -undef -D__DTS__ -x assembler-with-cpp -o src/arm/.MCP2515-SPI0.dtbo.dts.tmp src/arm/MCP2515-SPI0.dts ; dtc -O dtb -o src/arm/MCP2515-SPI0.dtbo -b 0 -@ -i src/arm -Wno-unit_address_vs_reg -Wno-chosen_node_is_root -Wno-alias_paths -d src/arm/.MCP2515-SPI0.dtbo.d.dtc.tmp src/arm/.MCP2515-SPI0.dtbo.dts.tmp ; cat src/arm/.MCP2515-SPI0.dtbo.d.pre.tmp src/arm/.MCP2515-SPI0.dtbo.d.dtc.tmp > src/arm/.MCP2515-SPI0.dtbo.d
+MCP2515-SPI0.o: src/arm/MCP2515-SPI0.dts
+src/arm/MCP2515-SPI0.dtbo: src/arm/.MCP2515-SPI0.dtbo.dts.tmp

@@ -1,0 +1,3 @@
+cmd_src/arm/PB-USB1-OTG.dtbo = cpp -Wp,-MD,src/arm/.PB-USB1-OTG.dtbo.d.pre.tmp -nostdinc -Iinclude -Isrc/arm -Isrc -Itestcase-data -undef -D__DTS__ -x assembler-with-cpp -o src/arm/.PB-USB1-OTG.dtbo.dts.tmp src/arm/PB-USB1-OTG.dts ; dtc -O dtb -o src/arm/PB-USB1-OTG.dtbo -b 0 -@ -i src/arm -Wno-unit_address_vs_reg -Wno-chosen_node_is_root -Wno-alias_paths -d src/arm/.PB-USB1-OTG.dtbo.d.dtc.tmp src/arm/.PB-USB1-OTG.dtbo.dts.tmp ; cat src/arm/.PB-USB1-OTG.dtbo.d.pre.tmp src/arm/.PB-USB1-OTG.dtbo.d.dtc.tmp > src/arm/.PB-USB1-OTG.dtbo.d
+PB-USB1-OTG.o: src/arm/PB-USB1-OTG.dts
+src/arm/PB-USB1-OTG.dtbo: src/arm/.PB-USB1-OTG.dtbo.dts.tmp

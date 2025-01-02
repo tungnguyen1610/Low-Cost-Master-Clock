@@ -1,0 +1,139 @@
+# 1 "src/arm/seeed-4mic-voicecard-00A0.dts"
+# 1 "<built-in>"
+# 1 "<command-line>"
+# 1 "src/arm/seeed-4mic-voicecard-00A0.dts"
+# 13 "src/arm/seeed-4mic-voicecard-00A0.dts"
+/dts-v1/;
+/plugin/;
+
+# 1 "include/dt-bindings/gpio/gpio.h" 1
+# 17 "src/arm/seeed-4mic-voicecard-00A0.dts" 2
+# 1 "include/dt-bindings/pinctrl/am33xx.h" 1
+# 9 "include/dt-bindings/pinctrl/am33xx.h"
+# 1 "include/dt-bindings/pinctrl/omap.h" 1
+# 10 "include/dt-bindings/pinctrl/am33xx.h" 2
+# 18 "src/arm/seeed-4mic-voicecard-00A0.dts" 2
+
+/ {
+
+
+
+ fragment@0 {
+  target-path="/";
+  __overlay__ {
+
+   chosen {
+    overlays {
+     seeed-4mic-voicecard-00A0 = "Wed Jun 19 07:10:02 2024";
+    };
+   };
+  };
+ };
+
+
+
+
+ fragment@1 {
+  target = <&ocp>;
+  __overlay__ {
+   P9_27_pinmux { status = "disabled"; };
+   P9_28_pinmux { status = "disabled"; };
+   P9_30_pinmux { status = "disabled"; };
+   P9_92_pinmux { status = "disabled"; };
+  };
+ };
+
+ fragment@2 {
+  target = <&am33xx_pinmux>;
+  __overlay__ {
+   bone_audio_cape_audio_pins: pinmux_bone_audio_cape_audio_pins {
+    pinctrl-single,pins = <
+     0x1A4 (((1 << 5)) | 0)
+     0x19C (((1 << 5)) | 0)
+     0x198 (((1 << 5)) | 0)
+     0x1A0 (((1 << 5)) | 0)
+    >;
+   };
+  };
+ };
+
+ fragment@3 {
+  target = <&scm_clocks>;
+  __overlay__ {
+   ac108_mclk: codec-mclk {
+    compatible = "fixed-clock";
+    #clock-cells = <0>;
+    clock-frequency = <24000000>;
+   };
+  };
+ };
+
+ fragment@4 {
+  target = <&i2c2>;
+  __overlay__ {
+   #address-cells = <1>;
+   #size-cells = <0>;
+   clock-frequency = <100000>;
+   status = "okay";
+   pinctrl-names = "default";
+   pinctrl-0 = <&i2c2_pins>;
+
+   ac108_b: ac108@3b {
+    #sound-dai-cells = <0>;
+    compatible = "x-power,ac108_0";
+    reg = <0x3b>;
+    data-protocol = <0>;
+   };
+  };
+ };
+
+ fragment@5 {
+  target = <&mcasp0>;
+  __overlay__ {
+   #sound-dai-cells = <0>;
+   pinctrl-names = "default";
+   pinctrl-0 = <&bone_audio_cape_audio_pins>;
+   status = "okay";
+   op-mode = <0>;
+   tdm-slots = <4>;
+   num-serializer = <16>;
+   serial-dir = <
+    2 0 1 0
+    0 0 0 0
+    0 0 0 0
+    0 0 0 0
+   >;
+   tx-num-evt = <1>;
+   rx-num-evt = <1>;
+  };
+ };
+
+ fragment@6 {
+  target-path="/";
+  __overlay__ {
+   sound {
+    compatible = "simple-audio-card";
+    simple-audio-card,name = "seeed-4mic-voicecard";
+# 129 "src/arm/seeed-4mic-voicecard-00A0.dts"
+    simple-audio-card,format = "dsp_a";
+    simple-audio-card,bitclock-master = <&sound_master>;
+    simple-audio-card,frame-master = <&sound_master>;
+
+
+    simple-audio-card,channels-playback-override = <4>;
+    simple-audio-card,channels-capture-override = <4>;
+
+    simple-audio-card,cpu {
+     sound-dai = <&mcasp0>;
+    };
+
+   sound_master: simple-audio-card,codec {
+     #sound-dai-cells = <0>;
+     sound-dai = <&ac108_b>;
+     clocks = <&ac108_mclk>;
+     clock-names = "mclk";
+    };
+   };
+  };
+ };
+};

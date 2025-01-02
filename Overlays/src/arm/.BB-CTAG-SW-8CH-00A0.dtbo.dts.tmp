@@ -1,0 +1,201 @@
+# 1 "src/arm/BB-CTAG-SW-8CH-00A0.dts"
+# 1 "<built-in>"
+# 1 "<command-line>"
+# 1 "src/arm/BB-CTAG-SW-8CH-00A0.dts"
+
+
+
+
+
+
+
+/dts-v1/;
+/plugin/;
+
+# 1 "include/dt-bindings/board/am335x-bbw-bbb-base.h" 1
+# 12 "src/arm/BB-CTAG-SW-8CH-00A0.dts" 2
+# 1 "include/dt-bindings/gpio/gpio.h" 1
+# 13 "src/arm/BB-CTAG-SW-8CH-00A0.dts" 2
+# 1 "include/dt-bindings/pinctrl/am33xx.h" 1
+# 9 "include/dt-bindings/pinctrl/am33xx.h"
+# 1 "include/dt-bindings/pinctrl/omap.h" 1
+# 10 "include/dt-bindings/pinctrl/am33xx.h" 2
+# 14 "src/arm/BB-CTAG-SW-8CH-00A0.dts" 2
+
+/ {
+ fragment@0 {
+  target-path = "/";
+  __overlay__ {
+   chosen {
+    overlays {
+     BB-CTAG-SW-8CH-00A0 = "Wed Jun 19 07:10:02 2024";
+    };
+   };
+  };
+ };
+
+
+
+
+ fragment@1 {
+  target = <&ocp>;
+  __overlay__ {
+   P9_30_pinmux { status = "disabled"; };
+   P9_28_pinmux { status = "disabled"; };
+   P9_31_pinmux { status = "disabled"; };
+   P9_29_pinmux { status = "disabled"; };
+   P9_12_pinmux { status = "disabled"; };
+   P9_27_pinmux { status = "disabled"; };
+   P9_25_pinmux { status = "disabled"; };
+   P8_32_pinmux { status = "disabled"; };
+   P8_33_pinmux { status = "disabled"; };
+   P8_14_pinmux { status = "disabled"; };
+   P8_17_pinmux { status = "disabled"; };
+  };
+ };
+
+ fragment@2 {
+  target-path = "/";
+  __overlay__ {
+   spi_gpio: spi_gpio {
+    compatible = "spi-gpio";
+    #address-cells = <1>;
+    #size-cells = <0>;
+
+    sck-gpios = <&gpio0 11 0>;
+    mosi-gpios = <&gpio0 9 0>;
+    miso-gpios = <&gpio0 26 0>;
+    cs-gpios = <&gpio0 27 0 &gpio0 10 0>;
+    num-chipselects = <2>;
+
+    pinctrl-names = "default";
+
+    pinctrl-0 = <&audiocard_spi_pins>;
+    status = "okay";
+
+    ad193x: ad193x@0{
+     pinctrl-names = "default";
+     pinctrl-0 = <&ad1938_codec_reset_muxing>;
+     #address-cells = <1>;
+     #size-cells = <0>;
+
+     compatible = "analog,ad1938";
+     status = "okay";
+     reset-gpio = <&gpio2 17 0>;
+     reg = <0>;
+     spi-max-frequency = <100000>;
+    };
+   };
+  };
+ };
+
+ fragment@3 {
+  target = <&am33xx_pinmux>;
+  __overlay__ {
+   ad1938_codec_reset_muxing: ad1938_codec_reset_muxing {
+    pinctrl-single,pins = <
+     ((((0x8cc)) & 0xffff) - (0x0800)) (((1 << 5)) | 7)
+    >;
+   };
+
+   mcasp0_pins_sleep: mcasp0_pins_sleep {
+    pinctrl-single,pins = <
+     ((((0x9ac)) & 0xffff) - (0x0800)) (((1 << 5)) | 7)
+     ((((0x99c)) & 0xffff) - (0x0800)) (((1 << 5)) | 7)
+     ((((0x994)) & 0xffff) - (0x0800)) (((1 << 5)) | 7)
+     ((((0x990)) & 0xffff) - (0x0800)) (((1 << 5)) | 7)
+     ((((0x9a4)) & 0xffff) - (0x0800)) (((1 << 5)) | 0)
+     ((((0x878)) & 0xffff) - (0x0800)) (((1 << 5)) | 6)
+     ((((0x998)) & 0xffff) - (0x0800)) (((1 << 5)) | 7)
+     0x06c (((1 << 5)) | 7)
+    >;
+   };
+
+   mcasp0_pins: mcasp0_pins {
+    pinctrl-single,pins = <
+     ((((0x9ac)) & 0xffff) - (0x0800)) (((1 << 5)) | 0)
+     ((((0x99c)) & 0xffff) - (0x0800)) (0 | 2)
+     ((((0x994)) & 0xffff) - (0x0800)) (((1 << 5)) | 0)
+     ((((0x990)) & 0xffff) - (0x0800)) (((1 << 5)) | 0)
+     ((((0x9a4)) & 0xffff) - (0x0800)) (((1 << 5)) | 0)
+     ((((0x878)) & 0xffff) - (0x0800)) (((1 << 5)) | 6)
+     ((((0x998)) & 0xffff) - (0x0800)) (((1 << 5)) | 0)
+     0x06c (0 | 7)
+    >;
+   };
+
+   audiocard_spi_pins: pinmux_audiocard_spi_pins {
+    pinctrl-single,pins = <
+     ((((0x8dc)) & 0xffff) - (0x0800)) (((1 << 5) | (1 << 4)) | 7)
+     ((((0x828)) & 0xffff) - (0x0800)) (((1 << 5) | (1 << 4)) | 7)
+     ((((0x8d4)) & 0xffff) - (0x0800)) (((1 << 4)) | 7)
+     ((((0x82c)) & 0xffff) - (0x0800)) (((1 << 4)) | 7)
+    >;
+   };
+  };
+ };
+
+ fragment@4 {
+  target = <&mcasp0>;
+  __overlay__ {
+   pinctrl-names = "default", "sleep";
+   pinctrl-0 = <&mcasp0_pins>;
+   pinctrl-1 = <&mcasp0_pins_sleep>;
+   status = "okay";
+   op-mode = <0>;
+   tdm-slots = <8>;
+   num-serializer = <16>;
+   serial-dir = <
+    2 0 1 0
+    0 0 0 0
+    0 0 0 0
+    0 0 0 0
+   >;
+   tx-num-evt = <1>;
+   rx-num-evt = <1>;
+  };
+ };
+
+ fragment@5 {
+  target-path = "/";
+  __overlay__ {
+
+   clk_mcasp0_fixed: clk_mcasp0_fixed {
+    #clock-cells = <0>;
+    compatible = "fixed-clock";
+    clock-frequency = <24576000>;
+   };
+
+   clk_mcasp0: clk_mcasp0 {
+    #clock-cells = <0>;
+    compatible = "gpio-gate-clock";
+    clocks = <&clk_mcasp0_fixed>;
+    enable-gpios = <&gpio1 27 0>;
+   };
+
+   sound {
+    compatible = "ctag,face-2-4";
+    ti,model = "CTAG face-2-4 8CH";
+    ti,audio-codec = <&ad193x>;
+    ti,mcasp-controller = <&mcasp0>;
+    ti,audiocard-tdm-slots = <8>;
+    ti,codec-clock-rate = <24576000>;
+    ti,cpu-clock-rate = <24576000>;
+    status = "okay";
+
+    ti,audio-codec-bit-delay-dac = <1>;
+    ti,audio-codec-bit-delay-adc = <1>;
+    ti,mcasp-controller-bit-delay-tx = <1>;
+    ti,mcasp-controller-bit-delay-rx = <1>;
+    bb-device = <0>;
+    audio-routing =
+     "Line Out", "DAC1OUT",
+     "Line Out", "DAC2OUT",
+     "Line Out", "DAC3OUT",
+     "Line Out", "DAC4OUT",
+     "ADC1IN", "Line In",
+     "ADC2IN", "Line In";
+   };
+  };
+ };
+};

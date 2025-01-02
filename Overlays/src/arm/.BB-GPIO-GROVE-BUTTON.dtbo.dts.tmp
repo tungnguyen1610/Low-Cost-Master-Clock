@@ -1,0 +1,93 @@
+# 1 "src/arm/BB-GPIO-GROVE-BUTTON.dts"
+# 1 "<built-in>"
+# 1 "<command-line>"
+# 1 "src/arm/BB-GPIO-GROVE-BUTTON.dts"
+
+
+
+
+
+
+/dts-v1/;
+/plugin/;
+
+# 1 "include/dt-bindings/board/am335x-bbw-bbb-base.h" 1
+# 11 "src/arm/BB-GPIO-GROVE-BUTTON.dts" 2
+# 1 "include/dt-bindings/gpio/gpio.h" 1
+# 12 "src/arm/BB-GPIO-GROVE-BUTTON.dts" 2
+# 1 "include/dt-bindings/pinctrl/am33xx.h" 1
+# 9 "include/dt-bindings/pinctrl/am33xx.h"
+# 1 "include/dt-bindings/pinctrl/omap.h" 1
+# 10 "include/dt-bindings/pinctrl/am33xx.h" 2
+# 13 "src/arm/BB-GPIO-GROVE-BUTTON.dts" 2
+
+/ {
+
+
+
+ fragment@0 {
+  target-path="/";
+  __overlay__ {
+   chosen {
+    overlays {
+     BB-GPIO-GROVE-BUTTON-00A0 = "Wed Jun 19 07:10:02 2024";
+    };
+   };
+  };
+ };
+
+ fragment@1 {
+  target = <&am33xx_pinmux>;
+  __overlay__ {
+# 66 "src/arm/BB-GPIO-GROVE-BUTTON.dts"
+  };
+ };
+
+ fragment@10 {
+  target= <&ocp>;
+  __overlay__ {
+   cape-universal {
+    status = "disabled";
+   };
+  };
+ };
+
+ fragment@20 {
+  target-path="/";
+  __overlay__ {
+
+   gpio_keys {
+    compatible = "gpio-keys";
+    pinctrl-names = "default";
+    pinctrl-0 = <>;
+
+    #address-cells = <1>;
+    #size-cells = <0>;
+
+    grove_button_1057_0@0 {
+     debounce_interval = <50>;
+     linux,code = <0x100>;
+     label = "grove:usr0";
+
+     gpios = <&gpio0 30 0x0>;
+     gpio-key,wakeup;
+     autorepeat;
+    };
+
+    grove_button_1057_1@1 {
+     debounce_interval = <50>;
+     linux,code = <0x101>;
+     label = "grove:usr1";
+
+
+
+
+     gpios = <&gpio2 22 0x0>;
+     gpio-key,wakeup;
+     autorepeat;
+    };
+# 169 "src/arm/BB-GPIO-GROVE-BUTTON.dts"
+   };
+  };
+ };
+};

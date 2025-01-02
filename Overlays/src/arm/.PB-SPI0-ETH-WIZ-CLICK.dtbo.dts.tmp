@@ -1,0 +1,101 @@
+# 1 "src/arm/PB-SPI0-ETH-WIZ-CLICK.dts"
+# 1 "<built-in>"
+# 1 "<command-line>"
+# 1 "src/arm/PB-SPI0-ETH-WIZ-CLICK.dts"
+# 12 "src/arm/PB-SPI0-ETH-WIZ-CLICK.dts"
+/dts-v1/;
+/plugin/;
+
+# 1 "include/dt-bindings/gpio/gpio.h" 1
+# 16 "src/arm/PB-SPI0-ETH-WIZ-CLICK.dts" 2
+# 1 "include/dt-bindings/pinctrl/am33xx.h" 1
+# 9 "include/dt-bindings/pinctrl/am33xx.h"
+# 1 "include/dt-bindings/pinctrl/omap.h" 1
+# 10 "include/dt-bindings/pinctrl/am33xx.h" 2
+# 17 "src/arm/PB-SPI0-ETH-WIZ-CLICK.dts" 2
+# 1 "include/dt-bindings/interrupt-controller/irq.h" 1
+# 18 "src/arm/PB-SPI0-ETH-WIZ-CLICK.dts" 2
+
+/ {
+
+
+
+ fragment@0 {
+  target-path="/";
+  __overlay__ {
+
+   chosen {
+    overlays {
+     PB-SPI0-ETH-WIZ-CLICK = "Wed Jun 19 07:10:02 2024";
+    };
+   };
+  };
+ };
+
+
+
+
+ fragment@1 {
+  target = <&ocp>;
+  __overlay__ {
+   P1_04_pinmux { status = "disabled"; };
+   P1_06_pinmux { status = "disabled"; };
+   P1_08_pinmux { status = "disabled"; };
+   P1_10_pinmux { status = "disabled"; };
+   P1_12_pinmux { status = "disabled"; };
+   P2_03_pinmux { status = "disabled"; };
+  };
+ };
+
+ fragment@2 {
+  target = <&am33xx_pinmux>;
+  __overlay__ {
+   w5500_pins: pinmux_w5500_pins {
+    pinctrl-single,pins = <
+     ((((0x0824)) & 0xffff) - (0x0800)) (((1 << 5) | (1 << 3)) | 7)
+     ((((0x08ec)) & 0xffff) - (0x0800)) (((1 << 5) | (1 << 3)) | 7)
+    >;
+   };
+
+   pb_spi0_pins: pinmux_pb_spi0_pins {
+    pinctrl-single,pins = <
+     ((((0x0950)) & 0xffff) - (0x0800)) (((1 << 5) | (1 << 3)) | 0)
+     ((((0x0954)) & 0xffff) - (0x0800)) (((1 << 5) | (1 << 3)) | 0)
+     ((((0x0958)) & 0xffff) - (0x0800)) (((1 << 5) | (1 << 3)) | 0)
+     ((((0x095c)) & 0xffff) - (0x0800)) (((1 << 5) | (1 << 3)) | 0)
+    >;
+   };
+  };
+ };
+
+ fragment@3 {
+  target = <&spi0>;
+  __overlay__ {
+   status = "okay";
+   pinctrl-names = "default";
+   pinctrl-0 = <&pb_spi0_pins>;
+
+   channel@0{ status = "disabled"; };
+   channel@1{ status = "disabled"; };
+  };
+ };
+
+ fragment@4 {
+  target = <&spi0>;
+  __overlay__ {
+   #address-cells = <1>;
+   #size-cells = <0>;
+
+   w5500: ethernet@0 {
+    compatible = "wiznet,w5500";
+    pinctrl-names = "default";
+    pinctrl-0 = <&w5500_pins>;
+    reg = <0x0>;
+    interrupt-parent = <&gpio0>;
+    interrupts = <23 2>;
+    spi-max-frequency = <24000000>;
+    local-mac-address = [ 00 00 00 00 00 00 ];
+   };
+  };
+ };
+};

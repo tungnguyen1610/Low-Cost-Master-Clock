@@ -1,0 +1,104 @@
+# 1 "src/arm/BB-SPI0-CC2520-00A0.dts"
+# 1 "<built-in>"
+# 1 "<command-line>"
+# 1 "src/arm/BB-SPI0-CC2520-00A0.dts"
+# 15 "src/arm/BB-SPI0-CC2520-00A0.dts"
+/dts-v1/;
+/plugin/;
+
+# 1 "include/dt-bindings/board/am335x-bbw-bbb-base.h" 1
+# 19 "src/arm/BB-SPI0-CC2520-00A0.dts" 2
+# 1 "include/dt-bindings/pinctrl/am33xx.h" 1
+# 9 "include/dt-bindings/pinctrl/am33xx.h"
+# 1 "include/dt-bindings/pinctrl/omap.h" 1
+# 10 "include/dt-bindings/pinctrl/am33xx.h" 2
+# 20 "src/arm/BB-SPI0-CC2520-00A0.dts" 2
+
+/ {
+
+
+
+ fragment@0 {
+  target = <&ocp>;
+  __overlay__ {
+   P9_17_pinmux { status = "disabled"; };
+   P9_18_pinmux { status = "disabled"; };
+   P9_21_pinmux { status = "disabled"; };
+   P9_22_pinmux { status = "disabled"; };
+
+   P8_11_pinmux { status = "disabled"; };
+   P8_12_pinmux { status = "disabled"; };
+   P8_15_pinmux { status = "disabled"; };
+   P8_16_pinmux { status = "disabled"; };
+   P9_12_pinmux { status = "disabled"; };
+   P9_23_pinmux { status = "disabled"; };
+  };
+ };
+
+ fragment@1 {
+  target = <&am33xx_pinmux>;
+  __overlay__ {
+
+   bb_spi0_pins: pinmux_bb_spi0_pins {
+    pinctrl-single,pins = <
+     0x15C (((1 << 4)) | 0)
+     0x158 (((1 << 4)) | 0)
+     0x154 (((1 << 5) | (1 << 4)) | 0)
+     0x150 (((1 << 5) | (1 << 4)) | 0)
+    >;
+   };
+
+   bb_cc2520_0_pins: pinmux_bb_cc2520_0_pins {
+    pinctrl-single,pins = <
+     0x034 (((1 << 5)) | 7)
+     0x030 (((1 << 5)) | 7)
+     0x03C (((1 << 5)) | 7)
+     0x038 (((1 << 5)) | 7)
+     0x078 (((1 << 5)) | 7)
+     0x044 (((1 << 5)) | 7)
+    >;
+   };
+  };
+ };
+
+ fragment@2 {
+  target = <&spi0>;
+  __overlay__ {
+   #address-cells = <1>;
+   #size-cells = <0>;
+
+   status = "okay";
+   pinctrl-names = "default";
+   pinctrl-0 = <&bb_spi0_pins>;
+
+
+
+
+   ti,pio-mode;
+
+
+   channel@0{ status = "disabled"; };
+   channel@1{ status = "disabled"; };
+
+   cc2520_0: cc2520@0 {
+    compatible = "ti,cc2520";
+    status = "okay";
+
+    reg = <0>;
+    spi-max-frequency = <4000000>;
+
+
+
+    pinctrl-names = "default";
+    pinctrl-0 = <&bb_cc2520_0_pins>;
+    fifo-gpio = <&gpio1 12 0>;
+    fifop-gpio = <&gpio1 13 0>;
+    cca-gpio = <&gpio1 14 0>;
+    sfd-gpio = <&gpio1 15 0>;
+    vreg-gpio = <&gpio1 28 0>;
+    reset-gpio = <&gpio1 17 0>;
+
+   };
+  };
+ };
+};

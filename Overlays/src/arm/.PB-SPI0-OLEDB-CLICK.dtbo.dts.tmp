@@ -1,0 +1,89 @@
+# 1 "src/arm/PB-SPI0-OLEDB-CLICK.dts"
+# 1 "<built-in>"
+# 1 "<command-line>"
+# 1 "src/arm/PB-SPI0-OLEDB-CLICK.dts"
+# 12 "src/arm/PB-SPI0-OLEDB-CLICK.dts"
+/dts-v1/;
+/plugin/;
+
+# 1 "include/dt-bindings/gpio/gpio.h" 1
+# 16 "src/arm/PB-SPI0-OLEDB-CLICK.dts" 2
+# 1 "include/dt-bindings/pinctrl/am33xx.h" 1
+# 9 "include/dt-bindings/pinctrl/am33xx.h"
+# 1 "include/dt-bindings/pinctrl/omap.h" 1
+# 10 "include/dt-bindings/pinctrl/am33xx.h" 2
+# 17 "src/arm/PB-SPI0-OLEDB-CLICK.dts" 2
+# 1 "include/dt-bindings/interrupt-controller/irq.h" 1
+# 18 "src/arm/PB-SPI0-OLEDB-CLICK.dts" 2
+
+/ {
+
+
+
+ fragment@0 {
+  target-path="/";
+  __overlay__ {
+
+   chosen {
+    overlays {
+     PB-SPI0-OLEDB-CLICK = "Wed Jun 19 07:10:02 2024";
+    };
+   };
+  };
+ };
+
+
+
+
+ fragment@1 {
+  target = <&ocp>;
+  __overlay__ {
+   P2_01_pinmux { status = "disabled"; };
+   P1_12_pinmux { status = "disabled"; };
+   P1_10_pinmux { status = "disabled"; };
+   P1_08_pinmux { status = "disabled"; };
+   P1_06_pinmux { status = "disabled"; };
+   P1_04_pinmux { status = "disabled"; };
+  };
+ };
+
+ fragment@2 {
+  target = <&spi0>;
+  __overlay__ {
+   status = "okay";
+
+   channel@0{ status = "disabled"; };
+   channel@1{ status = "disabled"; };
+  };
+ };
+
+ fragment@3 {
+  target = <&spi0>;
+  __overlay__ {
+   #address-cells = <1>;
+   #size-cells = <0>;
+
+   mikroe_oledb: mikroe_oledb@1{
+    compatible = "solomon,ssd1306";
+    pinctrl-names = "default";
+    pinctrl-0 = <
+     &P1_06_spi_cs_pin
+     &P1_08_spi_sclk_pin
+     &P1_10_spi_pin
+     &P1_12_spi_pin
+     &P2_01_gpio_pin
+     &P1_04_gpio_pin
+    >;
+    spi-max-frequency = <6000000>;
+    width = <96>;
+    height = <39>;
+    rotate = <180>;
+    reg = <1>;
+    buswidth = <8>;
+    debug = <3>;
+    reset-gpios = <&gpio2 25 0>;
+    dc-gpios = <&gpio1 18 0>;
+   };
+  };
+ };
+};

@@ -1,0 +1,1 @@
+src/arm/MCP2515-SPI0.dtbo: src/arm/.MCP2515-SPI0.dtbo.dts.tmp

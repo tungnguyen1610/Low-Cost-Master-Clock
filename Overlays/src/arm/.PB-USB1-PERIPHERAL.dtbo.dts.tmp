@@ -1,0 +1,16 @@
+# 1 "src/arm/PB-USB1-PERIPHERAL.dts"
+# 1 "<built-in>"
+# 1 "<command-line>"
+# 1 "src/arm/PB-USB1-PERIPHERAL.dts"
+# 24 "src/arm/PB-USB1-PERIPHERAL.dts"
+/dts-v1/;
+/plugin/;
+/ {
+        fragment@0 {
+                target = <&usb1>;
+                __overlay__ {
+                        status = "okay";
+                        dr_mode = "peripheral";
+                };
+        };
+};

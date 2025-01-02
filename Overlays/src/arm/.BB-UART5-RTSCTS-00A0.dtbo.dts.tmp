@@ -1,0 +1,62 @@
+# 1 "src/arm/BB-UART5-RTSCTS-00A0.dts"
+# 1 "<built-in>"
+# 1 "<command-line>"
+# 1 "src/arm/BB-UART5-RTSCTS-00A0.dts"
+# 19 "src/arm/BB-UART5-RTSCTS-00A0.dts"
+/dts-v1/;
+/plugin/;
+
+/{
+
+
+
+ fragment@0 {
+  target-path="/";
+  __overlay__ {
+
+   chosen {
+    overlays {
+     BB-UART5-RTSCTS-00A0 = "Wed Jun 19 07:10:02 2024";
+    };
+   };
+  };
+ };
+
+
+
+
+ fragment@1 {
+  target = <&ocp>;
+  __overlay__ {
+   P8_32_pinmux { status = "disabled"; };
+   P8_31_pinmux { status = "disabled"; };
+  };
+ };
+
+ fragment@2 {
+  target = <&am33xx_pinmux>;
+  __overlay__ {
+   u5_rtscts_pins: pinmux_u5_rtscts_pins {
+    pinctrl-single,pins = <
+     0x0dc 0x0e
+     0x0d8 0x36
+    >;
+   };
+  };
+ };
+
+ fragment@3 {
+  target = <&ocp>;
+  __overlay__ {
+   uart5-rtscts-pinmux {
+    compatible = "bone-pinmux-helper";
+    status="okay";
+
+    pinctrl-names = "default";
+
+
+    pinctrl-0 = <&u5_rtscts_pins>;
+   };
+  };
+ };
+};

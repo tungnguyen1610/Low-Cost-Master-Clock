@@ -1,0 +1,196 @@
+# 1 "src/arm/BW-ICE40Cape-00A0.dts"
+# 1 "<built-in>"
+# 1 "<command-line>"
+# 1 "src/arm/BW-ICE40Cape-00A0.dts"
+
+
+
+
+
+/dts-v1/;
+/plugin/;
+
+/ {
+
+
+
+ fragment@0 {
+  target-path="/";
+  __overlay__ {
+
+   chosen {
+    overlays {
+     BW-ICE40Cape-00A0 = "Wed Jun 19 07:10:02 2024";
+    };
+   };
+  };
+ };
+
+
+
+
+ fragment@1 {
+  target = <&ocp>;
+  __overlay__ {
+   P9_31_pinmux { status = "disabled"; };
+   P9_29_pinmux { status = "disabled"; };
+   P9_30_pinmux { status = "disabled"; };
+   P9_28_pinmux { status = "disabled"; };
+   P9_25_pinmux { status = "disabled"; };
+   P9_21_pinmux { status = "disabled"; };
+
+   P8_25_pinmux { status = "disabled"; };
+   P8_24_pinmux { status = "disabled"; };
+   P8_05_pinmux { status = "disabled"; };
+   P8_06_pinmux { status = "disabled"; };
+   P8_23_pinmux { status = "disabled"; };
+   P8_22_pinmux { status = "disabled"; };
+   P8_03_pinmux { status = "disabled"; };
+   P8_04_pinmux { status = "disabled"; };
+   P8_19_pinmux { status = "disabled"; };
+   P8_13_pinmux { status = "disabled"; };
+   P8_14_pinmux { status = "disabled"; };
+   P8_17_pinmux { status = "disabled"; };
+   P8_12_pinmux { status = "disabled"; };
+   P8_11_pinmux { status = "disabled"; };
+   P8_16_pinmux { status = "disabled"; };
+   P8_15_pinmux { status = "disabled"; };
+   P8_21_pinmux { status = "disabled"; };
+   P8_18_pinmux { status = "disabled"; };
+   P8_07_pinmux { status = "disabled"; };
+   P8_08_pinmux { status = "disabled"; };
+   P8_10_pinmux { status = "disabled"; };
+   P8_09_pinmux { status = "disabled"; };
+   P9_12_pinmux { status = "disabled"; };
+  };
+ };
+
+ fragment@2 {
+  target = <&am33xx_pinmux>;
+  __overlay__ {
+   bw_spi1_pins: pinmux_bw_spi1_pins {
+    pinctrl-single,pins = <
+     0x190 0x33
+     0x194 0x33
+     0x198 0x13
+     0x19c 0x13
+     0x1ac 0x07
+     0x154 0x27
+    >;
+   };
+
+   bw_gpmc_pins: pinmux_bw_gpmc_pins {
+    pinctrl-single,pins = <
+     0x000 0x30
+     0x004 0x30
+     0x008 0x30
+     0x00C 0x30
+     0x010 0x30
+     0x014 0x30
+     0x018 0x30
+     0x01C 0x30
+     0x020 0x30
+     0x024 0x30
+     0x028 0x30
+     0x02C 0x30
+     0x030 0x30
+     0x034 0x30
+     0x038 0x30
+     0x03C 0x30
+     0x080 0x08
+     0x08C 0x28
+     0x090 0x08
+     0x094 0x08
+     0x098 0x08
+     0x09C 0x08
+     0x078 0x08
+    >;
+   };
+  };
+ };
+
+ fragment@3 {
+  target = <&spi1>;
+  __overlay__ {
+   #address-cells = <1>;
+   #size-cells = <0>;
+   status = "okay";
+   pinctrl-names = "default";
+   pinctrl-0 = <&bw_spi1_pins>;
+
+   ice40: fpga@0 {
+    compatible = "lattice,ice40-fpga-mgr";
+    reg = <0>;
+    spi-max-frequency = <10000000>;
+    cdone-gpios = <&gpio0 3 0>;
+    reset-gpios = <&gpio3 21 1>;
+   };
+  };
+ };
+
+ fragment@4 {
+  target = <&gpmc>;
+  depth = <1>;
+
+
+  #address-cells = <1>;
+  #size-cells = <1>;
+
+  __overlay__ {
+
+   status = "okay";
+
+   #address-cells = <2>;
+   #size-cells = <1>;
+
+   pinctrl-names = "default";
+   pinctrl-0 = <&bw_gpmc_pins>;
+
+
+   ranges = <1 0 0x01000000 0x1000000>;
+
+   nor {
+    reg = <1 0 0x01000000>;
+    bank-width = <2>;
+
+
+
+    gpmc,sync-read;
+    gpmc,sync-write;
+    gpmc,clk-activation-ns = <0>;
+    gpmc,burst-length = <16>;
+    gpmc,mux-add-data = <2>;
+
+
+    gpmc,sync-clk-ps = <40000>;
+    gpmc,cs-on-ns = <0>;
+    gpmc,cs-rd-off-ns = <200>;
+    gpmc,cs-wr-off-ns = <200>;
+
+
+    gpmc,adv-on-ns = <0>;
+    gpmc,adv-rd-off-ns = <80>;
+    gpmc,adv-wr-off-ns = <80>;
+
+
+    gpmc,we-on-ns = <40>;
+    gpmc,we-off-ns = <200>;
+    gpmc,oe-on-ns = <40>;
+    gpmc,oe-off-ns = <200>;
+
+
+    gpmc,page-burst-access-ns = <40>;
+    gpmc,access-ns = <200>;
+    gpmc,rd-cycle-ns = <280>;
+    gpmc,wr-cycle-ns = <280>;
+
+
+    gpmc,wr-access-ns = <40>;
+    gpmc,wr-data-mux-bus-ns = <40>;
+
+
+
+   };
+  };
+ };
+};
