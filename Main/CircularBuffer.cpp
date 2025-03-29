@@ -12,7 +12,20 @@ void CircularBuffer::add(long value) {
         ++count;
     }
 }
-
+// Dynamic size for Circular Buffer
+void CircularBuffer::changeSize(size_t new_size){
+    buffer.resize(new_size);
+    max_size=new_size;
+}
+// Reinitialize the buffer
+   void CircularBuffer::reinitialize() {
+        buffer.assign(max_size, 0); // Reset all elements to 0 (or any default value)
+        head = 0;
+        count = 0;
+    }
+size_t CircularBuffer::getSize(){
+    return buffer.size();
+}
 // Check if all values in the buffer are the same
 bool CircularBuffer::allValuesSame() const {
     if (count < 2) return false;
@@ -34,7 +47,7 @@ void CircularBuffer::printBuffer() const {
     std::cout << std::endl;
 }
 
-double CircularBuffer::calculateAverage() const {
+double CircularBuffer::calculateAvg() const {
     if (count == 0) {
         return 0.0; // Return 0 if the buffer is empty to avoid division by zero
     }
@@ -43,6 +56,5 @@ double CircularBuffer::calculateAverage() const {
     for (size_t i = 0; i < count; ++i) {
         sum += buffer[(head + max_size - count + i) % max_size];
     }
-
-    return static_cast<double>(sum) / count;
+    return static_cast<double>(sum)/count;
 }
