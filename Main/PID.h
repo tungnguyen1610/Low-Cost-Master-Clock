@@ -6,8 +6,8 @@
 #define PID_KI  3.0f
 #define PID_LIM_MIN  -300.0f
 #define PID_LIM_MAX  300.0f
-#define PID_LIM_IN_MIN -300.0f
-#define PID_LIM_IN_MAX 300.0f
+#define PID_LIM_IN_MIN -100.0f
+#define PID_LIM_IN_MAX 100.0f
 #ifdef __cplusplus
 extern "C" {
 #endif
@@ -29,7 +29,7 @@ double preMeasure;
 double out;
 }PIController;
 void PIController_Init(PIController *pi);
-int PIController_Update(PIController *pid, long setpoint, long measurement);
+double PIController_Update(PIController *pid, double setpoint, double measurement);
 void setAdaptiveTunning (PIController *pid, double valueKp,double valueKi);
 void setAdaptiveTunningPHC (PIController *pid, double valueMin,double valueMax);
 double PIController_Update_PHC(PIController *pid, long setpoint, long offset);

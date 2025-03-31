@@ -11,10 +11,10 @@ pi->preError=0.0f;
 pi->preMeasure=0;
 pi->out=0;
 }
-int PIController_Update(PIController *pid, long  setpoint, long  measurement)
+double PIController_Update(PIController *pid, double  setpoint, double  measurement)
 {
 /*error signal*/
-int error=setpoint -measurement;
+double error=setpoint -measurement;
 /*proportiona */
 double proportional =pid->Kp * error;
 pid->integrator += pid->Ki*(error+ pid->preError);  //sampling time=1 second, we get a new counter value
@@ -41,9 +41,8 @@ if (pid->integrator > pid->limInMax) {
     }
     pid->preError       = error;
     pid->preMeasure = measurement;
-	/* Return controller output */
-    int result=round (pid->out);    
-    return result;
+	/* Return controller output */    
+    return pid->out;
 }
 void setAdaptiveTunning (PIController *pid, double valueKp,double valueKi)
 {
@@ -68,11 +67,10 @@ void write_DAC (int fd,uint16_t value)
         exit(1);
      }
 }
+/*
 double PIController_Update_PHC(PIController *pid, long setpointPHC, long offset)
 {
-/*error signal*/
 long error=setpointPHC-offset;
-/*proportiona */
 double proportional =pid->Kp * error;
 double ki_term=pid->Ki * error;
 pid->integrator += ki_term;  //sampling time=1 second, we get a new counter value
@@ -100,5 +98,5 @@ if (pid->integrator > pid->limInMax) {
     pid->preMeasure = offset;
   //  pid->integrator=pid->out;
         /* Return controller output */
-    return pid->out;
-}
+   // return pid->out;
+//}
