@@ -1,6 +1,13 @@
 import subprocess
 import threading
 
+def config_pin():
+	cmd=['config-pin', 'P8.10','timer']
+	try:
+        	subprocess.run(cmd, check=True)
+        	print("Pin configured successfully.")
+	except subprocess.CalledProcessError as e:
+        	print(f"Error occurred: {e}")
 def read_output(process, label):
     while True:
         output = process.stdout.readline().decode().strip()
@@ -17,7 +24,7 @@ def run_concurrent():
         '--ts2phc.channel', '2', '-l', '7', '-m'
     ]
     # Replace directory DMTIMER-Capture with your cloned directory
-    cmd2 = ['sudo', '/home/debian/DMTIMER-Capture/Main/main']
+    cmd2 = ['sudo', './Main/main']
 
     process1 = subprocess.Popen(cmd1, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
     process2 = subprocess.Popen(cmd2, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
@@ -36,4 +43,5 @@ def run_concurrent():
     print("Both processes have exited.")
 
 if __name__ == "__main__":
+    config_pin()
     run_concurrent()
