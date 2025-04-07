@@ -156,6 +156,8 @@ static double pi_sample(struct servo *servo,
 		printf("You are here, locked count is: %lld\n", s->locked_count);
 		if (abs(offset)<1000)
 		     {flag_locked=true;}
+		else 
+		     {flag_locked=false;}
 		if (s->locked_count > AFTER_COUNT) {
 			printf("Actual count: %lld\n",s->locked_count);
 			if( abs(s->last_freq - ppb) > 200) {
