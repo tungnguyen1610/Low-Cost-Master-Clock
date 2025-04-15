@@ -2,7 +2,13 @@
 
 This document provides a step-by-step guide to setting up a Precision Time Protocol (PTP) master clock on a BeagleBone platform. It covers kernel support verification, device tree overlay setup, initial configuration, and how to monitor the system’s operation. This setup achieves high-accuracy time synchronization on a cost-effective platform.
 
-## Table of Contents  
+## Hardware Components
+1. **BeagleBone Black** (~70 dollars)
+2. **GNSS L86 Receivers** (with PPS support) (~ 10 dollars)
+3. **10 Mhz OCXO** (CTI OC5SC25 OCXO) (~10 dollars)
+The schematics of the circuit/setup can be found in the repository.
+   
+## Software components  
 1. [Kernel Support Verification](#kernel-support-verification)  
 2. [Modified LinuxPTP Package](#modified-linuxptp-package)  
 3. [Building and Loading Device Tree Overlays](#building-and-loading-device-tree-overlays)  
@@ -87,7 +93,7 @@ With the kernel and device tree overlays in place, configure the necessary GPIO 
 ## 5. Monitoring Operation
 Once the setup is complete, use `ts2phc` output to monitor the PTP clock's performance. 
 
-### Output Example
+## Output
 The following output format from `ts2phc` illustrates key details of the synchronization status:
 ```plaintext
 ts2phc[80403.557]: adding tstamp 1727879618.999999999 to clock /dev/ptp0
@@ -100,3 +106,5 @@ The output format from main program illustrates the D/A values, raw timestamp va
 Averge counts: 10000000.5
 PID out value(D/A): 2460
 ```
+## Acknowledgements
+A big thank to **Professor Kovácsházy Tamás** of the *Budapest University of Technology and Economics* for his invaluable support and guidance throughout these projects.
