@@ -5,24 +5,21 @@
 #include "phc_ctl.h"
 #include "dmtimer.h"
 #include "cpts.h"
+#include "i2c_com.h"
 #include <iostream>
 #include <stdlib.h>
 #include <fcntl.h>
-#include <sys/mman.h>
-#include <iomanip>
-#include <sys/ioctl.h>
-#include <linux/i2c-dev.h>
+#include <sys/mman.h> 
 #include <linux/ptp_clock.h>
 using namespace std;
 
 // Global variables to store configuration parameters
-#define MCP4725_ADDR 0x60 //Slave address of DA converter
+//#define AD569X_ADDR 0x4c //Slave address of DA converter
 #define SETPOINT 10000000 // 10 Mhz Clock Frequency
-#define OFFSET 2550 // Estimated DA value for setpoint
+#define OFFSET 50000 // Estimated DA value for setpoint
 int mem_fd = open("/dev/mem", O_RDWR | O_SYNC);
 
 // Function prototypes
-void setupDAConverter (int &file,int adapter_nr);
 void setupPTP(int &ptp_fd,clockid_t &clkid);
 void handleAlgorithm (int file, PIController &pid, CircularBuffer &recent_value, uint32_t &preCapture,double &result);
 
@@ -41,9 +38,9 @@ int main()
     PIController_Init(&pid);
 
     // DA converter set-up, "2" -> I2C-2 in BeagleBone
-    int file;
-    setupDAConverter(file, 2);
-
+    int file=0;
+    setupDAConverter(&file, 2);
+//    setupTempSensor(&file,2);
     // Set up PTP clock
     int ptp_fd;
     clockid_t clkid;
@@ -68,24 +65,6 @@ int main()
     close(mem_fd);
     return 0;
 }
-
-void setupDAConverter(int &file, int adapter_nr)
-{
-    char filename[20];
-    snprintf(filename, sizeof(filename), "/dev/i2c-%d", adapter_nr);
-
-    file = open(filename, O_RDWR);
-    if (file < 0) {
-        perror("Failed to open the I2C bus");
-        exit(EXIT_FAILURE);
-    }
-
-    if (ioctl(file, I2C_SLAVE, MCP4725_ADDR) < 0) {
-        perror("Failed to acquire bus access or talk to slave");
-        exit(EXIT_FAILURE);
-    }
-}
-
 void setupPTP(int &ptp_fd, clockid_t &clkid)
 {
     ptp_fd = open("/dev/ptp0", O_RDWR);
@@ -148,7 +127,7 @@ void handleAlgorithm (int file, PIController &pid, CircularBuffer &recent_value,
            // {
             if (abs(temp-10000000)<0.75)
             {
-                recent_value.changeSize(50);
+                recent_value.changeSize(15);
             }
 	    else
 	   {
@@ -158,7 +137,7 @@ void handleAlgorithm (int file, PIController &pid, CircularBuffer &recent_value,
 		    cout << "Average count:"<<std::fixed<<temp<<endl;
             result= PIController_Update(&pid, SETPOINT, temp);
                 printf("PID out value:%lf\n",OFFSET+result);
-                write_DAC(file, round(OFFSET + result));
+                write_DAC(file, OFFSET+result);
              //   gate = 0;
               //  temp = 0;
            // }
