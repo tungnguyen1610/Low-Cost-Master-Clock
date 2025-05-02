@@ -16,7 +16,7 @@
 using namespace std;
 
 // Global variables to store configuration parameters
-#define MCP4725_ADDR 0x4C //Slave address of DA converter
+#define AD569X_ADDR 0x4C //Slave address of DA converter
 #define SETPOINT 10000000 // 10 Mhz Clock Frequency
 #define OFFSET 2550 // Estimated DA value for setpoint
 int mem_fd = open("/dev/mem", O_RDWR | O_SYNC);
@@ -80,7 +80,7 @@ void setupDAConverter(int &file, int adapter_nr)
         exit(EXIT_FAILURE);
     }
 
-    if (ioctl(file, I2C_SLAVE, MCP4725_ADDR) < 0) {
+    if (ioctl(file, I2C_SLAVE, AD569X_ADDR) < 0) {
         perror("Failed to acquire bus access or talk to slave");
         exit(EXIT_FAILURE);
     }
