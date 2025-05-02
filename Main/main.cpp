@@ -21,7 +21,7 @@ int mem_fd = open("/dev/mem", O_RDWR | O_SYNC);
 
 // Function prototypes
 void setupPTP(int &ptp_fd,clockid_t &clkid);
-void handleAlgorithm (int file, PIController &pid, CircularBuffer &recent_value, uint32_t &preCapture,double &result);
+void handleAlgorithm (int file,int file_temp, PIController &pid, CircularBuffer &recent_value, uint32_t &preCapture,double &result);
 
 int main()
 {
@@ -40,7 +40,8 @@ int main()
     // DA converter set-up, "2" -> I2C-2 in BeagleBone
     int file=0;
     setupDAConverter(&file, 2);
-//    setupTempSensor(&file,2);
+    int file_temp=0;
+    setupTempSensor(&file_temp,2);
     // Set up PTP clock
     int ptp_fd;
     clockid_t clkid;
@@ -53,10 +54,10 @@ int main()
     CircularBuffer recent_value(10);
     uint32_t preCapture=timer6_map[TCAR1_OFFSET/4];
     double result=0;
-
+    
     while(true)
     {   
-       handleAlgorithm (file, pid, recent_value, preCapture,result);
+       handleAlgorithm (file,file_temp,pid, recent_value, preCapture,result);
        usleep(5000);
     }
     /*unmap memory*/
@@ -76,7 +77,7 @@ void setupPTP(int &ptp_fd, clockid_t &clkid)
     clkid = ((~(clockid_t)ptp_fd) << 3) | 3;
 }
 
-void handleAlgorithm (int file, PIController &pid, CircularBuffer &recent_value, uint32_t &preCapture,double &result)
+void handleAlgorithm (int file, int file_temp, PIController &pid, CircularBuffer &recent_value, uint32_t &preCapture,double &result)
 {
     // Add Clock Monotonic Timestamp for Logging
     struct timespec ts;
@@ -136,11 +137,15 @@ void handleAlgorithm (int file, PIController &pid, CircularBuffer &recent_value,
             cout <<"size of circular buffer:0x"<<recent_value.getSize()<<endl;
 		    cout << "Average count:"<<std::fixed<<temp<<endl;
             result= PIController_Update(&pid, SETPOINT, temp);
-                printf("PID out value:%lf\n",OFFSET+result);
-                write_DAC(file, OFFSET+result);
-             //   gate = 0;
-              //  temp = 0;
-           // }
+            printf("PID out value:%lf\n",OFFSET+result);
+            write_DAC(file, OFFSET+result);
+            // Read OCXO temperature
+            uint8_t buff[3];
+            readTemperature(file_temp,buff);
+            float current_temp=convert_temp(buff);
+            cout <<"Current temp:"<<current_temp<<endl;
+           // fflush(stdout);
+
             preCapture = timer6_map[TCAR1_OFFSET / 4];
             // Clear interrupt flag
             timer6_map[IRQSTATUS / 4] |= 0x4;
