@@ -6,10 +6,10 @@ CXXFLAGS=-I.      # Include path for headers for C++
 LDFLAGS=-lm       # Linker flags for libraries (math library)
 
 # Dependencies
-DEPS = PID.h CircularBuffer.h clockadj.h missing.h phc_ctl.h dmtimer.h cpts.h     # Header dependencies
+DEPS = PID.h CircularBuffer.h clockadj.h missing.h phc_ctl.h dmtimer.h cpts.h i2c_com.h    # Header dependencies
 
 # Object files
-OBJ = main.o PID.o CircularBuffer.o clockadj.o phc_ctl.o dmtimer.o cpts.o # Object files
+OBJ = main.o PID.o CircularBuffer.o clockadj.o phc_ctl.o dmtimer.o cpts.o i2c_com.o # Object files
 
 # Pattern rule for C source files compile with C++
 %.o: %.c $(DEPS)
