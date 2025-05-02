@@ -16,7 +16,7 @@
 using namespace std;
 
 // Global variables to store configuration parameters
-#define MCP4725_ADDR 0x60 //Slave address of DA converter
+#define MCP4725_ADDR 0x4C //Slave address of DA converter
 #define SETPOINT 10000000 // 10 Mhz Clock Frequency
 #define OFFSET 2550 // Estimated DA value for setpoint
 int mem_fd = open("/dev/mem", O_RDWR | O_SYNC);

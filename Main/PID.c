@@ -4,7 +4,7 @@
 #include "math.h"
 //#include <stdlib.h>
 #include <unistd.h> 
-
+#define COM_BYTE 0x30
 void PIController_Init(PIController *pi){
 pi->integrator=0.0f;
 pi->preError=0.0f;
@@ -58,14 +58,15 @@ void setAdaptiveTunningPHC (PIController *pid, double valueMin,double valueMax)
 void write_DAC (int fd,uint16_t value)
 {
     uint8_t buff[10];
-    buff[0]=0x60; //register address 0x60
-    buff[1]=(value >> 4) & (0xFF);
-    buff[2]=(value << 4) & (0xFF);
+    buff[0]=COM_BYTE; //register address 0x60
+    buff[1]=(value >> 8) & (0xFF);
+    buff[2]=(value ) & (0xFF);
     if (write(fd, buff, 3) != 3) {
     /* ERROR HANDLING: i2c transaction failed */
      perror("Failed to write to the i2c bus");
         exit(1);
      }
+     return;
 }
 /*
 double PIController_Update_PHC(PIController *pid, long setpointPHC, long offset)
