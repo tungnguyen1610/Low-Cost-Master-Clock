@@ -4,10 +4,10 @@
 #include "stdint.h"
 #define PID_KP  7.0f
 #define PID_KI  3.0f
-#define PID_LIM_MIN  -300.0f
-#define PID_LIM_MAX  300.0f
-#define PID_LIM_IN_MIN -100.0f
-#define PID_LIM_IN_MAX 100.0f
+#define PID_LIM_MIN  -10000.0f
+#define PID_LIM_MAX  10000.0f
+#define PID_LIM_IN_MIN -10000.0f
+#define PID_LIM_IN_MAX 10000.0f
 #ifdef __cplusplus
 extern "C" {
 #endif
@@ -33,7 +33,7 @@ double PIController_Update(PIController *pid, double setpoint, double measuremen
 void setAdaptiveTunning (PIController *pid, double valueKp,double valueKi);
 void setAdaptiveTunningPHC (PIController *pid, double valueMin,double valueMax);
 double PIController_Update_PHC(PIController *pid, long setpoint, long offset);
-void write_DAC (int fd,uint16_t value);
+//void write_DAC (int fd,uint16_t value);
 #ifdef __cplusplus
 }
 #endif
