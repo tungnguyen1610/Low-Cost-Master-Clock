@@ -14,7 +14,6 @@
 using namespace std;
 
 // Global variables to store configuration parameters
-//#define AD569X_ADDR 0x4c //Slave address of DA converter
 #define SETPOINT 10000000 // 10 Mhz Clock Frequency
 #define OFFSET 50000 // Estimated DA value for setpoint
 int mem_fd = open("/dev/mem", O_RDWR | O_SYNC);
@@ -89,23 +88,21 @@ void handleAlgorithm (int file, int file_temp, PIController &pid, CircularBuffer
     // Combine seconds and nanoseconds into a floating-point number
     double time_in_seconds = ts.tv_sec + ts.tv_nsec / 1e9;
     // Persisting gate count and temporary accumulation
-//    static int gate = 0;  // Keeps its value across function calls
     static double temp = 0;  // Counter error accumulation during gate time measurement
     static bool firstCapture = true;  // Track first valid capture
     // Interrupt handling
     if (timer6_map[IRQSTATUS / 4] != 0) {
-//	    gate++;
             printf("TIME: %.3f seconds\n", time_in_seconds);
             // Assign Match Register Value for PPS Capture
             timer6_map[TMAR_OFFSET/4]= timer6_map[TCAR1_OFFSET/4] + 10000002;
             //Ignore first cycle calculation
-        if (firstCapture)
-        {
+            if (firstCapture)
+            {
             preCapture = timer6_map[TCAR1_OFFSET / 4];
             firstCapture = false;  // Next time, process normally
             timer6_map[IRQSTATUS / 4] |= 0x4;
             return; // Skip this iteration
-        }
+            }
             // Perform PID calculation and handle hardware interaction
             int cycle = timer6_map[TCAR1_OFFSET / 4] - preCapture;
             printf("Counter Value:%d\n",cycle);
@@ -115,7 +112,7 @@ void handleAlgorithm (int file, int file_temp, PIController &pid, CircularBuffer
             if (recent_value.allValuesSame()) {
                 setAdaptiveTunning(&pid, 0.5, 0.1);
             } else 
-		{
+            {
                 if (abs(cycle - SETPOINT) > 1) {
                     setAdaptiveTunning(&pid, 7.0, 3.0);
                 } else {
@@ -123,28 +120,20 @@ void handleAlgorithm (int file, int file_temp, PIController &pid, CircularBuffer
                 }
             }
             temp = recent_value.calculateAvg();
-           // printf ("PID input value:%d\n",temp);
-           // if (gate == 10)
-           // {
-            if (abs(temp-10000000)<0.75)
+            if (abs(temp-10000000)<0.5)
             {
-                recent_value.changeSize(15);
+                recent_value.changeSize(20);
+                cout <<"size of circular buffer:0x"<<recent_value.getSize()<<endl;
+                cout << "Average count:"<<std::fixed<<temp<<endl;
+                result= PIController_Update(&pid, SETPOINT, temp);
+                printf("PID out value:%lf\n",OFFSET+4*result);
+                write_DAC(file, OFFSET+4*result);
+                // Read OCXO temperature
+                uint8_t buff[3];
+                readTemperature(file_temp,buff);
+                float current_temp=convert_temp(buff);
+                printf("Current temp:%.2f\n",current_temp);
             }
-	    else
-	   {
-               recent_value.reinitialize();
-           }
-            cout <<"size of circular buffer:0x"<<recent_value.getSize()<<endl;
-		    cout << "Average count:"<<std::fixed<<temp<<endl;
-            result= PIController_Update(&pid, SETPOINT, temp);
-            printf("PID out value:%lf\n",OFFSET+result);
-            write_DAC(file, OFFSET+result);
-            // Read OCXO temperature
-            uint8_t buff[3];
-            readTemperature(file_temp,buff);
-            float current_temp=convert_temp(buff);
-            cout <<"Current temp:"<<current_temp<<endl;
-           // fflush(stdout);
 
             preCapture = timer6_map[TCAR1_OFFSET / 4];
             // Clear interrupt flag
