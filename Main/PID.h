@@ -4,10 +4,10 @@
 #include "stdint.h"
 #define PID_KP  7.0f
 #define PID_KI  3.0f
-#define PID_LIM_MIN  -10000.0f
-#define PID_LIM_MAX  10000.0f
-#define PID_LIM_IN_MIN -10000.0f
-#define PID_LIM_IN_MAX 10000.0f
+#define PID_LIM_MIN  -1000.0f
+#define PID_LIM_MAX  1000.0f
+#define PID_LIM_IN_MIN -2000.0f
+#define PID_LIM_IN_MAX 2000.0f
 #ifdef __cplusplus
 extern "C" {
 #endif
