@@ -13,7 +13,7 @@ public:
     CircularBuffer(size_t size);
     void add(long value);
     void changeSize (size_t new_size);
-     void reinitialize();
+    void reinitialize();
     size_t getSize();
     bool allValuesSame() const;
     void printBuffer() const;

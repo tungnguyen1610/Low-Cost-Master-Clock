@@ -25,13 +25,6 @@ void handleAlgorithm (int file,int file_temp, PIController &pid, CircularBuffer 
 int main()
 {
     setupTimer();
-    /* for debugging purpose
-    for (int i=0;i<5;i++)
-    {
-        cout<<timer6_map[TCRR_OFFSET/4]<<endl;
-        sleep(1);
-    }
-    */
     // Set up PI controller parameter
     PIController pid ={PID_KP, PID_KI,PID_LIM_IN_MIN,PID_LIM_IN_MAX,PID_LIM_MIN, PID_LIM_MAX};
     PIController_Init(&pid);
@@ -106,9 +99,15 @@ void handleAlgorithm (int file, int file_temp, PIController &pid, CircularBuffer
             // Perform PID calculation and handle hardware interaction
             int cycle = timer6_map[TCAR1_OFFSET / 4] - preCapture;
             printf("Counter Value:%d\n",cycle);
-            if (cycle > 10000100 || cycle < 9999900)
-                cycle=10000000;
             recent_value.add(cycle);
+            if (cycle > 10000100 || cycle < 9999900)
+            {
+                recent_value.reinitialize();
+                printf("Wrong PPS\n");
+                preCapture = timer6_map[TCAR1_OFFSET / 4];
+                timer6_map[IRQSTATUS / 4] |= 0x4;
+                return;
+            }
             if (recent_value.allValuesSame()) {
                 setAdaptiveTunning(&pid, 0.5, 0.1);
             } else 
@@ -123,20 +122,23 @@ void handleAlgorithm (int file, int file_temp, PIController &pid, CircularBuffer
             if (abs(temp-10000000)<0.5)
             {
                 recent_value.changeSize(20);
-                cout <<"size of circular buffer:0x"<<recent_value.getSize()<<endl;
-                cout << "Average count:"<<std::fixed<<temp<<endl;
-                result= PIController_Update(&pid, SETPOINT, temp);
-                printf("PID out value:%lf\n",OFFSET+4*result);
-                write_DAC(file, OFFSET+4*result);
-                // Read OCXO temperature
-                uint8_t buff[3];
-                readTemperature(file_temp,buff);
-                float current_temp=convert_temp(buff);
-                printf("Current temp:%.2f\n",current_temp);
             }
+            cout <<"size of circular buffer:0x"<<recent_value.getSize()<<endl;
+            cout << "Average count:"<<std::fixed<<temp<<endl;
+            result= PIController_Update(&pid, SETPOINT, temp);
+            printf("PID out value:%lf\n",OFFSET+4*result);
+            write_DAC(file, OFFSET+4*result);
+            // Read OCXO temperature
+
+            uint8_t buff[3];
+            readTemperature(file_temp,buff);
+            float current_temp=convert_temp(buff);
+            printf("Current temp:%lf",current_temp);
+            printf("\n");
 
             preCapture = timer6_map[TCAR1_OFFSET / 4];
             // Clear interrupt flag
             timer6_map[IRQSTATUS / 4] |= 0x4;
+
         }
 }
