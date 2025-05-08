@@ -46,7 +46,7 @@ void setAdaptiveTunning (PIController *pid, double valueKp,double valueKi)
 {
     pid->Kp=valueKp;
     pid->Ki=valueKi;
-
+}
 void setAdaptiveTunningPHC (PIController *pid, double valueMin,double valueMax)
 {
     pid->limInMin=valueMin; 
