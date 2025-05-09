@@ -119,10 +119,10 @@ void handleAlgorithm (int file, int file_temp, PIController &pid, CircularBuffer
                 }
             }
             temp = recent_value.calculateAvg();
-            if (abs(temp-10000000)<0.5)
-            {
-                recent_value.changeSize(20);
-            }
+//            if (abs(temp-10000000)<0.5)
+//            {
+//                recent_value.changeSize(20);
+//            }
             cout <<"size of circular buffer:0x"<<recent_value.getSize()<<endl;
             cout << "Average count:"<<std::fixed<<temp<<endl;
             result= PIController_Update(&pid, SETPOINT, temp);
