@@ -7,6 +7,7 @@
 #include "cpts.h"
 #include "i2c_com.h"
 #include <iostream>
+#include <string>
 #include <stdlib.h>
 #include <fcntl.h>
 #include <sys/mman.h> 
@@ -14,16 +15,35 @@
 using namespace std;
 
 // Global variables to store configuration parameters
-#define SETPOINT 10000000 // 10 Mhz Clock Frequency
-#define OFFSET 50000 // Estimated DA value for setpoint
+int SETPOINT =  10000000; // 10 Mhz Clock Frequency
+uint32_t OFFSET = 50000; // Estimated DA value for setpoint
 int mem_fd = open("/dev/mem", O_RDWR | O_SYNC);
 
 // Function prototypes
 void setupPTP(int &ptp_fd,clockid_t &clkid);
 void handleAlgorithm (int file,int file_temp, PIController &pid, CircularBuffer &recent_value, uint32_t &preCapture,double &result);
-
-int main()
+int main(int argc, char *argv[])
 {
+    int opt;
+    // Command line argument interfaces
+    while ((opt = getopt(argc, argv, "f:o:")) != -1){
+        switch(opt){
+        case 'f':
+            SETPOINT=(atoi(optarg))*pow(10,3);
+            break;
+        case 'o':
+            OFFSET=atoi(optarg);
+            break;
+        case ':':
+            cout<<"Option needs value, continue with default value" << endl;
+            break;
+        default:
+            cerr<<"Usage:"<<argv[0]<<"-f <frequency> -o <offset> \n";
+            cout <<"Process with default value (10Mhz and 50000 DA offset" << endl;
+        }
+    }
+    cout <<"Frequency and offset parameters:"<< SETPOINT << ";"<<OFFSET<<endl;
+
     setupTimer();
     // Set up PI controller parameter
     PIController pid ={PID_KP, PID_KI,PID_LIM_IN_MIN,PID_LIM_IN_MAX,PID_LIM_MIN, PID_LIM_MAX};
@@ -119,17 +139,12 @@ void handleAlgorithm (int file, int file_temp, PIController &pid, CircularBuffer
                 }
             }
             temp = recent_value.calculateAvg();
-            if (abs(temp-10000000)<0.5)
-            {
-                recent_value.changeSize(20);
-            }
             cout <<"size of circular buffer:0x"<<recent_value.getSize()<<endl;
             cout << "Average count:"<<std::fixed<<temp<<endl;
             result= PIController_Update(&pid, SETPOINT, temp);
             printf("PID out value:%lf\n",OFFSET+4*result);
             write_DAC(file, OFFSET+4*result);
             // Read OCXO temperature
-
             uint8_t buff[3];
             readTemperature(file_temp,buff);
             float current_temp=convert_temp(buff);
